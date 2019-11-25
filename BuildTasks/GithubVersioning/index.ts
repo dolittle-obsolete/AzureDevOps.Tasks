@@ -6,8 +6,8 @@ import tl = require('azure-pipelines-task-lib/task');
 
 async function run() {
     try {
-        tl.setResult(tl.TaskResult.Succeeded, 'Success');
         console.log('Hello world!');
+        tl.setResult(tl.TaskResult.Succeeded, 'Success');
     }
     catch (err) {
         tl.setResult(tl.TaskResult.Failed, err.message);
