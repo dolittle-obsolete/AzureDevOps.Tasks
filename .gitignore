@@ -1,0 +1,6 @@
+Distribution
+node_modules
+*.d.ts
+yarn.lock
+package-lock.json
+.taskkey

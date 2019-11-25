@@ -1,0 +1,54 @@
+{
+    "manifestVersion": 1,
+    "id": "dolittle-build-release-tasks",
+    "name": "Dolittle Build and Release Tasks",
+    "version": "0.1.0",
+    "links": {
+        "repository": {
+            "uri": "https://github.com/dolittle-tools/AzureDevOps.Tasks"
+        },
+        "issues": {
+            "uri": "https://github.com/dolittle-tools/AzureDevOps.Tasks/issues"
+        }
+    },
+    "repository": {
+        "type": "git",
+        "uri": "https://github.com/dolittle-tools/AzureDevOps.Tasks"
+    },
+    "publisher": "Dolittle",
+    "public": true,
+    "description": "Tools for building/releasing with Dolittle.",
+    "categories": [
+        "Azure Pipelines"
+    ],
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],
+    "content": {
+        "license": {
+            "path": "LICENSE"
+        }
+    },
+    "icons": {
+        "default": "Images/extension-icon.png"        
+    },
+    "files": [
+        {
+            "path": "BuildTasks/GithubVersioning"
+        }
+    ],
+    "contributions": [
+        {
+            "id": "github-versioning-build-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "BuildTasks/GithubVersioning"
+            }
+        }
+    ]
+}

@@ -1,0 +1,28 @@
+{
+    "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+    "id": "5eede884-e5e5-44fc-a867-b10b2adecedd",
+    "name": "DolittleGithubVersioning",
+    "friendlyName": "Dolittle Github Versioning ",
+    "description": "Deals with versioning of packages based upon github tags",
+    "author": "Dolittle",
+    "helpMarkDown": "",
+    "category": "Utility",
+    "version": {
+        "Major": 0,
+        "Minor": 1,
+        "Patch": 0
+    },
+    "visibility": [
+        "Build"
+    ],
+    "demands": [
+    ],
+    "instanceNameFormat": "Dolittle Github Versioning Strategy",
+    "inputs": [
+    ],
+    "execution": {
+        "Node10": {
+            "target": "GithubVersioning/Distribution/index.js"
+        }
+    }
+}
