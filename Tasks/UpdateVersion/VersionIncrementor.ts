@@ -15,9 +15,9 @@ import { IVersionIncrementor } from "./IVersionIncrementor";
 export class VersionIncrementor implements IVersionIncrementor {
     
     increment(version: string | semver.SemVer, releaseType: semver.ReleaseType) {
-        this._throwIfInvalidVersion(version)
+        this._throwIfInvalidVersion(version);
         let newVersion = semver.inc(version, releaseType)!;
-        
+        if (newVersion === null) throw new Error(`Release Type '${releaseType}' is not valid`)
         return newVersion;
     }
 
