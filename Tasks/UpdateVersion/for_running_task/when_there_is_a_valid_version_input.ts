@@ -12,4 +12,5 @@ describe('when there is a valid version input', function () {
     tr.run();
     
     it('should succeed', () => tr.succeeded.should.be.true);
+    it('should output new version variable 1.0.1', () => tr.stdOutContained('##vso[task.setvariable variable=version;issecret=false;]1.0.1').should.be.true)
  });

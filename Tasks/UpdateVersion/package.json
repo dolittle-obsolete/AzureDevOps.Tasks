@@ -15,7 +15,8 @@
     "prepublishOnly": "yarn build && yarn test:run && yarn test:clean"
   },
   "devDependencies": {
-    "@types/q": "^1.5.2"
+    "@types/q": "^1.5.2",
+    "@types/semver": "^6.2.0"
   },
   "files": [
     "Distribution"

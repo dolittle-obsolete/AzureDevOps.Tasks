@@ -1,3 +1,3 @@
-const build = require('@dolittle/typescript.build');
+// const build = require('@dolittle/typescript.build');
 
-module.exports = build.wallaby();
+// module.exports = build.wallaby();

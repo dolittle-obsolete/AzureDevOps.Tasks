@@ -37,5 +37,11 @@
         "Node10": {
             "target": "Distribution/index.js"
         }
-    }
+    },
+    "OutputVariables": [
+        {
+            "name": "Version",
+            "description": "The updated version"
+        }
+    ]
 }
