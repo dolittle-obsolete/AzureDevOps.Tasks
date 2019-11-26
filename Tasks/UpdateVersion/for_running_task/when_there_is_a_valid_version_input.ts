@@ -11,7 +11,7 @@ describe('when there is a valid version input', function () {
 
     let tr = new ttm.MockTestRunner(tp);
     tr.run();
-    
+
     it('should succeed', () => tr.succeeded.should.be.true);
-    it('should output new version variable 1.0.1', () => tr.hasOutputVariable('version', '1.0.1').should.be.true)
+    it('should output new version variable 1.0.1', () => tr.hasOutputVariable('Version', '1.0.1').should.be.true)
  });

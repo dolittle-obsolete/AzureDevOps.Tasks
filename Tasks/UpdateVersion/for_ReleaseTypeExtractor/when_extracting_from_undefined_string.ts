@@ -2,9 +2,11 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import tmrm = require('azure-pipelines-task-lib/mock-run');
-import path = require('path');
 
-let taskPath = path.join(__dirname, '..', '..', 'index.js');
-let tmr = new tmrm.TaskMockRunner(taskPath);
-tmr.run();
+import {ReleaseTypeExtractor} from '../ReleaseTypeExtractor'
+describe('when extracting from undefined string', () => {
+    let extractor = new ReleaseTypeExtractor();
+    let result = extractor.extract(undefined);
+
+    it('should return patch', () => result!.should.be.equal('patch'));
+});
