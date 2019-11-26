@@ -13,10 +13,8 @@ async function run() {
         const releaseTypeExtractor = new ReleaseTypeExtractor();
         const versionIncrementor = new VersionIncrementor();
         let version = taskLib.getInput('version', true)!;
-        // let source = taskLib.getInput('source', true)!;
         let labels = taskLib.getDelimitedInput('labels', ',');
         taskLib.debug(`Got version ${version}`);
-        // taskLib.debug(`Got source ${source}`);
         taskLib.debug(`Got labels: ${labels}`);
 
         let releaseType = releaseTypeExtractor.extract(labels)
