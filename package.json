@@ -1,7 +1,7 @@
 {
   "private": true,
   "workspaces": [
-    "BuildTasks/*"
+    "Tasks/*"
   ],
   "scripts": {
     "clean": "gulp clean --gulpfile node_modules/@dolittle/typescript.build/Gulpfile.js",

@@ -17,7 +17,7 @@
     },
     "publisher": "Dolittle",
     "public": false,
-    "description": "Tools for building/releasing with Dolittle.",
+    "description": "Custom DevOps Pipeline Tasks for Dolittle.",
     "categories": [
         "Azure Pipelines"
     ],
@@ -39,10 +39,10 @@
     },
     "files": [
         {
-            "path": "BuildTasks/CurrentVersion"
+            "path": "Tasks/CurrentVersion"
         },
         {
-            "path": "BuildTasks/UpdateVersion"
+            "path": "Tasks/UpdateVersion"
         }
     ],
     "contributions": [
@@ -53,7 +53,7 @@
                 "ms.vss-distributed-task.tasks"
             ],
             "properties": {
-                "name": "BuildTasks/CurrentVersion"
+                "name": "Tasks/CurrentVersion"
             }
         },
         {
@@ -63,7 +63,7 @@
                 "ms.vss-distributed-task.tasks"
             ],
             "properties": {
-                "name": "BuildTasks/UpdateVersion"
+                "name": "Tasks/UpdateVersion"
             }
         }
     ]

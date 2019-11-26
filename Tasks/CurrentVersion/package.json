@@ -1,5 +1,5 @@
 {
-  "name": "@dolittle/azure-dev-ops.tasks.versioning",
+  "name": "@dolittle/azure-dev-ops.tasks.current-version",
   "private": true,
   "version": "1.0.0",
   "description": "",
