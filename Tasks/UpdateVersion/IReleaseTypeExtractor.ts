@@ -13,10 +13,10 @@ import { ReleaseType} from "semver";
 export interface IReleaseTypeExtractor {
 
     /**
-     * Extracts a release type from a comma separated list of labels
+     * Extracts a release type from a list of labels
      *
-     * @param {string | undefined} labels
+     * @param {string[]} labels
      * @returns {ReleaseType}
      */
-    extract(labels: undefined | string): ReleaseType | undefined
+    extract(labels: string[]): ReleaseType | undefined
 }

@@ -14,13 +14,13 @@ import { IReleaseTypeExtractor } from "./IReleaseTypeExtractor";
  */
 export class ReleaseTypeExtractor implements IReleaseTypeExtractor {
     
-    extract(labels: string | undefined): ReleaseType | undefined {
+    extract(labels: string[]): ReleaseType | undefined {
         if (labels === undefined) return 'patch';
-        let labelList = labels.split(',').map(_ => _.trim());
-        let major = labelList.includes('major');
-        let minor = labelList.includes('minor');
-        let patch = labelList.includes('patch');
-        let preview = labelList.includes('preview');
+        labels = labels.map(_ => _.trim());
+        let major = labels.includes('major');
+        let minor = labels.includes('minor');
+        let patch = labels.includes('patch');
+        let preview = labels.includes('preview');
         let releaseLabelBoolList = [major, minor, patch, preview];
         
         this._throwIfMultipleReleaseLabels(releaseLabelBoolList);

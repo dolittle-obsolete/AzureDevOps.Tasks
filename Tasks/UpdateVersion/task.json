@@ -26,6 +26,14 @@
             "helpMarkDown": "The previous version"
         },
         {
+            "name": "source",
+            "type": "string",
+            "label": "Source",
+            "defaultValue": "$(Build.SourceBranch)",
+            "required": true,
+            "helpMarkDown": "The source branch of the triggered build",
+        }
+        {
             "name": "labels",
             "defaultValue": "",
             "type": "string",

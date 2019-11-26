@@ -3,7 +3,6 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import taskLib = require('azure-pipelines-task-lib/task');
-import semver from 'semver';
 import { ReleaseTypeExtractor } from './ReleaseTypeExtractor';
 import { VersionIncrementor } from './VersionIncrementor';
 
@@ -14,13 +13,15 @@ async function run() {
         const releaseTypeExtractor = new ReleaseTypeExtractor();
         const versionIncrementor = new VersionIncrementor();
         let version = taskLib.getInput('version', true)!;
-        let labels = taskLib.getInput('labels');
-
+        // let source = taskLib.getInput('source', true)!;
+        let labels = taskLib.getDelimitedInput('labels', ',');
         taskLib.debug(`Got version ${version}`);
+        // taskLib.debug(`Got source ${source}`);
         taskLib.debug(`Got labels: ${labels}`);
 
         let releaseType = releaseTypeExtractor.extract(labels)
         if (releaseType === undefined) {
+            taskLib.setVariable('Version', VERSION_NOT_SET);
             taskLib.setResult(taskLib.TaskResult.Succeeded, `There were no labels denoting a new version. Version output set to '${VERSION_NOT_SET}'`);
             return;
         }

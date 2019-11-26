@@ -4,14 +4,14 @@
  *--------------------------------------------------------------------------------------------*/
 import ttm = require('azure-pipelines-task-lib/mock-test')
 import path = require('path');
-import '@dolittle/azure-dev-ops.tasks.test-helpers';
+import '@dolittle/azure-dev-ops.tasks.test-helpers'; 
 
-describe('when there is a valid version input', function () {
-    let tp = path.join(__dirname, 'given', 'a_runner_with_valid_version_input.js');
+describe('when labels is empty string', function () {
+    let tp = path.join(__dirname, 'given', 'a_runner_with_empty_string_as_labels.js');
 
     let tr = new ttm.MockTestRunner(tp);
     tr.run();
 
     it('should succeed', () => tr.succeeded.should.be.true);
-    it('should output new version variable 1.0.1', () => tr.hasOutputVariable('Version', 'NOT_SET').should.be.true)
+    it('should output new version variable NOT_SET', () => tr.hasOutputVariable('Version', 'NOT_SET').should.be.true)
  });

@@ -2,12 +2,10 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import {ReleaseTypeExtractor} from '../ReleaseTypeExtractor'
+import tmrm = require('azure-pipelines-task-lib/mock-run');
+import task_path from './task_path';
 
-describe('when extracting from string with only a release type', () => {
-    let extractor = new ReleaseTypeExtractor();
-    let labels = ['major'];
-    let result = extractor.extract(labels);
-
-    it('should return major', () => result!.should.be.equal('major'));
-});
+let tmr = new tmrm.TaskMockRunner(task_path);
+tmr.setInput('version', '1.0.0');
+tmr.setInput('labels', '');
+tmr.run();
