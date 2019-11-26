@@ -4,9 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 import {ReleaseTypeExtractor} from '../ReleaseTypeExtractor'
 
-describe('when extracting from undefined string', () => {
+describe('when extracting from string with only a release type', () => {
     let extractor = new ReleaseTypeExtractor();
-    let result = extractor.extract(undefined);
+    let labels = 'major';
+    let result = extractor.extract(labels);
 
-    it('should return patch', () => result!.should.be.equal('patch'));
+    it('should return major', () => result!.should.be.equal('major'));
 });

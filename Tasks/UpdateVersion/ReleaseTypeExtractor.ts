@@ -13,7 +13,6 @@ import { IReleaseTypeExtractor } from "./IReleaseTypeExtractor";
  * @implements {IReleaseTypeExtractor}
  */
 export class ReleaseTypeExtractor implements IReleaseTypeExtractor {
-
     
     extract(labels: string | undefined): ReleaseType | undefined {
         if (labels === undefined) return 'patch';

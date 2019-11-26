@@ -3,10 +3,12 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import {ReleaseTypeExtractor} from '../ReleaseTypeExtractor'
+import { expect } from 'chai';
 
-describe('when extracting from undefined string', () => {
+describe('when extracting from string with only a non release type', () => {
     let extractor = new ReleaseTypeExtractor();
-    let result = extractor.extract(undefined);
+    let labels = 'something';
+    let result = extractor.extract(labels);
 
-    it('should return patch', () => result!.should.be.equal('patch'));
+    it('should return undefined', () => expect(result).to.be.undefined);
 });
