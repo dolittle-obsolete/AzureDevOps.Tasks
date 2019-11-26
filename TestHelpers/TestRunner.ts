@@ -17,5 +17,5 @@ ttm.MockTestRunner.prototype.hasOutputVariable = function (variable: string, val
 
 ttm.MockTestRunner.prototype.isMissingRequiredVariable = function (variable: string) {
     let self = this as ttm.MockTestRunner;
-    return self.createdErrorIssue(`Input required:${variable}`);
+    return self.createdErrorIssue(`Input required: ${variable}`);
 };

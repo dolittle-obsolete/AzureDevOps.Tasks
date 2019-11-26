@@ -5,6 +5,9 @@
 import ttm = require('azure-pipelines-task-lib/mock-test')
 import path = require('path');
 import '@dolittle/azure-dev-ops.tasks.test-helpers'; 
+import task_path from './given/task_path';
+
+console.log(task_path)
 
 describe('when there is a valid version input', function () {
     let tp = path.join(__dirname, 'given', 'a_runner_with_valid_version_input.js');

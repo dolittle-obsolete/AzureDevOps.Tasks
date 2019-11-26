@@ -3,8 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import tmrm = require('azure-pipelines-task-lib/mock-run');
-import path = require('path');
+import task_path from './task_path';
 
-let taskPath = path.join(__dirname, '..', '..', 'index.js');
-let tmr = new tmrm.TaskMockRunner(taskPath);
+let tmr = new tmrm.TaskMockRunner(task_path);
 tmr.run();
