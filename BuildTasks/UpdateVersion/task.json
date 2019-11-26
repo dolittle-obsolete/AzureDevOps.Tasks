@@ -1,0 +1,41 @@
+{
+    "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+    "id": "6e984b8e-58f2-488e-aebf-c519f3e50775",
+    "name": "UpdateVersion",
+    "friendlyName": "Update Version",
+    "description": "Takes a list of labels and a SemVer version as input and outputs the updated version number",
+    "author": "Dolittle",
+    "helpMarkDown": "",
+    "category": "Utility",
+    "version": {
+        "Major": 0,
+        "Minor": 0,
+        "Patch": 1
+    },
+    "visibility": [
+        "Build"
+    ],
+    "demands": [ ],
+    "instanceNameFormat": "Dolittle: Update Version",
+    "inputs": [
+        {
+            "name": "version",
+            "required": true,
+            "type": "string",
+            "label": "Version To Update",
+            "helpMarkDown": "The previous version"
+        },
+        {
+            "name": "labels",
+            "defaultValue": "",
+            "type": "string",
+            "label": "Comma Separated List Of Pull Request Labels",
+            "helpMarkDown": "A comma separated list of the labels from the pull request"
+        }
+    ],
+    "execution": {
+        "Node10": {
+            "target": "Distribution/index.js"
+        }
+    }
+}

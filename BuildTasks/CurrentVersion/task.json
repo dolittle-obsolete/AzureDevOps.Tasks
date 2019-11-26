@@ -1,0 +1,48 @@
+{
+    "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+    "id": "5eede884-e5e5-44fc-a867-b10b2adecedd",
+    "name": "CurrentVersion",
+    "friendlyName": "Current Version",
+    "description": "Gets the current version from a repository",
+    "author": "Dolittle",
+    "helpMarkDown": "",
+    "category": "Utility",
+    "version": {
+        "Major": 0,
+        "Minor": 0,
+        "Patch": 1
+    },
+    "visibility": [
+        "Build"
+    ],
+    "demands": [
+    ],
+    "instanceNameFormat": "Dolittle: Calculating Current Version",
+    "inputs": [
+        {
+            "name": "gitHubConnection",
+            "type": "connectedService:github:OAuth,PersonalAccessToken,InstallationToken",
+            "label": "GitHub connection (OAuth or PAT)",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Specify the name of the GitHub service connection to use to connect to the GitHub repository. The connection must be based on a GitHub user's OAuth or a GitHub personal access token. Learn more about service connections [here](https://aka.ms/AA3am5s)."
+        },
+        {
+            "name": "repositoryName",
+            "type": "githubRepositoryPicker",
+            "label": "Repository",
+            "defaultValue": "$(Build.Repository.Name)",
+            "required": true,
+            "helpMarkDown": "Specify the name of the GitHub repository in which the GitHub comment will be created",
+            "properties": {
+                "DisableManageLink": "True",
+                "EditableOptions": "True"
+            }
+        }
+    ],
+    "execution": {
+        "Node10": {
+            "target": "GithubVersioning/Distribution/index.js"
+        }
+    }
+}
