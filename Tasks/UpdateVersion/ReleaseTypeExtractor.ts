@@ -14,8 +14,8 @@ import { IReleaseTypeExtractor } from "./IReleaseTypeExtractor";
  */
 export class ReleaseTypeExtractor implements IReleaseTypeExtractor {
     
-    extract(labels: string[]): ReleaseType | undefined {
-        if (labels === undefined) return 'patch';
+    extract(labels: string[], isPullRequest: boolean): ReleaseType | undefined {
+        if (labels === undefined || !isPullRequest) return 'patch';
         labels = labels.map(_ => _.trim());
         let major = labels.includes('major');
         let minor = labels.includes('minor');
