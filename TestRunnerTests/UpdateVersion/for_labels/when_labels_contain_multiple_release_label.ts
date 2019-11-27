@@ -10,7 +10,7 @@ describe('when labels contain multiple release labels', function () {
     let tp = path.join(__dirname, 'given', 'a_runner_with_multiple_release_labels.js');
 
     let tr = new ttm.MockTestRunner(tp);
-    tr.run();
+    tr.run(); 
     it('should fail', () => tr.succeeded.should.be.false);
     it('should have one issue', () => tr.errorIssues.length.should.equal(1))
     it('should have an issue saying there are multiple release labels', () => tr.reportsIssue('There are multiple release labels').should.be.true)

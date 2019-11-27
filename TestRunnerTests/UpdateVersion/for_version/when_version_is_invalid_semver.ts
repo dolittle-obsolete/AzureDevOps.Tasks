@@ -11,7 +11,6 @@ describe('when version is invalid semver', function () {
 
     let tr = new ttm.MockTestRunner(tp);
     tr.run();
-    console.log(tr.stdout)
     it('should not succeed', () => tr.succeeded.should.be.false);
     it('should have one error issue', () => tr.errorIssues.length.should.equal(1));
     it('should be missing version variable', () => tr.reportsIssue('1-0-0 is not a valid SemVer version').should.be.true);
