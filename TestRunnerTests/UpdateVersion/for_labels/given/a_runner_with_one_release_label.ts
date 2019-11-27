@@ -2,7 +2,10 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import get_path_to_task from '../../get_path_to_task';
+import tmrm = require('azure-pipelines-task-lib/mock-run');
+import task_path from '../../task_path';
 
-const task_path = get_path_to_task('UpdateVersion');
-export default task_path;
+let tmr = new tmrm.TaskMockRunner(task_path);
+tmr.setInput('version', '1.0.0');
+tmr.setInput('labels', 'something,major');
+tmr.run();

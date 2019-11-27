@@ -2,8 +2,9 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import path from 'path';
+import tmrm = require('azure-pipelines-task-lib/mock-run');
+import task_path from '../../task_path';
 
-export default function get_path_to_task(task_name: string) {
-    return path.resolve(__dirname, '..', '..', 'Tasks', task_name, 'Distribution', 'index.js');
-}
+let tmr = new tmrm.TaskMockRunner(task_path);
+tmr.setInput('version', '1.0.0');
+tmr.run();

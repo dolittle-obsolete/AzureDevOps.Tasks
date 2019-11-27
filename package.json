@@ -3,7 +3,7 @@
   "workspaces": [
     "Tasks/*",
     "TestHelpers",
-    "TestRunnerTests"
+    "TestRunnerTests/*"
   ],
   "scripts": {
     "clean": "gulp clean --gulpfile node_modules/@dolittle/typescript.build/Gulpfile.js",
