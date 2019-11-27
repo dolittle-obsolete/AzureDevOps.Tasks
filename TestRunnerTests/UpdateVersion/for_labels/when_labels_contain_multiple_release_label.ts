@@ -11,7 +11,6 @@ describe('when labels contain multiple release labels', function () {
 
     let tr = new ttm.MockTestRunner(tp);
     tr.run();
-    console.log(tr.errorIssues)
     it('should fail', () => tr.succeeded.should.be.false);
     it('should have one issue', () => tr.errorIssues.length.should.equal(1))
     it('should have an issue saying there are multiple release labels', () => tr.reportsIssue('There are multiple release labels').should.be.true)
