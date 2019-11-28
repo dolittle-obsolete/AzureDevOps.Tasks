@@ -1,0 +1,50 @@
+{
+    "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+    "id": "5eede884-e5e5-44fc-a867-b10b2adecedd",
+    "name": "SetupBuildContext",
+    "friendlyName": "Dolittle: Setup Build Context",
+    "description": "Sets up the context of the build pipeline",
+    "author": "Dolittle",
+    "helpMarkDown": "",
+    "category": "Utility",
+    "version": {
+        "Major": 0,
+        "Minor": 0,
+        "Patch": 1
+    },
+    "visibility": [
+        "Build"
+    ],
+    "demands": [
+        "git"
+    ],
+    "instanceNameFormat": "Setting up context",
+    "inputs": [
+        {
+            "name": "Connection",
+            "required": true,
+            "type": "connectedService:github:OAuth,PersonalAccessToken,InstallationToken",
+            "label": "Connection (OAuth or PAT)",
+            "helpMarkDown": "Specify the name of the service connection to use to connect to the repository. The connection must be based on a user's OAuth or a personal access token. Learn more about service connections [here](https://aka.ms/AA3am5s)."
+        }
+    ],
+    "OutputVariables": [
+        {
+            "name": "ShouldPublish",
+            "description": "Whether or not the pipeline should publish"
+        },
+        {
+            "name": "PreviousVersion",
+            "description": "The old version that should be updated"
+        },
+        {
+            "name": "ReleaseType",
+            "description": "The type of the release (major, minor, patch, preview)"
+        }
+    ],
+    "execution": {
+        "Node10": {
+            "target": "task.js"
+        }
+    }
+}

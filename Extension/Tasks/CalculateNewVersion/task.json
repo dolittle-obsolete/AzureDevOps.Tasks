@@ -1,0 +1,48 @@
+{
+    "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+    "id": "6e984b8e-58f2-488e-aebf-c519f3e50775",
+    "name": "CalculateNewVersion",
+    "friendlyName": "Dolittle: Calculate New Version",
+    "description": "Calculates a new version based on the previous version and the release type",
+    "author": "Dolittle",
+    "helpMarkDown": "",
+    "category": "Utility",
+    "version": {
+        "Major": 0,
+        "Minor": 0,
+        "Patch": 1
+    },
+    "visibility": [
+        "Build"
+    ],
+    "demands": [],
+    "instanceNameFormat": "Calculating New Version",
+    "inputs": [
+        {
+            "name": "PreviousVersion",
+            "required": true,
+            "type": "string",
+            "label": "Version To Update",
+            "helpMarkDown": "The previous version"
+        },
+        {
+            "name": "ReleaseType",
+            "required": true,
+            "type": "string",
+            "label": "The release type",
+            "helpMarkDown": "major, minor, patch or preview"
+        }
+    
+    ],
+    "OutputVariables": [
+        {
+            "name": "NextVersion",
+            "description": "The updated version number"
+        }
+    ],
+    "execution": {
+        "Node10": {
+            "target": "task.js"
+        }
+    }
+}
