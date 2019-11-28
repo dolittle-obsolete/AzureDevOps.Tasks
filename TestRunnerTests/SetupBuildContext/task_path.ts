@@ -4,5 +4,5 @@
  *--------------------------------------------------------------------------------------------*/
 import {getPathToTask} from '@dolittle/azure-dev-ops.tasks.test-helpers';
 
-const task_path = getPathToTask('CurrentVersion');
+const task_path = getPathToTask('SetupBuildContext');
 export default task_path;

@@ -1,5 +1,5 @@
 {
-  "name": "@dolittle/azure-dev-ops.tasks.current-version-test-runner-tests",
+  "name": "@dolittle/azure-dev-ops.tasks.setup-build-context-test-runner-tests",
   "private": true,
   "version": "1.0.0",
   "description": "",

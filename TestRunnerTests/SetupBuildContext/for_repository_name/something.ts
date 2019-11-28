@@ -6,11 +6,7 @@ import ttm = require('azure-pipelines-task-lib/mock-test')
 import path = require('path');
 import '@dolittle/azure-dev-ops.tasks.test-helpers';
 
-describe('something', function () {
-    let tp = path.join(__dirname, 'given', 'something.js');
+describe('something', () => {
 
-    let tr = new ttm.MockTestRunner(tp);
-    tr.run();
-    console.log(tr.stdout)
-    it('should succeed', () => tr.succeeded.should.be.true);
+    it('something', () => true.should.be.true);
  });
