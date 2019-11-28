@@ -11,7 +11,6 @@ describe('when release type is empty string', function () {
 
     let tr = new ttm.MockTestRunner(tp);
     tr.run();
-
     it('should fail', () => tr.succeeded.should.be.false);
     it('should complain on missing required input', () => tr.isMissingRequiredVariable('ReleaseType'));
  });

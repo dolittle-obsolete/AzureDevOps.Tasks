@@ -1,0 +1,42 @@
+{
+    "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+    "id": "4977e0cb-87cb-4591-bb03-8d7fb1cc92b8",
+    "name": "TagNewVersion",
+    "friendlyName": "Dolittle: Tag New Version",
+    "description": "Tags a new version on the repository's master branch",
+    "author": "Dolittle",
+    "helpMarkDown": "",
+    "category": "Utility",
+    "version": {
+        "Major": 0,
+        "Minor": 0,
+        "Patch": 1
+    },
+    "visibility": [
+        "Build"
+    ],
+    "demands": [],
+    "instanceNameFormat": "Tagging Repository With New Version",
+    "inputs": [
+        {
+            "name": "Connection",
+            "required": true,
+            "type": "connectedService:github:OAuth,PersonalAccessToken,InstallationToken",
+            "label": "Connection (OAuth or PAT)",
+            "helpMarkDown": "Specify the name of the service connection to use to connect to the repository. The connection must be based on a user's OAuth or a personal access token. Learn more about service connections [here](https://aka.ms/AA3am5s)."
+        },
+        {
+            "name": "Version",
+            "required": true,
+            "type": "string",
+            "label": "The version number that should be tagged",
+            "helpMarkDown": ""
+        }
+    
+    ],    
+    "execution": {
+        "Node10": {
+            "target": "task.js"
+        }
+    }
+}

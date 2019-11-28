@@ -75,6 +75,16 @@
             "properties": {
                 "name": "Distribution/Tasks/TriggerCascadingBuilds"
             }
+        },
+        {
+            "id": "TagNewVersion",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "Distribution/Tasks/TagNewVersion"
+            }
         }
     ]
 }
