@@ -5,7 +5,7 @@
 import taskLib = require('azure-pipelines-task-lib/task');
 import path from 'path';
 
-taskLib.setResourcePath(path.resolve(__dirname, '..', 'task.json'));
+taskLib.setResourcePath(path.resolve(__dirname, 'task.json'));
 /**
  * Taken from https://github.com/microsoft/azure-pipelines-tasks/blob/master/Tasks/GitHubCommentV0/main.ts
  *

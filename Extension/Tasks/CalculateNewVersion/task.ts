@@ -7,7 +7,7 @@ import path from 'path';
 import { ReleaseType } from 'semver';
 import { VersionIncrementor } from './VersionIncrementor';
 
-taskLib.setResourcePath(path.resolve(__dirname, '..', 'task.json'));
+taskLib.setResourcePath(path.resolve(__dirname, 'task.json'));
 
 async function run() {
     try {
