@@ -47,23 +47,33 @@
     ],
     "contributions": [
         {
-            "id": "CurrentVersion",
+            "id": "CalculateNewVersion",
             "type": "ms.vss-distributed-task.task",
             "targets": [
                 "ms.vss-distributed-task.tasks"
             ],
             "properties": {
-                "name": "Distribution/Tasks/CurrentVersion"
+                "name": "Distribution/Tasks/CalculateNewVersion"
             }
         },
         {
-            "id": "UpdateVersion",
+            "id": "SetupBuildContext",
             "type": "ms.vss-distributed-task.task",
             "targets": [
                 "ms.vss-distributed-task.tasks"
             ],
             "properties": {
-                "name": "Distribution/Tasks/UpdateVersion"
+                "name": "Distribution/Tasks/SetupBuildContext"
+            }
+        },
+        {
+            "id": "TriggerCascadingBuilds",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "Distribution/Tasks/TriggerCascadingBuilds"
             }
         }
     ]
