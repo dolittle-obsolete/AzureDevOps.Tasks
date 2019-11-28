@@ -13,5 +13,5 @@ describe('when there is no version input', function () {
     tr.run();
     it('should not succeed', () => tr.succeeded.should.be.false);
     it('should have one error issue', () => tr.errorIssues.length.should.equal(1));
-    it('should be missing version variable', () => tr.isMissingRequiredVariable('version').should.be.true);
+    it('should be missing version variable', () => tr.isMissingRequiredVariable('PreviousVersion').should.be.true);
  });
