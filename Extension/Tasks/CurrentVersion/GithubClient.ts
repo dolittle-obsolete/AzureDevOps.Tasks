@@ -32,6 +32,8 @@ export class GithubClient implements IRepositoryClient{
             owner,
             repo
         });
+        let branch = await this._octokit.repos.getBranch({owner,  repo, branch: 'master'})
+        
         return tags.data.map(_ => _.name);
     }
 
