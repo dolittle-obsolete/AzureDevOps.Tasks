@@ -9,6 +9,9 @@ taskLib.setResourcePath(path.resolve(__dirname, 'task.json'));
 
 async function run() {
     try {
+        const connection = taskLib.getInput('Connection', true);
+        const nextVersion = taskLib.getInput('NextVersion', true);
+        const releaseType = taskLib.getInput('ReleaseType', true);
         
         taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success');
     }
