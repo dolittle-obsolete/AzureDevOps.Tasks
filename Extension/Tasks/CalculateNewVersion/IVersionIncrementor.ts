@@ -5,7 +5,14 @@
 import { SemVer, ReleaseType } from "semver";
 
 
+/**
+ * Defines a system that can increment a version based on the release type
+ *
+ * @export
+ * @interface IVersionIncrementor
+ */
 export interface IVersionIncrementor {
+
     /**
      * Increments a version based on the release type 
      * @param {SemVer} version 
