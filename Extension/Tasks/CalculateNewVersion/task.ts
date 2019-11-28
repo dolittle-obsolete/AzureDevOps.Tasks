@@ -4,41 +4,26 @@
  *--------------------------------------------------------------------------------------------*/
 import taskLib = require('azure-pipelines-task-lib/task');
 import path from 'path';
-import { ReleaseTypeExtractor } from './ReleaseTypeExtractor';
+import { ReleaseType } from 'semver';
 import { VersionIncrementor } from './VersionIncrementor';
-import { GithubPullRequestChecker } from './GithubPullRequestChecker';
-
-const VERSION_NOT_SET = 'NOT_SET';
 
 taskLib.setResourcePath(path.resolve(__dirname, '..', 'task.json'));
 
 async function run() {
     try {
-        const releaseTypeExtractor = new ReleaseTypeExtractor();
         const versionIncrementor = new VersionIncrementor();
-        const pullRequestChecker = new GithubPullRequestChecker
-        const version = taskLib.getInput('version', true)!;
-        const labels = taskLib.getDelimitedInput('labels', ',');
-        const triggeredByCascade = taskLib.getBoolInput('triggeredByCascade', )
-        const sourceBranch = taskLib.getVariable('Build.SourceBranch')!;
 
-        taskLib.debug(`Got version ${version}`);
-        taskLib.debug(`Got labels: ${labels}`);
-        taskLib.debug(`Got sourceBranch: ${sourceBranch}`);
+        const previousVersion = taskLib.getInput('PreviousVersion', true)!;
+        const releaseType = taskLib.getInput('ReleaseType', true)! as ReleaseType ;
 
-        let isPullRequest = pullRequestChecker.check(sourceBranch);
+        taskLib.debug(`Got Previous Version ${previousVersion}`);
+        taskLib.debug(`Got Release Type: ${releaseType}`);
 
-        let releaseType = releaseTypeExtractor.extract(labels, isPullRequest);
-        if (releaseType === undefined) {
-            taskLib.setVariable('Version', VERSION_NOT_SET);
-            taskLib.setResult(taskLib.TaskResult.Succeeded, `There were no labels denoting a new version. Version output set to '${VERSION_NOT_SET}'`);
-            return;
-        }
         taskLib.debug(`Updating version for new ${releaseType}`);
-        let newVersion = versionIncrementor.increment(version, releaseType);
+        let newVersion = versionIncrementor.increment(previousVersion, releaseType);
 
-        taskLib.setVariable('Version', newVersion);
-        taskLib.setResult(taskLib.TaskResult.Succeeded, `Successfully updated version from '${version}' to ${newVersion}`);
+        taskLib.setVariable('NextVersion', newVersion);
+        taskLib.setResult(taskLib.TaskResult.Succeeded, `Successfully updated version from '${previousVersion}' to ${newVersion}`);
     }
     catch (err) {
         taskLib.setResult(taskLib.TaskResult.Failed, err.message);
