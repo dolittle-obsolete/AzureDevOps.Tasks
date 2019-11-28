@@ -1,5 +1,5 @@
 {
-  "name": "@dolittle/azure-dev-ops.tasks.update-version-test-runner-tests",
+  "name": "@dolittle/azure-dev-ops.tasks.calculate-new-version-test-runner-tests",
   "private": true,
   "version": "1.0.0",
   "description": "",

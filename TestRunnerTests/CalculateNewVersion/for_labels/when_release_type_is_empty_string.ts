@@ -6,12 +6,12 @@ import ttm = require('azure-pipelines-task-lib/mock-test')
 import path = require('path');
 import '@dolittle/azure-dev-ops.tasks.test-helpers'; 
 
-describe('when labels contain a release label', function () {
-    let tp = path.join(__dirname, 'given', 'a_runner_with_one_release_label.js');
+describe('when release type is empty string', function () {
+    let tp = path.join(__dirname, 'given', 'a_runner_with_empty_string_as_release_type.js');
 
     let tr = new ttm.MockTestRunner(tp);
     tr.run();
 
-    it('should succeed', () => tr.succeeded.should.be.true);
-    it('should output new version variable 2.0.0', () => tr.hasOutputVariable('Version', '2.0.0').should.be.true)
+    it('should fail', () => tr.succeeded.should.be.false);
+    it('should complain on missing required input', () => tr.isMissingRequiredVariable('ReleaseType'));
  });
