@@ -41,7 +41,7 @@
     ],
     "execution": {
         "Node10": {
-            "target": "Distribution/index.js"
+            "target": "task.js"
         }
     }
 }

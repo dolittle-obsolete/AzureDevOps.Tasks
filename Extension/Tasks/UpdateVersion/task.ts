@@ -6,7 +6,7 @@ import taskLib = require('azure-pipelines-task-lib/task');
 import path from 'path';
 import { ReleaseTypeExtractor } from './ReleaseTypeExtractor';
 import { VersionIncrementor } from './VersionIncrementor';
-import { GithubPullRequestChecker } from 'GithubPullRequestChecker';
+import { GithubPullRequestChecker } from './GithubPullRequestChecker';
 
 const VERSION_NOT_SET = 'NOT_SET';
 

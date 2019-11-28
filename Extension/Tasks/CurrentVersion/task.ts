@@ -46,8 +46,6 @@ async function run() {
         taskLib.debug(`Got repositoryName: ${repoName}`);
 
         
-        tags.data.forEach(_ => taskLib.debug(`Tag: ${_.name}`));
-        tags.data.forEach(_ => taskLib.debug(`Tag: ${_}`));
         taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success');
     }
     catch (err) {

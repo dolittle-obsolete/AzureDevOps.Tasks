@@ -39,7 +39,10 @@
     },
     "files": [
         {
-            "path": "Tasks"
+            "path": "node_modules"
+        },
+        {
+            "path": "Distribution/Tasks"
         }
     ],
     "contributions": [
@@ -50,7 +53,7 @@
                 "ms.vss-distributed-task.tasks"
             ],
             "properties": {
-                "name": "Tasks/CurrentVersion"
+                "name": "Distribution/Tasks/CurrentVersion"
             }
         },
         {
@@ -60,7 +63,7 @@
                 "ms.vss-distributed-task.tasks"
             ],
             "properties": {
-                "name": "Tasks/UpdateVersion"
+                "name": "Distribution/Tasks/UpdateVersion"
             }
         }
     ]
