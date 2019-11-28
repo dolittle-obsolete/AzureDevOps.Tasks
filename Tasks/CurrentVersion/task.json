@@ -2,7 +2,7 @@
     "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
     "id": "5eede884-e5e5-44fc-a867-b10b2adecedd",
     "name": "CurrentVersion",
-    "friendlyName": "Current Version",
+    "friendlyName": "Dolittle: Current Version",
     "description": "Gets the current version from a repository",
     "author": "Dolittle",
     "helpMarkDown": "",
@@ -24,7 +24,6 @@
             "type": "connectedService:github:OAuth,PersonalAccessToken,InstallationToken",
             "label": "GitHub connection (OAuth or PAT)",
             "defaultValue": "",
-            "required": true,
             "helpMarkDown": "Specify the name of the GitHub service connection to use to connect to the GitHub repository. The connection must be based on a GitHub user's OAuth or a GitHub personal access token. Learn more about service connections [here](https://aka.ms/AA3am5s)."
         },
         {
@@ -42,7 +41,7 @@
     ],
     "execution": {
         "Node10": {
-            "target": "GithubVersioning/Distribution/index.js"
+            "target": "Distribution/index.js"
         }
     }
 }

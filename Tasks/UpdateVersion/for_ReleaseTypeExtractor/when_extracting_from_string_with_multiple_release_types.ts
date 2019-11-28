@@ -10,7 +10,7 @@ describe('when extracting from string with multiple release types', () => {
     let labels = ['major','minor'];
     let exception: Error;
     try {
-        extractor.extract(labels);
+        extractor.extract(labels, true);
     }
     catch(error) {
         exception = error;

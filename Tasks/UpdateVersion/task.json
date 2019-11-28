@@ -26,12 +26,21 @@
             "helpMarkDown": "The previous version"
         },
         {
+            "name": "triggeredByCascade",
+            "required": true,
+            "defaultValue": false,
+            "type": "boolean",
+            "label": "Triggered By Cascade",
+            "helpMarkDown": "Whether the build was triggered by cascading"
+        },
+        {
             "name": "labels",
             "defaultValue": "",
             "type": "string",
             "label": "Comma Separated List Of Pull Request Labels",
             "helpMarkDown": "A comma separated list of the labels from the pull request"
         }
+    
     ],
     "execution": {
         "Node10": {
@@ -42,6 +51,10 @@
         {
             "name": "Version",
             "description": "The updated version"
+        },
+        {
+            "name": "IsMajor",
+            "description": "Whether or not it was a major bump in version"
         }
     ]
 }

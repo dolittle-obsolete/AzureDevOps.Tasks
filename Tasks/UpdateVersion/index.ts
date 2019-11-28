@@ -19,6 +19,7 @@ async function run() {
         const pullRequestChecker = new GithubPullRequestChecker
         const version = taskLib.getInput('version', true)!;
         const labels = taskLib.getDelimitedInput('labels', ',');
+        const triggeredByCascade = taskLib.getBoolInput('triggeredByCascade', )
         const sourceBranch = taskLib.getVariable('Build.SourceBranch')!;
 
         taskLib.debug(`Got version ${version}`);

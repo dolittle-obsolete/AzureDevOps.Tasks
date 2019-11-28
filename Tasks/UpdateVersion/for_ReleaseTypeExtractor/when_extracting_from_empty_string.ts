@@ -8,7 +8,7 @@ import { expect } from 'chai';
 describe('when extracting from empty string', () => {
     let extractor = new ReleaseTypeExtractor();
     let labels: string[] = [];
-    let result = extractor.extract(labels);
+    let result = extractor.extract(labels, true);
 
     it('should return undefined', () => expect(result).to.be.undefined);
 });

@@ -6,7 +6,7 @@ import {ReleaseTypeExtractor} from '../ReleaseTypeExtractor'
 
 describe('when extracting from undefined string', () => {
     let extractor = new ReleaseTypeExtractor();
-    let result = extractor.extract(undefined as any);
+    let result = extractor.extract(undefined as any, true);
 
     it('should return patch', () => result!.should.be.equal('patch'));
 });

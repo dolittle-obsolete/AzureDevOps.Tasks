@@ -4,10 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 import {ReleaseTypeExtractor} from '../ReleaseTypeExtractor'
 
-describe('when extracting from string with only a release type', () => {
+describe('when extracting and it is not a pull request', () => {
     let extractor = new ReleaseTypeExtractor();
-    let labels = ['major'];
-    let result = extractor.extract(labels, true);
+    let result = extractor.extract(['major'], false);
 
-    it('should return major', () => result!.should.be.equal('major'));
+    it('should return patch', () => result!.should.be.equal('patch'));
 });
