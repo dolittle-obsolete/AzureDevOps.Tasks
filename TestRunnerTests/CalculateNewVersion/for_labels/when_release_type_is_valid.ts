@@ -6,7 +6,7 @@ import ttm = require('azure-pipelines-task-lib/mock-test')
 import path = require('path');
 import '@dolittle/azure-dev-ops.tasks.test-helpers'; 
 
-describe('when labels contain a release label', function () {
+describe('when release type is valid', function () {
     let tp = path.join(__dirname, 'given', 'a_runner_with_a_valid_release_type.js');
 
     let tr = new ttm.MockTestRunner(tp);
