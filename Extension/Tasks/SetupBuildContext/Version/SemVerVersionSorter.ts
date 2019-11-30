@@ -15,6 +15,7 @@ import semver from 'semver';
 export class SemVerVersionSorter implements IVersionSorter {
         
     sort(versions: string[], descending: boolean = true) {
+        if (versions === undefined) return [];
         versions.forEach(_ => {
             if (!semver.valid(_)) throw new Error(`${_} is not a valid SemVer version`);
         })
