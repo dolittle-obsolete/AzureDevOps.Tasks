@@ -9,6 +9,7 @@ import { PipelineContext } from "../PipelineContext";
 import { RepositoryProviders } from "../../Repository/RepositoryProviders";
 import { GithubClient } from "../../Repository/Github/GithubClient";
 import { IReleaseTypeExtractor } from "../../ReleaseType/IReleaseTypeExtractor";
+import { GithubLatestVersion } from "../../Version/Github/GithubLatestVersion";
 
 /**
  * Represents an implementation of {ICanCreatePipelineContext}
@@ -19,7 +20,7 @@ import { IReleaseTypeExtractor } from "../../ReleaseType/IReleaseTypeExtractor";
  */
 export class GithubPipelineContextCreator implements ICanCreatePipelineContext {
     
-    constructor(private _client: GithubClient, private _releaseTypeExtractor: IReleaseTypeExtractor) {}
+    constructor(private _client: GithubClient, private _releaseTypeExtractor: IReleaseTypeExtractor, private _latestVersionGetter: GithubLatestVersion) {}
 
     async create(buildContext: BuildContext, pullRequestContext: PullRequestContext): Promise<PipelineContext> {
         const isPullRequest = this._isPullRequest(pullRequestContext);
@@ -30,7 +31,8 @@ export class GithubPipelineContextCreator implements ICanCreatePipelineContext {
         const releaseType = this._releaseTypeExtractor.extract(labels);
         const shouldPublish = isCascadingBuild || isMergeToMaster;
 
-        
+        let previousVersion = await this._latestVersionGetter.get();
+
         let pipelineContext: PipelineContext = {
             previousVersion,
             releaseType,
@@ -40,8 +42,7 @@ export class GithubPipelineContextCreator implements ICanCreatePipelineContext {
         return pipelineContext;
     }
 
-    canCreateFromContext(buildContext: BuildContext) {
-        
+    canCreateFromContext(buildContext: BuildContext) { 
         return buildContext.repositoryProvider === RepositoryProviders.GitHub;
     }
 

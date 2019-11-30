@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 import { PipelineContext } from "./PipelineContext";
 import { BuildContext } from "./BuildContext";
-import { PullRequestContext } from "./Contexts/PullRequestContext";
+import { PullRequestContext } from "./PullRequestContext";
 import { ICanCreatePipelineContext } from "./ICanCreatePipelineContext";
 
 /**
