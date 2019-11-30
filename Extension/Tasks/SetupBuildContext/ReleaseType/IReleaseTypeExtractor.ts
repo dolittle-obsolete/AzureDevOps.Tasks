@@ -16,8 +16,7 @@ export interface IReleaseTypeExtractor {
      * Extracts a release type from a list of labels
      *
      * @param {string[]} labels
-     * @param {boolean} isPullRequest
-     * @returns {ReleaseType}
+     * @returns {ReleaseType | undefined}
      */
-    extract(labels: string[], isPullRequest: boolean | undefined): ReleaseType | undefined
+    extract(labels: string[]): ReleaseType | undefined
 }

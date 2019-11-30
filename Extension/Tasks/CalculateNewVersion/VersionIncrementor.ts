@@ -16,17 +16,12 @@ export class VersionIncrementor implements IVersionIncrementor {
     
     increment(version: string | semver.SemVer, releaseType: semver.ReleaseType) {
         this._throwIfInvalidVersion(version);
-        this._throwIfReleaseTypeIsNotValid(releaseType);
-        let newVersion = semver.inc(version, releaseType)!;
-        if (newVersion === null) throw new Error(`Release Type '${releaseType}' is not valid`)
+        const newVersion = semver.inc(version, releaseType)!;
+        if (newVersion === null) throw new Error(`'${releaseType}' is not a valid SemVer release type`)
         return newVersion;
     }
 
     private _throwIfInvalidVersion(version: string | semver.SemVer) {
         if (!semver.valid(version)) throw new Error(`${version} is not a valid SemVer version`);
-    }
-    private _throwIfReleaseTypeIsNotValid(releaseType: semver.ReleaseType) {
-        let releaseTypes = ['major', 'minor', 'patch', 'prerelease' ];
-        if (!releaseTypes.includes(releaseType)) throw new Error(`'${releaseType}' is not a valid SemVer release type`);
     }
 }

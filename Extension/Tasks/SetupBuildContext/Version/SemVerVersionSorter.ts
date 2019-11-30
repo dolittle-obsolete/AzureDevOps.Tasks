@@ -20,5 +20,5 @@ export class SemVerVersionSorter implements IVersionSorter {
         })
         return descending? semver.rsort(versions) : semver.sort(versions);
     }
-
+    
 }

@@ -38,13 +38,12 @@ function getGithubEndPointToken(githubEndpoint: string): string {
 }
 async function run() {
     try {
-        const endpointId = taskLib.getInput('gitHubConnection');
+        // 1) ShouldPublish
+        // 2) PreviousVersion
+        // 3) ReleaseType
+        
+        const endpointId = taskLib.getInput('Connection');
         const token = endpointId? getGithubEndPointToken(endpointId) : undefined;
-        let repoName = taskLib.getInput('repositoryName', true)!;
-
-        taskLib.debug(`Got githubConnection ${endpointId}`);
-        taskLib.debug(`Got repositoryName: ${repoName}`);
-
         
         taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success');
     }
