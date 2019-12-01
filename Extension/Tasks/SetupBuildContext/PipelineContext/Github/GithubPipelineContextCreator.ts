@@ -11,6 +11,8 @@ import { GithubClient } from "../../Repository/Github/GithubClient";
 import { IReleaseTypeExtractor } from "../../ReleaseType/IReleaseTypeExtractor";
 import { GithubLatestVersionFinder } from "../../Version/Github/GithubLatestVersionFinder";
 
+export const cascadingBuildMessage = 'Cascading Build Triggered:'
+
 /**
  * Represents an implementation of {ICanCreatePipelineContext}
  *
@@ -23,6 +25,7 @@ export class GithubPipelineContextCreator implements ICanCreatePipelineContext {
     constructor(private _client: GithubClient, private _releaseTypeExtractor: IReleaseTypeExtractor, private _latestVersionGetter: GithubLatestVersionFinder) {}
 
     async create(buildContext: BuildContext, pullRequestContext: PullRequestContext): Promise<PipelineContext> {
+        if (!this.canCreateFromContext(buildContext)) throw new Error('Cannot create pipeline context')
         const isPullRequest = this._isPullRequest(pullRequestContext);
         const isMergeToMaster = !isPullRequest && (await this._isMergeToMaster(buildContext));
         const isCascadingBuild = !isPullRequest && !isMergeToMaster && this._isCascadinbBuild(buildContext);
@@ -66,7 +69,7 @@ export class GithubPipelineContextCreator implements ICanCreatePipelineContext {
     private _isCascadinbBuild(buildContext: BuildContext) {
         if (buildContext.sourceBranchName !== 'master') return false;
 
-        return buildContext.sourceVersionMessage.startsWith('Cascading Build Triggered:') && buildContext.sourceVersionMessage.endsWith(buildContext.repositoryName); 
+        return buildContext.sourceVersionMessage.startsWith(cascadingBuildMessage) && buildContext.sourceVersionMessage.endsWith(buildContext.repositoryName); 
     }
     private _isPullRequest(pullRequestContext: PullRequestContext) {
         return pullRequestContext.sourceCommitId? true: false;   
