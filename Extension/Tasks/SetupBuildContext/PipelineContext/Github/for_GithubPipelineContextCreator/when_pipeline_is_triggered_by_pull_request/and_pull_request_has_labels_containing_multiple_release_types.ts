@@ -9,17 +9,19 @@ import { PipelineContext } from '../../../PipelineContext';
 describe('and pull request has labels containing multiple release types', () => {
     let context = new a_github_pipeline_context_creator();
     let context_creator = context.pipeline_context_creator;
-
+    context.pull_request_context.pullRequestNumber = 1;
     (context.client.pulls as sinon.SinonStub).returns(Promise.resolve({data: [{
-        number: context.pull_request_number,
+        number: context.pull_request_context.pullRequestNumber,
         labels: [{name: 'minor'}, {name: 'patch'}]
     }]}));
 
     let pipeline_context: PipelineContext
-    beforeEach(async () => {
+    before(async () => {
         pipeline_context = await context_creator.create(context.build_context, context.pull_request_context);
+        console.log(pipeline_context)
     });
     it('should not be undefined', () => expect(pipeline_context).to.not.be.undefined);
     it('should not publish', () => pipeline_context.shouldPublish.should.equal(false));
     it('should have minor release type', () => pipeline_context.releaseType!.should.equal('minor'));
+    it('should have previous version 1.0.0', () => pipeline_context.previousVersion!.should.equal('1.0.0'));
 });

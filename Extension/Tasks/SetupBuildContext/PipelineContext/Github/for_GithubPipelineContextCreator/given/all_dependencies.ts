@@ -14,18 +14,8 @@ export class all_dependencies {
     client: GithubClient;
     release_type_extractor: IReleaseTypeExtractor;
     latest_version_finder: GithubLatestVersionFinder;
-    pull_request_number: number;
-    pull_request_source_branch: string;
-    pull_request_source_commit_id: string;
-    pull_request_target_branch: string;
     pull_request_context: PullRequestContext;
     build_context: BuildContext;
-    repository_name: string;
-    repository_provider: string;
-    source_branch: string;
-    source_branch_name: string;
-    source_version: string;
-    source_version_message: string;
     
     constructor() {
         this.client = {
@@ -35,31 +25,21 @@ export class all_dependencies {
         this.release_type_extractor = new ReleaseTypeExtractor();
         this.latest_version_finder = new GithubLatestVersionFinder(this.client);
 
-        this.repository_name = 'some-org/some-repo';
-        this.repository_provider = 'GitHub';
-        this.source_branch = 'refs/head/master';
-        this.source_branch_name = 'master';
-        this.source_version = 'some-id';
-        this.source_version_message = 'some commit message';
         this.build_context = {
-            repositoryName: this.repository_name,
-            repositoryProvider: this.repository_provider,
-            sourceBranch: this.source_branch,
-            sourceBranchName: this.source_branch_name,
-            sourceVersion: this.source_version,
-            sourceVersionMessage: this.source_version_message
+            repositoryName: 'some-org/some-repo',
+            repositoryProvider: 'GitHub',
+            sourceBranch: 'refs/head/master',
+            sourceBranchName: 'master',
+            sourceVersion: 'some-id',
+            sourceVersionMessage: 'some commit message'
 
         } as BuildContext;
 
-        this.pull_request_number = 1;
-        this.pull_request_source_branch = 'source-branch';
-        this.pull_request_source_commit_id = 'some-id';
-        this.pull_request_target_branch = 'target-branch';
         this.pull_request_context = {
-            pullRequestNumber: this.pull_request_number,
-            sourceBranch: this.pull_request_source_branch,
-            sourceCommitId: this.pull_request_source_commit_id,
-            targetBranch: this.pull_request_target_branch
+            pullRequestNumber: undefined,
+            sourceBranch: undefined,
+            sourceCommitId: undefined,
+            targetBranch: undefined
         } as PullRequestContext;
     }
 }
