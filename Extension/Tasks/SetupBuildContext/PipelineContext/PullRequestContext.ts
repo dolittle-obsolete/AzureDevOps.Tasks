@@ -9,27 +9,27 @@ export type PullRequestContext = {
      *
      * @type {string}
      */
-    sourceCommitId: string
+    sourceCommitId?: string
     
     /**
      * The pull request number
      *
      * @type {number}
      */
-    pullRequestNumber: number;
+    pullRequestNumber?: number;
     
     /**
      * The source branch of the pull request
      *
      * @type {string}
      */
-    sourceBranch: string;
+    sourceBranch?: string;
 
     /**
      * The target branch of the pull request
      *
      * @type {string}
      */
-    targetBranch: string;
+    targetBranch?: string;
 
 }
