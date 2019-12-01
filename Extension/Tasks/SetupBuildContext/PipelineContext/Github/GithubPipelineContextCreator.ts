@@ -9,7 +9,7 @@ import { PipelineContext } from "../PipelineContext";
 import { RepositoryProviders } from "../../Repository/RepositoryProviders";
 import { GithubClient } from "../../Repository/Github/GithubClient";
 import { IReleaseTypeExtractor } from "../../ReleaseType/IReleaseTypeExtractor";
-import { GithubLatestVersion } from "../../Version/Github/GithubLatestVersion";
+import { GithubLatestVersionFinder } from "../../Version/Github/GithubLatestVersionFinder";
 
 /**
  * Represents an implementation of {ICanCreatePipelineContext}
@@ -20,7 +20,7 @@ import { GithubLatestVersion } from "../../Version/Github/GithubLatestVersion";
  */
 export class GithubPipelineContextCreator implements ICanCreatePipelineContext {
     
-    constructor(private _client: GithubClient, private _releaseTypeExtractor: IReleaseTypeExtractor, private _latestVersionGetter: GithubLatestVersion) {}
+    constructor(private _client: GithubClient, private _releaseTypeExtractor: IReleaseTypeExtractor, private _latestVersionGetter: GithubLatestVersionFinder) {}
 
     async create(buildContext: BuildContext, pullRequestContext: PullRequestContext): Promise<PipelineContext> {
         const isPullRequest = this._isPullRequest(pullRequestContext);

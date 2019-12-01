@@ -7,13 +7,13 @@ import { ICanGetLatestVersion } from '../ICanGetLatestVersion';
 import semver from 'semver';
 
 /**
- * Represents an implementation of {ICanGetTags} that gets tags using the {GithubClient}
+ * Represents an implementation of {ICanGetLatestVersion} that can get the latest version from Github
  *
  * @export
- * @class GithubVersionTags
- * @implements {ICanGetTags}
+ * @class GithubLatestVersionFinder
+ * @implements {ICanGetLatestVersion}
  */
-export class GithubLatestVersion implements ICanGetLatestVersion {
+export class GithubLatestVersionFinder implements ICanGetLatestVersion {
 
     /**
      * Instantiates an instance of {GithubVersionTags}.
