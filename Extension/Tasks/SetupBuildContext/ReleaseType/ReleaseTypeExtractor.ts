@@ -17,7 +17,6 @@ export class ReleaseTypeExtractor implements IReleaseTypeExtractor {
     
     extract(labels: string[]): ReleaseType | undefined {
         if (labels === undefined) return undefined;
-        
         labels = labels.map(_ => _.trim());
 
         let major = labels.includes('major');
