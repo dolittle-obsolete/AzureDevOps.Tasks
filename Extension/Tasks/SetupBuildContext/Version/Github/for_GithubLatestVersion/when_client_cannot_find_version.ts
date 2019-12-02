@@ -13,7 +13,7 @@ describe('when client cannot find version', () => {
     client.latestVersionTagFromBranch.returns(Promise.resolve(undefined));
     let github_latest_version_finder = new GithubLatestVersionFinder(client as any)
     let latest_version: string
-    beforeEach(async () => {
+    before(async () => {
         latest_version = await github_latest_version_finder.get();
     });
     

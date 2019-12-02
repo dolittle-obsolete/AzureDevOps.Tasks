@@ -17,7 +17,7 @@ describe('and pull request has labels containing non release types', () => {
     }]}));
 
     let pipeline_context: PipelineContext
-    beforeEach(async () => {
+    before(async () => {
         pipeline_context = await context_creator.create(context.build_context, context.pull_request_context);
     });
     it('should not be undefined', () => expect(pipeline_context).to.not.be.undefined);

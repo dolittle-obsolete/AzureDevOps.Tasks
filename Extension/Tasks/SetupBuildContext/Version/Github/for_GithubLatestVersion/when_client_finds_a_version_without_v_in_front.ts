@@ -13,7 +13,7 @@ describe('when client finds a version without v in front', () => {
     client.latestVersionTagFromBranch.returns(Promise.resolve({name: '2.0.0'}));
     let github_latest_version_finder = new GithubLatestVersionFinder(client as any)
     let latest_version: string
-    beforeEach(async () => {
+    before(async () => {
         console.log('Hello');
         latest_version = await github_latest_version_finder.get();
     });
