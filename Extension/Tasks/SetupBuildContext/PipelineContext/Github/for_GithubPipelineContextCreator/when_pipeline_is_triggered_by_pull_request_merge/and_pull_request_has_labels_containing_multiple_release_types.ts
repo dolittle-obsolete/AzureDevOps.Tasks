@@ -21,7 +21,7 @@ describe('and pull request has labels containing multiple release types', () => 
 
     });
     it('should not be undefined', () => expect(pipeline_context).to.not.be.undefined);
-    it('should publish', () => pipeline_context.shouldPublish.should.equal(true));
+    it('should publish', () => pipeline_context.shouldPublish.should.be.true);
     it('should have minor release type', () => pipeline_context.releaseType!.should.equal('minor'));
     it('should have previous version 1.0.0', () => pipeline_context.previousVersion!.should.equal('1.0.0'));
 });

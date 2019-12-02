@@ -21,7 +21,7 @@ describe('and pull request has labels containing non release types', () => {
         pipeline_context = await context_creator.create(context.build_context, context.pull_request_context);
     });
     it('should not be undefined', () => expect(pipeline_context).to.not.be.undefined);
-    it('should not publish', () => pipeline_context.shouldPublish.should.equal(true));
+    it('should publish', () => pipeline_context.shouldPublish.should.be.true);
     it('should have undefined release type', () => expect(pipeline_context.releaseType).to.be.undefined);
     it('should have previous version 1.0.0', () => pipeline_context.previousVersion!.should.equal('1.0.0'));
 });
