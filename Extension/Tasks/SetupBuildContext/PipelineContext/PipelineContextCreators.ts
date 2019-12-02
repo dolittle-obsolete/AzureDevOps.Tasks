@@ -39,9 +39,9 @@ export class PipelineContextCreators implements IPipelineContextCreators {
         let creator: ICanCreatePipelineContext | null = null
         
         for (const pipelineCreator of this.pipeLineContextCreators) {
+            if (creator !== null) throw new Error('There are multiple pipeline creators that can create pipeline context from context')
             if (pipelineCreator.canCreateFromContext(buildContext)) {
                 creator = pipelineCreator;
-                break;
             }
         }
         if (creator === null) throw new Error('There are no pipeline creators that can build pipeline context from context');
