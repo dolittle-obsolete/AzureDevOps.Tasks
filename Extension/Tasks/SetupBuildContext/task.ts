@@ -17,6 +17,7 @@ import { GithubClient } from './Repository/Github/GithubClient';
 import { BuildContext } from './PipelineContext/BuildContext';
 import { GithubPipelineContextCreator } from './PipelineContext/Github/GithubPipelineContextCreator';
 import { GithubLatestVersionFinder } from './Version/Github/GithubLatestVersionFinder';
+import Octokit from '@octokit/rest';
 
 taskLib.setResourcePath(path.resolve(__dirname, 'task.json'));
 /**
@@ -60,6 +61,13 @@ async function run() {
 
         const githubClient = createGithubClient(versionSorter, buildContext, token);
         const githubLatestVersionFinder = createGithubLatestVersionFinder(githubClient);
+
+        console.log(buildContext)
+        console.log(pullRequestContext)
+        taskLib.debug('Debugging something');
+        let pulls = await githubClient.pulls('open');
+        console.log(pulls);
+        taskLib.debug(pulls.data.map(_ => `${_.number}`).join('\n'));
         let pipelineContextCreators = getPipelineContextCreators(releaseTypeExtractor, githubClient, githubLatestVersionFinder);
 
         let pipelineContext = await pipelineContextCreators.create(buildContext, pullRequestContext);

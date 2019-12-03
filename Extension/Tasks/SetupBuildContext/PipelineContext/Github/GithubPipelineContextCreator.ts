@@ -61,7 +61,7 @@ export class GithubPipelineContextCreator implements ICanCreatePipelineContext {
         let pullRequests = isMergeToMaster? 
             await this._client.pulls('closed').then(_ => _.data.filter(_ => _.merge_commit_sha === buildContext.sourceVersion))
             : await this._client.pulls('open').then(_ => _.data.filter(_ => _.number === pullRequestContext.pullRequestNumber));
-        
+        console.log(pullRequests);
         if (pullRequests.length === 0) throw new Error('No pull request found');
         else if (pullRequests.length > 1) throw new Error('Multiple pull requests matching context found');
         return pullRequests[0].labels.map(_ => _.name);
