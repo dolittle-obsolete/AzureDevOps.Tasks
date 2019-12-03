@@ -13,14 +13,16 @@
     "build": "gulp build --gulpfile node_modules/@dolittle/typescript.build/Gulpfile.js",
     "test": "gulp test --gulpfile node_modules/@dolittle/typescript.build/Gulpfile.js",
     "test:run": "gulp test-run --gulpfile node_modules/@dolittle/typescript.build/Gulpfile.js",
-    "test:clean": "gulp test-clean --gulpfile node_modules/@dolittle/typescript.build/Gulpfile.js"
+    "test:clean": "gulp test-clean --gulpfile node_modules/@dolittle/typescript.build/Gulpfile.js",
+    "extension:build": "yarn test && yarn test:clean && rimraf node_modules yarn.lock && yarn install --prod"
   },
   "devDependencies": {
     "@dolittle/typescript.build": "^5.1.1",
     "@types/q": "^1.5.2",
     "@types/semver": "^6.2.0",
     "rimraf": "^3.0.0",
-    "sync-request": "^6.1.0"
+    "sync-request": "^6.1.0",
+    "tfx-cli": "^0.7.11"
   },
   "dependencies": {
     "@octokit/rest": "^16.35.0",

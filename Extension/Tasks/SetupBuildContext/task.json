@@ -42,7 +42,7 @@
     ],
     "execution": {
         "Node10": {
-            "target": "task.js"
+            "target": "Distribution/task.js"
         }
     }
 }

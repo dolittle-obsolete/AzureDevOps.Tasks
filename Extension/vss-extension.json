@@ -39,10 +39,7 @@
     },
     "files": [
         {
-            "path": "node_modules"
-        },
-        {
-            "path": "Distribution/Tasks"
+            "path": "Tasks"
         }
     ],
     "contributions": [
@@ -53,7 +50,7 @@
                 "ms.vss-distributed-task.tasks"
             ],
             "properties": {
-                "name": "Distribution/Tasks/CalculateNewVersion"
+                "name": "Tasks/CalculateNewVersion"
             }
         },
         {
@@ -63,7 +60,7 @@
                 "ms.vss-distributed-task.tasks"
             ],
             "properties": {
-                "name": "Distribution/Tasks/SetupBuildContext"
+                "name": "Tasks/SetupBuildContext"
             }
         },
         {
@@ -73,7 +70,7 @@
                 "ms.vss-distributed-task.tasks"
             ],
             "properties": {
-                "name": "Distribution/Tasks/TriggerCascadingBuilds"
+                "name": "Tasks/TriggerCascadingBuilds"
             }
         },
         {
@@ -83,7 +80,7 @@
                 "ms.vss-distributed-task.tasks"
             ],
             "properties": {
-                "name": "Distribution/Tasks/TagNewVersion"
+                "name": "Tasks/TagNewVersion"
             }
         }
     ]
