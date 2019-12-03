@@ -4,6 +4,19 @@
  *--------------------------------------------------------------------------------------------*/
 import taskLib = require('azure-pipelines-task-lib/task');
 import path from 'path';
+import outputVariables from './OutputVariables';
+import { createBuildContext } from './PipelineContext/createBuildContext';
+import { createPullRequestContext } from './PipelineContext/createPullRequestContext';
+import { IPipelineContextCreators } from './PipelineContext/IPipelineContextCreators';
+import { PipelineContextCreators } from './PipelineContext/PipelineContextCreators';
+import { IVersionSorter } from './Version/IVersionSorter';
+import { SemVerVersionSorter } from './Version/SemVerVersionSorter';
+import { IReleaseTypeExtractor } from './ReleaseType/IReleaseTypeExtractor';
+import { ReleaseTypeExtractor } from './ReleaseType/ReleaseTypeExtractor';
+import { GithubClient } from './Repository/Github/GithubClient';
+import { BuildContext } from './PipelineContext/BuildContext';
+import { GithubPipelineContextCreator } from './PipelineContext/Github/GithubPipelineContextCreator';
+import { GithubLatestVersionFinder } from './Version/Github/GithubLatestVersionFinder';
 
 taskLib.setResourcePath(path.resolve(__dirname, 'task.json'));
 /**
@@ -38,18 +51,43 @@ function getGithubEndPointToken(githubEndpoint: string): string {
 }
 async function run() {
     try {
-        // 1) ShouldPublish
-        // 2) PreviousVersion
-        // 3) ReleaseType
-        
         const endpointId = taskLib.getInput('Connection');
         const token = endpointId? getGithubEndPointToken(endpointId) : undefined;
-        
+        const buildContext = createBuildContext();
+        const pullRequestContext = createPullRequestContext();
+        const versionSorter: IVersionSorter = new SemVerVersionSorter();
+        const releaseTypeExtractor: IReleaseTypeExtractor = new ReleaseTypeExtractor();
+
+        const githubClient = createGithubClient(versionSorter, buildContext, token);
+        const githubLatestVersionFinder = createGithubLatestVersionFinder(githubClient);
+        let pipelineContextCreators = getPipelineContextCreators(releaseTypeExtractor, githubClient, githubLatestVersionFinder);
+
+        let pipelineContext = await pipelineContextCreators.create(buildContext, pullRequestContext);
+
+        taskLib.setVariable(outputVariables.PreviousVersion, pipelineContext.previousVersion);
+        taskLib.setVariable(outputVariables.ShouldPublish, `${pipelineContext.shouldPublish}`);
+        if (pipelineContext.releaseType !== undefined) taskLib.setVariable(outputVariables.ReleaseType, pipelineContext.releaseType!);
         taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success');
     }
     catch (err) {
         taskLib.setResult(taskLib.TaskResult.Failed, err.message);
     }
+}
+
+function createGithubClient(versionSorter: IVersionSorter, buildContext: BuildContext, token?: string) {
+    return new GithubClient(versionSorter, buildContext, token);
+}
+
+function createGithubLatestVersionFinder(client: GithubClient) {
+    return new GithubLatestVersionFinder(client);
+}
+
+function getPipelineContextCreators(releaseTypeExtractor: IReleaseTypeExtractor, githubClient: GithubClient, githubLatestVersionFinder: GithubLatestVersionFinder) {
+    let pipelineContextCreators: IPipelineContextCreators = new PipelineContextCreators([
+        new GithubPipelineContextCreator(githubClient, releaseTypeExtractor, githubLatestVersionFinder)
+    ]);
+
+    return pipelineContextCreators;
 }
 
 run();

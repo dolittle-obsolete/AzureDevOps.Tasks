@@ -17,8 +17,8 @@ import { IPipelineContextCreators } from "./IPipelineContextCreators";
 export class PipelineContextCreators implements IPipelineContextCreators {
     
 
-    constructor() {
-        this.pipeLineContextCreators = []
+    constructor(pipelineContextCreators: ICanCreatePipelineContext[]) {
+        this.pipeLineContextCreators = pipelineContextCreators;
     }
 
     /**
