@@ -1,6 +1,6 @@
 {
     "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
-    "id": "5eede884-e5e5-44fc-a867-b10b2adecedd",
+    "id": "edffa758-4888-4eda-b886-c0a9afcb9360",
     "name": "SetupBuildContext",
     "friendlyName": "Dolittle: Setup Build Context",
     "description": "Sets up the context of the build pipeline",
@@ -10,14 +10,12 @@
     "version": {
         "Major": 0,
         "Minor": 0,
-        "Patch": 1
+        "Patch": 3
     },
     "visibility": [
         "Build"
     ],
-    "demands": [
-        "git"
-    ],
+    "demands": [],
     "instanceNameFormat": "Setting up context",
     "inputs": [
         {

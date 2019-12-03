@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import taskLib = require('azure-pipelines-task-lib/task');
+import * as taskLib from 'azure-pipelines-task-lib';
 import path from 'path';
 
 taskLib.setResourcePath(path.resolve(__dirname, 'task.json'));

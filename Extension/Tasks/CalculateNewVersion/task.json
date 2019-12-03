@@ -1,6 +1,6 @@
 {
     "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
-    "id": "6e984b8e-58f2-488e-aebf-c519f3e50775",
+    "id": "c2ddafe1-8f22-4200-8984-88f27ba7081d",
     "name": "CalculateNewVersion",
     "friendlyName": "Dolittle: Calculate New Version",
     "description": "Calculates a new version based on the previous version and the release type",
@@ -10,7 +10,7 @@
     "version": {
         "Major": 0,
         "Minor": 0,
-        "Patch": 1
+        "Patch": 3
     },
     "visibility": [
         "Build"
