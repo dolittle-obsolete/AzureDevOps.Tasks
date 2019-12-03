@@ -2,11 +2,10 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import ttm = require('azure-pipelines-task-lib/mock-test')
-import path = require('path');
-import '@dolittle/azure-dev-ops.tasks.test-helpers';
+import tmrm = require('azure-pipelines-task-lib/mock-run');
+import task_path from '../../task_path';
+import answers from './answers';
 
-describe('something', () => {
-
-    it('something', () => true.should.be.true);
- });
+let tmr = new tmrm.TaskMockRunner(task_path);
+tmr.setAnswers(answers);
+tmr.run();

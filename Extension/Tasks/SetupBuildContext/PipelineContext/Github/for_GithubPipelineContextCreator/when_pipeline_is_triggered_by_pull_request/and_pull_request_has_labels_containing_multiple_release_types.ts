@@ -18,8 +18,8 @@ describe('and pull request has labels containing multiple release types', () => 
     let pipeline_context: PipelineContext
     before(async () => {
         pipeline_context = await context_creator.create(context.build_context, context.pull_request_context);
-        console.log(pipeline_context)
     });
+
     it('should not be undefined', () => expect(pipeline_context).to.not.be.undefined);
     it('should not publish', () => pipeline_context.shouldPublish.should.be.false);
     it('should have minor release type', () => pipeline_context.releaseType!.should.equal('minor'));
