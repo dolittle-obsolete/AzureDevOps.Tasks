@@ -6,8 +6,12 @@ import { PullRequestContext } from "./PullRequestContext";
 import taskLib = require('azure-pipelines-task-lib/task');
 
 export function createPullRequestContext() {
+    let pullRequestNumberString = taskLib.getVariable('System.PullRequest.PullRequestNumber');
+    const pullRequestNumber = pullRequestNumberString === undefined? 
+        pullRequestNumberString
+        : parseInt(pullRequestNumberString);
     return {
-        pullRequestNumber: taskLib.getVariable('System.PullRequest.PullRequestNumber'),
+        pullRequestNumber,
         sourceCommitId: taskLib.getVariable('System.PullRequest.SourceCommitId'),
         sourceBranch: taskLib.getVariable('System.PullRequest.SourceBranch') ,
         targetBranch: taskLib.getVariable('System.PullRequest.TargetBranch'),
