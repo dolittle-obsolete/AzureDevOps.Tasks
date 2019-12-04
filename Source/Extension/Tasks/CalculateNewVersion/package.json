@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "azure-pipelines-task-lib": "^2.9.3",
-    "semver": "^6.3.0"
+    "semver": "^6.3.0",
+    "@dolittle/azure-dev-ops.tasks.shared": "file:../../Shared"
   }
 }

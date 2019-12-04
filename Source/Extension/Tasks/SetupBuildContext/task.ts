@@ -52,6 +52,7 @@ function getGithubEndPointToken(githubEndpoint: string): string {
 }
 async function run() {
     try {
+        let logger = new PipelineLogger(); 
         const endpointId = taskLib.getInput('Connection');
         const token = endpointId? getGithubEndPointToken(endpointId) : undefined;
         const buildContext = createBuildContext();
