@@ -58,6 +58,7 @@ export class GithubClient {
     }
 
     pulls(state: 'all' | 'open' | 'closed' = 'all') {
+        this._logger.debug(`Getting ${state} pull requests`);
         return this._octokit.pulls.list({
             owner: this._owner,
             repo: this._repo,

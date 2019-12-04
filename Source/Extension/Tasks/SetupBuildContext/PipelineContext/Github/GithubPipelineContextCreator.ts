@@ -64,29 +64,32 @@ export class GithubPipelineContextCreator implements ICanCreatePipelineContext {
         return buildContext.repositoryProvider === RepositoryProviders.GitHub;
     }
 
+    private _isPullRequest(pullRequestContext: PullRequestContext) {
+        this._logger.debug('Checking if build was triggered by a pull request');
+        return pullRequestContext.sourceCommitId? true: false;   
+    }
     private async _isMergeToMaster(buildContext: BuildContext) {
+        this._logger.debug('Checking if build was triggered by a merge to master');
         if (buildContext.sourceBranchName !== 'master') return false;
-
         const commitId = buildContext.sourceVersion;
         let closedPullRequests = await this._client.pulls('closed');
         return closedPullRequests.data.filter(_ => _.merge_commit_sha === commitId).length === 1;
+    }
 
+    private _isCascadinbBuild(buildContext: BuildContext) {
+        this._logger.debug('Checking if build was triggered by a cascading build');
+        if (buildContext.sourceBranchName !== 'master') return false;
+
+        return buildContext.sourceVersionMessage.startsWith(cascadingBuildMessage) && buildContext.sourceVersionMessage.endsWith(buildContext.repositoryName); 
     }
     private async _getLabels(isMergeToMaster: boolean, buildContext: BuildContext, pullRequestContext: PullRequestContext) {
+        this._logger.debug('Getting labels from pull request');
         let pullRequests = isMergeToMaster? 
             await this._client.pulls('closed').then(_ => _.data.filter(_ => _.merge_commit_sha === buildContext.sourceVersion))
             : await this._client.pulls('open').then(_ => _.data.filter(_ => _.number === pullRequestContext.pullRequestNumber));
         if (pullRequests.length === 0) throw new Error('No pull request found');
         else if (pullRequests.length > 1) throw new Error('Multiple pull requests matching context found');
         return pullRequests[0].labels.map(_ => _.name);
-    }
-    private _isCascadinbBuild(buildContext: BuildContext) {
-        if (buildContext.sourceBranchName !== 'master') return false;
-
-        return buildContext.sourceVersionMessage.startsWith(cascadingBuildMessage) && buildContext.sourceVersionMessage.endsWith(buildContext.repositoryName); 
-    }
-    private _isPullRequest(pullRequestContext: PullRequestContext) {
-        return pullRequestContext.sourceCommitId? true: false;   
     }
 
 }
