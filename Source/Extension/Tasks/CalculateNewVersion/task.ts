@@ -14,7 +14,8 @@ async function run() {
         const versionIncrementor = new VersionIncrementor();
 
         const previousVersion = taskLib.getInput('PreviousVersion', true)!;
-        const releaseType = taskLib.getInput('ReleaseType') as ReleaseType | undefined;
+        let releaseType = taskLib.getInput('ReleaseType') as string | undefined;
+        if (releaseType && releaseType.startsWith('$(')) releaseType = undefined;
         if (releaseType === undefined) {
             console.log('Got undefined ReleaseType. Outputting PreviousVersion as NextVersion');
 
@@ -29,7 +30,7 @@ async function run() {
             taskLib.debug(`Got Release Type: ${releaseType}`);
     
             taskLib.debug(`Updating version for new ${releaseType}`);
-            let newVersion = versionIncrementor.increment(previousVersion, releaseType);
+            let newVersion = versionIncrementor.increment(previousVersion, releaseType as ReleaseType);
     
             console.log(`Setting next version to be '${newVersion}'`);
             taskLib.setVariable('NextVersion', newVersion);
