@@ -33,7 +33,8 @@ export class GithubPipelineContextCreator implements ICanCreatePipelineContext {
     constructor(private _client: GithubClient, private _releaseTypeExtractor: IReleaseTypeExtractor, private _latestVersionGetter: GithubLatestVersionFinder, private _logger: ILogger) {}
 
     async create(buildContext: BuildContext, pullRequestContext: PullRequestContext): Promise<PipelineContext> {
-        if (!this.canCreateFromContext(buildContext)) throw new Error('Cannot create pipeline context')
+        if (!this.canCreateFromContext(buildContext)) throw new Error('Cannot create pipeline context');
+        console.log('Resolving Pipeline Context from Github');
         this._logger.debug('Building pipeline context from a Github context');
         const isPullRequest = this._isPullRequest(pullRequestContext);
         if (isPullRequest) {
