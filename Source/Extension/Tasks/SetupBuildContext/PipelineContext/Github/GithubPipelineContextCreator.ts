@@ -12,7 +12,7 @@ import { IReleaseTypeExtractor } from "../../ReleaseType/IReleaseTypeExtractor";
 import { GithubLatestVersionFinder } from "../../Version/Github/GithubLatestVersionFinder";
 import { ILogger } from "@dolittle/azure-dev-ops.tasks.shared";
 
-export const cascadingBuildMessage = 'Cascading Build Triggered:'
+export const cascadingBuildMessage = '[Cascading release]'
 
 /**
  * Represents an implementation of {ICanCreatePipelineContext}
@@ -100,7 +100,7 @@ export class GithubPipelineContextCreator implements ICanCreatePipelineContext {
         this._logger.debug('Checking if build was triggered by a cascading build');
         if (buildContext.sourceBranchName !== 'master') return false;
 
-        return buildContext.sourceVersionMessage.startsWith(cascadingBuildMessage) && buildContext.sourceVersionMessage.endsWith(buildContext.repositoryName); 
+        return buildContext.sourceVersionMessage.startsWith(cascadingBuildMessage); 
     }
     private async _getLabels(isMergeToMaster: boolean, buildContext: BuildContext, pullRequestContext: PullRequestContext) {
         this._logger.debug('Getting labels from pull request');
