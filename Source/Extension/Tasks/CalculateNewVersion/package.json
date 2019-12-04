@@ -21,8 +21,7 @@
     "@types/q": "^1.5.2",
     "@types/semver": "^6.2.0",
     "rimraf": "^3.0.0",
-    "sync-request": "^6.1.0",
-    "tfx-cli": "^0.7.11"
+    "sync-request": "^6.1.0"
   },
   "dependencies": {
     "azure-pipelines-task-lib": "^2.9.3",

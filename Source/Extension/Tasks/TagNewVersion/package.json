@@ -21,12 +21,12 @@
     "@types/q": "^1.5.2",
     "@types/semver": "^6.2.0",
     "rimraf": "^3.0.0",
-    "sync-request": "^6.1.0",
-    "tfx-cli": "^0.7.11"
+    "sync-request": "^6.1.0"
   },
   "dependencies": {
     "@octokit/rest": "^16.35.0",
     "azure-pipelines-task-lib": "^2.9.3",
-    "semver": "^6.3.0"
+    "semver": "^6.3.0",
+    "@dolittle/azure-dev-ops.tasks.shared": "file:../../Shared"
   }
 }
