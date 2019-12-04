@@ -2,6 +2,8 @@
     "extends": "./node_modules/@dolittle/typescript.build/TSConfig/tsconfig.base.json",
     "compilerOptions": {
         "target": "es6",
-        "declaration": false
-    }
+        "declaration": false,
+        "outDir": "./"
+    },
+    "exclude": ["wallaby.conf.js"]
 }
