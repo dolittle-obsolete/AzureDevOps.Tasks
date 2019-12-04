@@ -16,12 +16,15 @@ describe('and pull request has no labels', () => {
         labels: []
     }]}));
 
-    let pipeline_context: PipelineContext
+    let exception: Error
     before(async () => {
-        pipeline_context = await context_creator.create(context.build_context, context.pull_request_context);
+        try {
+            
+            await context_creator.create(context.build_context, context.pull_request_context);
+        }
+        catch(error) {
+            exception = error;
+        }
     });
-    it('should not be undefined', () => expect(pipeline_context).to.not.be.undefined);
-    it('should not publish', () => pipeline_context.shouldPublish.should.be.true);
-    it('should have undefined release type', () => expect(pipeline_context.releaseType).to.be.undefined);
-    it('should have previous version 1.0.0', () => pipeline_context.previousVersion!.should.equal('1.0.0'));
+    it('should throw an exception', () => expect(exception).to.not.be.undefined);
 });
