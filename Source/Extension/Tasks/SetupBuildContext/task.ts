@@ -17,9 +17,11 @@ import { GithubClient } from './Repository/Github/GithubClient';
 import { BuildContext } from './PipelineContext/BuildContext';
 import { GithubPipelineContextCreator } from './PipelineContext/Github/GithubPipelineContextCreator';
 import { GithubLatestVersionFinder } from './Version/Github/GithubLatestVersionFinder';
-import Octokit from '@octokit/rest';
+import { Logger } from '@dolittle/azure-dev-ops.tasks.shared';
 
 taskLib.setResourcePath(path.resolve(__dirname, 'task.json'));
+
+const logger = new Logger(); 
 /**
  * Taken from https://github.com/microsoft/azure-pipelines-tasks/blob/master/Tasks/GitHubCommentV0/main.ts
  *
@@ -52,13 +54,12 @@ function getGithubEndPointToken(githubEndpoint: string): string {
 }
 async function run() {
     try {
-        let logger = new PipelineLogger(); 
         const endpointId = taskLib.getInput('Connection');
         const token = endpointId? getGithubEndPointToken(endpointId) : undefined;
         const buildContext = createBuildContext();
         const pullRequestContext = createPullRequestContext();
-        const versionSorter: IVersionSorter = new SemVerVersionSorter();
-        const releaseTypeExtractor: IReleaseTypeExtractor = new ReleaseTypeExtractor();
+        const versionSorter: IVersionSorter = new SemVerVersionSorter(logger);
+        const releaseTypeExtractor: IReleaseTypeExtractor = new ReleaseTypeExtractor(logger);
 
         const githubClient = createGithubClient(versionSorter, buildContext, token);
         const githubLatestVersionFinder = createGithubLatestVersionFinder(githubClient);
@@ -77,16 +78,16 @@ async function run() {
 }
 
 function createGithubClient(versionSorter: IVersionSorter, buildContext: BuildContext, token?: string) {
-    return new GithubClient(versionSorter, buildContext, token);
+    return new GithubClient(logger, versionSorter, buildContext, token);
 }
 
 function createGithubLatestVersionFinder(client: GithubClient) {
-    return new GithubLatestVersionFinder(client);
+    return new GithubLatestVersionFinder(client, logger);
 }
 
 function getPipelineContextCreators(releaseTypeExtractor: IReleaseTypeExtractor, githubClient: GithubClient, githubLatestVersionFinder: GithubLatestVersionFinder) {
     let pipelineContextCreators: IPipelineContextCreators = new PipelineContextCreators([
-        new GithubPipelineContextCreator(githubClient, releaseTypeExtractor, githubLatestVersionFinder)
+        new GithubPipelineContextCreator(githubClient, releaseTypeExtractor, githubLatestVersionFinder, logger)
     ]);
 
     return pipelineContextCreators;
