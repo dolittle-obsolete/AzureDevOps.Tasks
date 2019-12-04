@@ -10,7 +10,7 @@
     "version": {
         "Major": 0,
         "Minor": 0,
-        "Patch": 9
+        "Patch": 10
     },
     "visibility": [
         "Build"
@@ -27,7 +27,6 @@
         },
         {
             "name": "ReleaseType",
-            "required": true,
             "type": "string",
             "label": "The release type",
             "helpMarkDown": "major, minor, patch or preview"
