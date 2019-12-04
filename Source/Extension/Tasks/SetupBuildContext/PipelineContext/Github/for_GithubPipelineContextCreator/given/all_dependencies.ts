@@ -20,7 +20,7 @@ export class all_dependencies {
     
     constructor() {
         this.client = {
-            latestVersionTagFromBranch: sinon.stub(),
+            latestVersionTag: sinon.stub(),
             pulls: sinon.stub()
         } as any as GithubClient;
         this.release_type_extractor = new ReleaseTypeExtractor(new NullLogger());
