@@ -34,15 +34,7 @@ export class GithubClient {
         this._repo = repo;
     }
 
-    async latestVersionTagFromBranch(branch: string) {
-        this._logger.debug(`Getting latest version tag from branch '${branch}'`);
-        let branches = await this._octokit.repos.listBranches({
-            owner: this._owner,
-            repo: this._repo
-        }).then(_ => _.data.filter(_ => _.name === branch));
-
-        if (branches.length === 0) throw new Error(`No branch named '${branch}'`) ;
-
+    async latestVersionTag() {
         let versionTags = await this._octokit.repos.listTags({
             owner: this._owner,
             repo: this._repo
