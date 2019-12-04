@@ -26,4 +26,8 @@ export class Logger implements ILogger {
         taskLib.error(message);
     }
 
+    log(message: string) {
+        console.log(message);
+    }
+
 }

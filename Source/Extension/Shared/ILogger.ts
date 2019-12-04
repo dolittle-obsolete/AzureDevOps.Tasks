@@ -9,23 +9,33 @@
  * @interface ILogger
  */
 export interface ILogger {
+    
     /**
      * Logs a debugging message
      *
      * @param {string} message
      */
     debug(message: string): void;
+    
     /**
      * Logs a warning message
      *
      * @param {string} message
      */
     warning(message: string): void;
+
     /**
      * Logs an error message
      *
      * @param {string} message
      */
     error(message: string): void;
+
+    /**
+     * Logs the message
+     *
+     * @param {string} message
+     */
+    log(message: string): void
 
 } 

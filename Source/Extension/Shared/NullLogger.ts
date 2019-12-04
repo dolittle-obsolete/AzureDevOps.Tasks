@@ -15,5 +15,6 @@ export class NullLogger implements ILogger {
     debug(message: string) { }    
     warning(message: string) { }
     error(message: string) { }
+    log(message: string) { }
 
 }

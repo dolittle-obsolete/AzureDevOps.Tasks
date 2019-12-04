@@ -34,26 +34,26 @@ export class GithubPipelineContextCreator implements ICanCreatePipelineContext {
 
     async create(buildContext: BuildContext, pullRequestContext: PullRequestContext): Promise<PipelineContext> {
         if (!this.canCreateFromContext(buildContext)) throw new Error('Cannot create pipeline context');
-        console.log('Resolving Pipeline Context from Github');
+        this._logger.log('Resolving Pipeline Context from Github');
         this._logger.debug('Building pipeline context from a Github context');
         const isPullRequest = this._isPullRequest(pullRequestContext);
         if (isPullRequest) {
-            console.log('Build triggered by pull request');
+            this._logger.log('Build triggered by pull request');
             this._logger.debug('Build triggered by pull request');
         }
         const isMergeToMaster = !isPullRequest && (await this._isMergeToMaster(buildContext));
         if (isMergeToMaster) {
-            console.log('Build triggered by merge to master');
+            this._logger.log('Build triggered by merge to master');
             this._logger.debug('Build triggered by merge to master');
         }
         const isCascadingBuild = !isPullRequest && !isMergeToMaster && this._isCascadingBuild(buildContext);
         if (isCascadingBuild) {
-            console.log('Build triggered by a cascading build');
+            this._logger.log('Build triggered by a cascading build');
             this._logger.debug('Build triggered by a cascading build');
         }
         
         if (!isPullRequest && !isMergeToMaster && !isCascadingBuild) {
-            console.log('Not triggering build with new version. Outputting default variables');
+            this._logger.log('Not triggering build with new version. Outputting default variables');
             return {
                 previousVersion: '1.0.0',
                 releaseType: undefined,
@@ -75,7 +75,7 @@ export class GithubPipelineContextCreator implements ICanCreatePipelineContext {
             releaseType,
             shouldPublish
         };
-        Object.keys(pipelineContext).forEach(key => console.log(`${key}: ${(pipelineContext as any)[key]}`));
+        Object.keys(pipelineContext).forEach(key => this._logger.log(`${key}: ${(pipelineContext as any)[key]}`));
         return pipelineContext;
     }
 
