@@ -6,6 +6,9 @@
   "license": "MIT",
   "main": "Distribution/index.js",
   "types": "Distribution/index.d.ts",
+  "files": [
+    "Distribution"
+  ],
   "scripts": {
     "clean": "gulp clean --gulpfile node_modules/@dolittle/typescript.build/Gulpfile.js",
     "build": "gulp build --gulpfile node_modules/@dolittle/typescript.build/Gulpfile.js",
