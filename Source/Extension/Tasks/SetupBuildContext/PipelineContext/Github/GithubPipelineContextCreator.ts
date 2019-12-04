@@ -86,7 +86,7 @@ export class GithubPipelineContextCreator implements ICanCreatePipelineContext {
 
     private _isPullRequest(pullRequestContext: PullRequestContext) {
         this._logger.debug('Checking if build was triggered by a pull request');
-        return pullRequestContext.sourceCommitId? true: false;   
+        return pullRequestContext.pullRequestNumber? true: false;   
     }
     private async _isMergeToMaster(buildContext: BuildContext) {
         this._logger.debug('Checking if build was triggered by a merge to master');
