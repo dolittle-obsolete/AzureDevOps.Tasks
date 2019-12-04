@@ -5,13 +5,14 @@
 import { GithubLatestVersionFinder } from "../GithubLatestVersionFinder";
 import { expect } from "chai";
 import sinon from "sinon";
+import { NullLogger } from "@dolittle/azure-dev-ops.tasks.shared";
 
 describe('when client cannot find version', () => {
     let client = {
         latestVersionTagFromBranch: sinon.stub()
     };
     client.latestVersionTagFromBranch.returns(Promise.resolve(undefined));
-    let github_latest_version_finder = new GithubLatestVersionFinder(client as any)
+    let github_latest_version_finder = new GithubLatestVersionFinder(client as any, new NullLogger())
     let latest_version: string
     before(async () => {
         latest_version = await github_latest_version_finder.get();

@@ -4,9 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 import { SemVerVersionSorter } from "../SemVerVersionSorter";
 import { expect } from "chai";
+import { a_sorter } from "./given/a_sorter";
 
 describe('when sorting a list of versions where one version is invalid', () => {
-    let version_sorter = new SemVerVersionSorter();
+    let version_sorter = new a_sorter().sorter;
 
     let valid_version = '2.0.0';
     let invalid_version = 'something1.1.0';

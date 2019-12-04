@@ -25,7 +25,6 @@ describe('and there are multiple matching pull requests', () => {
     let exception: Error;
     before(async () => {
         try {
-            console.log(context.build_context)
             await context_creator.create(context.build_context, context.pull_request_context);
         }
         catch(error) {

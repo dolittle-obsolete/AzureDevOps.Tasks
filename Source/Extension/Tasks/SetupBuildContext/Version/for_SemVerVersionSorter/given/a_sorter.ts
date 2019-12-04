@@ -2,11 +2,13 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { a_sorter } from "./given/a_sorter";
+import { NullLogger } from "@dolittle/azure-dev-ops.tasks.shared";
+import { SemVerVersionSorter } from "../../SemVerVersionSorter";
+import { IVersionSorter } from "../../IVersionSorter";
 
-describe('when sorting undefined list', () => {
-    let version_sorter = new a_sorter().sorter;
-    let res = version_sorter.sort(undefined as any);
-
-    it('should return an empty list', () => res.should.be.empty);
-});
+export class a_sorter {
+    sorter: IVersionSorter;
+    constructor() {
+        this.sorter = new SemVerVersionSorter(new NullLogger());
+    }
+}

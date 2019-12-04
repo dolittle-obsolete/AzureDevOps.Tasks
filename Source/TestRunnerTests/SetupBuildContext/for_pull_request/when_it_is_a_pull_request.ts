@@ -11,6 +11,5 @@ describe('when it is a pull request', function () {
 
     let tr = new ttm.MockTestRunner(tp);
     tr.run();
-    console.log(tr.stdout)
     it('should succeed', () => tr.succeeded.should.be.true);
  });

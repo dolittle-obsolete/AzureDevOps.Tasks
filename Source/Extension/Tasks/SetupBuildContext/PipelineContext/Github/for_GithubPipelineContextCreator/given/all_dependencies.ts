@@ -9,6 +9,7 @@ import { PullRequestContext } from "../../../PullRequestContext";
 import { GithubLatestVersionFinder } from "../../../../Version/Github/GithubLatestVersionFinder";
 import { BuildContext } from "../../../BuildContext";
 import { ReleaseTypeExtractor } from "../../../../ReleaseType/ReleaseTypeExtractor";
+import { NullLogger } from "@dolittle/azure-dev-ops.tasks.shared";
 
 export class all_dependencies {
     client: GithubClient;
@@ -22,8 +23,8 @@ export class all_dependencies {
             latestVersionTagFromBranch: sinon.stub(),
             pulls: sinon.stub()
         } as any as GithubClient;
-        this.release_type_extractor = new ReleaseTypeExtractor();
-        this.latest_version_finder = new GithubLatestVersionFinder(this.client);
+        this.release_type_extractor = new ReleaseTypeExtractor(new NullLogger());
+        this.latest_version_finder = new GithubLatestVersionFinder(this.client, new NullLogger());
 
         this.build_context = {
             repositoryName: 'some-org/some-repo',

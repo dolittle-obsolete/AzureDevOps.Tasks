@@ -2,10 +2,10 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { SemVerVersionSorter } from "../SemVerVersionSorter";
+import { a_sorter } from "./given/a_sorter";
 
 describe('when sorting list with versions with prereleases', () => {
-    let version_sorter = new SemVerVersionSorter();
+    let version_sorter = new a_sorter().sorter;
     let version1 = '2.0.0-preview.2';
     let version2 = '2.0.0-preview.1';
     let version3 = '2.0.0-beta.2';

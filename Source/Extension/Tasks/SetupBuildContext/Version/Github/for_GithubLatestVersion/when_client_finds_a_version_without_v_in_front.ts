@@ -5,16 +5,16 @@
 import { GithubLatestVersionFinder } from "../GithubLatestVersionFinder";
 import { expect } from "chai";
 import sinon from "sinon";
+import { NullLogger } from "@dolittle/azure-dev-ops.tasks.shared";
 
 describe('when client finds a version without v in front', () => {
     let client = {
         latestVersionTagFromBranch: sinon.stub()
     };
-    client.latestVersionTagFromBranch.returns(Promise.resolve({name: '2.0.0'}));
-    let github_latest_version_finder = new GithubLatestVersionFinder(client as any)
+    client.latestVersionTagFromBranch.returns(Promise.resolve('2.0.0'));
+    let github_latest_version_finder = new GithubLatestVersionFinder(client as any, new NullLogger() )
     let latest_version: string
     before(async () => {
-        console.log('Hello');
         latest_version = await github_latest_version_finder.get();
     });
     
