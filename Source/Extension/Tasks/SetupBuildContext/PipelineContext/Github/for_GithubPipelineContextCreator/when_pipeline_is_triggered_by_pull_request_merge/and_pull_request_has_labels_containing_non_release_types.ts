@@ -16,15 +16,12 @@ describe('and pull request has labels containing non release types', () => {
         labels: [{name: 'something'}, {name: 'something else'}]
     }]}));
 
-    let exception: Error
+    let pipeline_context: PipelineContext
     before(async () => {
-        try {
-            
-            await context_creator.create(context.build_context, context.pull_request_context);
-        }
-        catch(error) {
-            exception = error;
-        }
+        pipeline_context = await context_creator.create(context.build_context, context.pull_request_context);
     });
-    it('should throw an exception', () => expect(exception).to.not.be.undefined);
+    it('should not be undefined', () => expect(pipeline_context).to.not.be.undefined);
+    it('should not publish', () => pipeline_context.shouldPublish.should.be.false);
+    it('should have undefined release type', () => expect(pipeline_context.releaseType).to.be.undefined);
+    it('should have previous version 1.0.0', () => pipeline_context.previousVersion!.should.equal('1.0.0'));
 });

@@ -64,12 +64,11 @@ export class GithubPipelineContextCreator implements ICanCreatePipelineContext {
         
         const releaseType = this._releaseTypeExtractor.extract(labels);
         this._logger.debug(`Got release type: ${releaseType? releaseType : 'not a release!'}`);
-        const shouldPublish = isCascadingBuild || isMergeToMaster;
+        let shouldPublish = isCascadingBuild || (isMergeToMaster && releaseType !== undefined);
         this._logger.debug(`Should result in a release?: ${shouldPublish}`);
         let previousVersion = await this._latestVersionGetter.get();
         this._logger.debug(`Got previous version: '${previousVersion}'`);
         
-        if (shouldPublish && releaseType === undefined) throw new Error('Cannot publish new version when there is no release type');
 
         let pipelineContext: PipelineContext = {
             previousVersion,
