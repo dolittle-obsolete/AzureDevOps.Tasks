@@ -32,10 +32,8 @@ export class GithubLatestVersionFinder implements ICanGetLatestVersion {
             version = '1.0.0';
         }
         else {
-            this._logger.debug(`Found latest version to be '${latestVersionTag!.name}'`)
-            version = latestVersionTag!.name.toLowerCase().startsWith('v')?
-                latestVersionTag!.name.substr(1)
-                : latestVersionTag!.name;
+            this._logger.debug(`Found latest version to be '${latestVersionTag}'`)
+            version = latestVersionTag;
         }
 
         if (!semver.valid(version)) throw new Error(`${version} is not a valid SemVer version`);

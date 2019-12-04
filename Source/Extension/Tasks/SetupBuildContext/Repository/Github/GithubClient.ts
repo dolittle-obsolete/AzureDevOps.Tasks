@@ -38,25 +38,24 @@ export class GithubClient {
         this._logger.debug(`Getting latest version tag from branch '${branch}'`);
         let branches = await this._octokit.repos.listBranches({
             owner: this._owner,
-            repo: this._repo,
-            per_page: 100
+            repo: this._repo
         }).then(_ => _.data.filter(_ => _.name === branch));
+
         if (branches.length === 0) throw new Error(`No branch named '${branch}'`) ;
 
         let versionTags = await this._octokit.repos.listTags({
             owner: this._owner,
-            repo: this._repo,
-            per_page: 100
-        }).then(_ => _.data.filter(_ => semver.valid(_.name)));
+            repo: this._repo
+        }).then(_ => _.data.filter(_ => semver.valid(_.name)).map(_ => _.name));
         this._logger.debug(`Found ${versionTags.length} version tags`);
 
-        let sortedVersions = this._versionSorter.sort(versionTags.map(_ => _.name), true);
+        versionTags = versionTags.map(_ => _.startsWith('v')? _.substr(1) : _);
+        let sortedVersions = this._versionSorter.sort(versionTags, true);
 
-        let latestVersionTag = sortedVersions.length === 0? undefined : sortedVersions[0];
+        let latestVersion = sortedVersions.length === 0? undefined : sortedVersions[0];
         
-        return latestVersionTag;
+        return latestVersion;
     }
-
 
     pulls(state: 'all' | 'open' | 'closed' = 'all') {
         return this._octokit.pulls.list({
