@@ -7,3 +7,6 @@ package-lock.json
 *.vsix
 .DS*
 *.tgz
+
+Source/Extension/Tasks/**/*.js
+!wallaby.conf.js
