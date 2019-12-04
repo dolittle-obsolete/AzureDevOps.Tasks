@@ -46,12 +46,20 @@ export class GithubPipelineContextCreator implements ICanCreatePipelineContext {
             console.log('Build triggered by merge to master');
             this._logger.debug('Build triggered by merge to master');
         }
-        const isCascadingBuild = !isPullRequest && !isMergeToMaster && this._isCascadinbBuild(buildContext);
+        const isCascadingBuild = !isPullRequest && !isMergeToMaster && this._isCascadingBuild(buildContext);
         if (isCascadingBuild) {
             console.log('Build triggered by a cascading build');
             this._logger.debug('Build triggered by a cascading build');
         }
-
+        
+        if (!isPullRequest && !isMergeToMaster && !isCascadingBuild) {
+            console.log('Not triggering build with new version. Outputting default variables');
+            return {
+                previousVersion: '1.0.0',
+                releaseType: undefined,
+                shouldPublish: false
+            };
+        }
         const labels = isCascadingBuild? ['patch'] : await this._getLabels(isMergeToMaster, buildContext, pullRequestContext);
         
         const releaseType = this._releaseTypeExtractor.extract(labels);
@@ -61,6 +69,8 @@ export class GithubPipelineContextCreator implements ICanCreatePipelineContext {
         let previousVersion = await this._latestVersionGetter.get();
         this._logger.debug(`Got previous version: '${previousVersion}'`);
         
+        if (shouldPublish && releaseType === undefined) throw new Error('Cannot publish new version when there is no release type');
+
         let pipelineContext: PipelineContext = {
             previousVersion,
             releaseType,
@@ -86,7 +96,7 @@ export class GithubPipelineContextCreator implements ICanCreatePipelineContext {
         return closedPullRequests.data.filter(_ => _.merge_commit_sha === commitId).length === 1;
     }
 
-    private _isCascadinbBuild(buildContext: BuildContext) {
+    private _isCascadingBuild(buildContext: BuildContext) {
         this._logger.debug('Checking if build was triggered by a cascading build');
         if (buildContext.sourceBranchName !== 'master') return false;
 
