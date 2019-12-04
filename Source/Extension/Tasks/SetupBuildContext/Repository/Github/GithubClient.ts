@@ -6,6 +6,7 @@ import Octokit from '@octokit/rest';
 import semver from 'semver';
 import { BuildContext } from "../../PipelineContext/BuildContext";
 import { IVersionSorter } from '../../Version/IVersionSorter';
+import { ILogger } from '@dolittle/azure-dev-ops.tasks.shared';
 /**
  * Represents a proxy for communicating with GitHub
  *
@@ -17,7 +18,14 @@ export class GithubClient {
     private _owner: string
     private _repo: string
 
-    constructor(private _versionSorter: IVersionSorter, buildContext: BuildContext, token?: string) {
+    /**
+     * Instantiates an instance of {GithubClient}.
+     * @param {ILogger} _logger
+     * @param {IVersionSorter} _versionSorter
+     * @param {BuildContext} buildContext
+     * @param {string} [token]
+     */
+    constructor(private _logger: ILogger, private _versionSorter: IVersionSorter, buildContext: BuildContext, token?: string) {
         this._octokit = new Octokit({
             auth: token
         });
@@ -27,6 +35,7 @@ export class GithubClient {
     }
 
     async latestVersionTagFromBranch(branch: string) {
+        this._logger.debug(`Getting latest version tag from branch '${branch}'`);
         let branches = await this._octokit.repos.listBranches({
             owner: this._owner,
             repo: this._repo,
@@ -39,18 +48,12 @@ export class GithubClient {
             repo: this._repo,
             per_page: 100
         }).then(_ => _.data.filter(_ => semver.valid(_.name)));
+        this._logger.debug(`Found ${versionTags.length} version tags`);
 
-        let commits = await this._octokit.request(`GET /repos/${this._owner}/${this._repo}/commits?sha=${branch}`)
         let sortedVersions = this._versionSorter.sort(versionTags.map(_ => _.name), true);
 
-        let latestVersionTag: Octokit.ReposListTagsResponseItem | undefined;
-        for (let version of sortedVersions) {
-            let tag = versionTags.find(_ => _.name === version)!;
-            if (commits.data.find((_: any) => _.sha === tag.commit.sha)) {
-                latestVersionTag = tag;
-                break;
-            }
-        }
+        let latestVersionTag = sortedVersions.length === 0? undefined : sortedVersions[0];
+        
         return latestVersionTag;
     }
 

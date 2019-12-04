@@ -10,6 +10,7 @@ import { RepositoryProviders } from "../../Repository/RepositoryProviders";
 import { GithubClient } from "../../Repository/Github/GithubClient";
 import { IReleaseTypeExtractor } from "../../ReleaseType/IReleaseTypeExtractor";
 import { GithubLatestVersionFinder } from "../../Version/Github/GithubLatestVersionFinder";
+import { ILogger } from "@dolittle/azure-dev-ops.tasks.shared";
 
 export const cascadingBuildMessage = 'Cascading Build Triggered:'
 
@@ -22,19 +23,33 @@ export const cascadingBuildMessage = 'Cascading Build Triggered:'
  */
 export class GithubPipelineContextCreator implements ICanCreatePipelineContext {
     
-    constructor(private _client: GithubClient, private _releaseTypeExtractor: IReleaseTypeExtractor, private _latestVersionGetter: GithubLatestVersionFinder) {}
+    /**
+     * Instantiates an instance of {GithubPipelineContextCreator}.
+     * @param {GithubClient} _client
+     * @param {IReleaseTypeExtractor} _releaseTypeExtractor
+     * @param {GithubLatestVersionFinder} _latestVersionGetter
+     * @param {ILogger} _logger
+     */
+    constructor(private _client: GithubClient, private _releaseTypeExtractor: IReleaseTypeExtractor, private _latestVersionGetter: GithubLatestVersionFinder, private _logger: ILogger) {}
 
     async create(buildContext: BuildContext, pullRequestContext: PullRequestContext): Promise<PipelineContext> {
         if (!this.canCreateFromContext(buildContext)) throw new Error('Cannot create pipeline context')
+        this._logger.debug('Building pipeline context from a Github context');
         const isPullRequest = this._isPullRequest(pullRequestContext);
+        if (isPullRequest) this._logger.debug('Build triggered by pull request');
         const isMergeToMaster = !isPullRequest && (await this._isMergeToMaster(buildContext));
+        if (isMergeToMaster) this._logger.debug('Build triggered by merge to master');
         const isCascadingBuild = !isPullRequest && !isMergeToMaster && this._isCascadinbBuild(buildContext);
+        if (isCascadingBuild) this._logger.debug('Build triggered by a cascading build');
 
         const labels = isCascadingBuild? ['patch'] : await this._getLabels(isMergeToMaster, buildContext, pullRequestContext);
+        
         const releaseType = this._releaseTypeExtractor.extract(labels);
+        this._logger.debug(`Got release type: ${releaseType? releaseType : 'not a release!'}`)
         const shouldPublish = isCascadingBuild || isMergeToMaster;
-
+        this._logger.debug(`Should result in a release?: ${shouldPublish}`)
         let previousVersion = await this._latestVersionGetter.get();
+        this._logger.debug(`Got previous version: '${previousVersion}'`);
 
         let pipelineContext: PipelineContext = {
             previousVersion,
