@@ -36,27 +36,36 @@ export class GithubPipelineContextCreator implements ICanCreatePipelineContext {
         if (!this.canCreateFromContext(buildContext)) throw new Error('Cannot create pipeline context')
         this._logger.debug('Building pipeline context from a Github context');
         const isPullRequest = this._isPullRequest(pullRequestContext);
-        if (isPullRequest) this._logger.debug('Build triggered by pull request');
+        if (isPullRequest) {
+            console.log('Build triggered by pull request');
+            this._logger.debug('Build triggered by pull request');
+        }
         const isMergeToMaster = !isPullRequest && (await this._isMergeToMaster(buildContext));
-        if (isMergeToMaster) this._logger.debug('Build triggered by merge to master');
+        if (isMergeToMaster) {
+            console.log('Build triggered by merge to master');
+            this._logger.debug('Build triggered by merge to master');
+        }
         const isCascadingBuild = !isPullRequest && !isMergeToMaster && this._isCascadinbBuild(buildContext);
-        if (isCascadingBuild) this._logger.debug('Build triggered by a cascading build');
+        if (isCascadingBuild) {
+            console.log('Build triggered by a cascading build');
+            this._logger.debug('Build triggered by a cascading build');
+        }
 
         const labels = isCascadingBuild? ['patch'] : await this._getLabels(isMergeToMaster, buildContext, pullRequestContext);
         
         const releaseType = this._releaseTypeExtractor.extract(labels);
-        this._logger.debug(`Got release type: ${releaseType? releaseType : 'not a release!'}`)
+        this._logger.debug(`Got release type: ${releaseType? releaseType : 'not a release!'}`);
         const shouldPublish = isCascadingBuild || isMergeToMaster;
-        this._logger.debug(`Should result in a release?: ${shouldPublish}`)
+        this._logger.debug(`Should result in a release?: ${shouldPublish}`);
         let previousVersion = await this._latestVersionGetter.get();
         this._logger.debug(`Got previous version: '${previousVersion}'`);
-
+        
         let pipelineContext: PipelineContext = {
             previousVersion,
             releaseType,
             shouldPublish
         };
-
+        Object.keys(pipelineContext).forEach(key => console.log(`${key}: ${(pipelineContext as any)[key]}`));
         return pipelineContext;
     }
 
