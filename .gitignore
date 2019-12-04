@@ -6,3 +6,4 @@ package-lock.json
 .taskkey
 *.vsix
 .DS*
+*.tgz
