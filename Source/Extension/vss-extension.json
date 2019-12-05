@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "tasks",
     "name": "Dolittle Pipeline Tasks",
-    "version": "1.0.23",
+    "version": "1.0.24",
     "links": {
         "repository": {
             "uri": "https://github.com/dolittle-tools/AzureDevOps.Tasks"

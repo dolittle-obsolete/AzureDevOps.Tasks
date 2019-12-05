@@ -38,6 +38,8 @@ async function run() {
         const nextVersion = taskLib.getInput('NextVersion', true);
         const shouldPublish = taskLib.getBoolInput('ShouldPublish', true);
         const cascades = taskLib.getDelimitedInput('Cascades', ',', true);
+        console.log(nextVersion);
+        console.log(shouldPublish);
         console.log(cascades);
 
         taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success');
