@@ -44,11 +44,10 @@ async function run() {
         const cascades = taskLib.getDelimitedInput('Cascades', ',', true);
         let messageCreator = new CascadingBuildMessageCreator();
         let cascadingBuild = new TriggerCascadingBuild();
-        cascades.forEach(async _ => {
+        for (let cascadingRepositoryName of cascades) {
             const message = messageCreator.create(originRepo, nextVersion);
-            await cascadingBuild.trigger(message, _, token!);
-        })
-
+            await cascadingBuild.trigger(message, cascadingRepositoryName, token!);
+        }
 
         taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success');
     }
