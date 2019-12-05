@@ -17,6 +17,6 @@ export interface ICanTriggerCascadingBuild {
      * @param {string} triggerMessage
      * @returns {Promise<void>}
      */
-    trigger(triggerMessage: string): Promise<void>
+    trigger(triggerMessage: string, repo: string, token: string): Promise<void>
 
 }

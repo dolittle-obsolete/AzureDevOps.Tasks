@@ -4,6 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 import * as taskLib from 'azure-pipelines-task-lib';
 import path from 'path';
+import { CascadingBuildMessageCreator } from './CascadingBuildMessageCreator';
+import { TriggerCascadingBuild } from './TriggerCascadingBuild';
 
 taskLib.setResourcePath(path.resolve(__dirname, 'task.json'));
 function getGithubEndPointToken(githubEndpoint: string): string {
@@ -33,14 +35,20 @@ function getGithubEndPointToken(githubEndpoint: string): string {
 
 async function run() {
     try {
+        const originRepo = taskLib.getVariable('Build.Repository.Name');
+        if ( originRepo === undefined ) throw new Error("Build.Rpository.Name is undefined");
         const endpointId = taskLib.getInput('Connection', true);
         const token = endpointId? getGithubEndPointToken(endpointId) : undefined;
-        const nextVersion = taskLib.getInput('NextVersion', true);
+        const nextVersion = taskLib.getInput('NextVersion', true)!;
         const shouldPublish = taskLib.getBoolInput('ShouldPublish', true);
         const cascades = taskLib.getDelimitedInput('Cascades', ',', true);
-        console.log(nextVersion);
-        console.log(shouldPublish);
-        console.log(cascades);
+        let messageCreator = new CascadingBuildMessageCreator();
+        let cascadingBuild = new TriggerCascadingBuild();
+        cascades.forEach(async _ => {
+            const message = messageCreator.create(originRepo, nextVersion);
+            await cascadingBuild.trigger(message, _, token!);
+        })
+
 
         taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success');
     }
