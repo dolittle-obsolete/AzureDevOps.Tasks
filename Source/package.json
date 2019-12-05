@@ -15,5 +15,8 @@
     "@types/q": "^1.5.2",
     "@dolittle/typescript.build": "^5.1.1",
     "sync-request": "^6.1.0"
+  },
+  "dependencies": {
+    "git-commit-push-via-github-api": "^1.0.2"
   }
 }

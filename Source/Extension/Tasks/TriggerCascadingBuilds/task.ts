@@ -6,13 +6,40 @@ import * as taskLib from 'azure-pipelines-task-lib';
 import path from 'path';
 
 taskLib.setResourcePath(path.resolve(__dirname, 'task.json'));
+function getGithubEndPointToken(githubEndpoint: string): string {
+    const githubEndpointObject = taskLib.getEndpointAuthorization(githubEndpoint, false);
+    let githubEndpointToken: string | undefined = undefined;
+
+    if (!!githubEndpointObject) {
+        taskLib.debug('Endpoint scheme: ' + githubEndpointObject.scheme);
+
+        if (githubEndpointObject.scheme === 'PersonalAccessToken') {
+            githubEndpointToken = githubEndpointObject.parameters.accessToken;
+        } else if (githubEndpointObject.scheme === 'OAuth') {
+            githubEndpointToken = githubEndpointObject.parameters.AccessToken;
+        } else if (githubEndpointObject.scheme === 'Token') {
+            githubEndpointToken = githubEndpointObject.parameters.AccessToken;
+        } else if (githubEndpointObject.scheme) {
+            throw new Error(taskLib.loc('InvalidEndpointAuthScheme', githubEndpointObject.scheme));
+        }
+    }
+
+    if (!githubEndpointToken) {
+        throw new Error(taskLib.loc('InvalidGitHubEndpoint', githubEndpoint));
+    }
+
+    return githubEndpointToken;
+}
 
 async function run() {
     try {
-        const connection = taskLib.getInput('Connection', true);
+        const endpointId = taskLib.getInput('Connection', true);
+        const token = endpointId? getGithubEndPointToken(endpointId) : undefined;
         const nextVersion = taskLib.getInput('NextVersion', true);
-        const releaseType = taskLib.getInput('ReleaseType', true);
-        
+        const shouldPublish = taskLib.getBoolInput('ShouldPublish', true);
+        const cascades = taskLib.getDelimitedInput('Cascades', ',', true);
+        console.log(cascades);
+
         taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success');
     }
     catch (err) {

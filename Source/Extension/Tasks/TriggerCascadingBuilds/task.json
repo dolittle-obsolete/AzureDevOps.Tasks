@@ -35,11 +35,18 @@
             "helpMarkDown": ""
         },
         {
-            "name": "ReleaseType",
+            "name": "ShouldPublish",
+            "required": true,
+            "type": "boolean",
+            "label": "Wether or not it should publish",
+            "helpMarkDown": ""
+        },
+        {
+            "name": "Cascades",
             "required": true,
             "type": "string",
-            "label": "The release type",
-            "helpMarkDown": "major, minor, patch or preview"
+            "label": "Comma separated list of repositories to cascade",
+            "helpMarkDown": ""
         }
     
     ],    

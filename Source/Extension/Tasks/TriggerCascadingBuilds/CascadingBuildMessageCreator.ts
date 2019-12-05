@@ -13,8 +13,8 @@ import {ICascadingBuildMessageCreator} from './ICascadingBuildMessageCreator';
  */
 export class CascadingBuildMessageCreator implements ICascadingBuildMessageCreator {
     
-    create(originRepository: string, version: string, releaseType: string, cascadingRepository: string) {
-        return `something`
+    create(originRepository: string, version: string) {
+        return `[Cascading release] ${originRepository} released ${version}`
     }
 
 }

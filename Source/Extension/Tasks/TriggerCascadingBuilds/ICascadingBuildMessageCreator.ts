@@ -16,10 +16,8 @@ export interface ICascadingBuildMessageCreator {
      *
      * @param {string} originRepository
      * @param {string} version
-     * @param {string} releaseType
-     * @param {string} cascadingRepository
      * @returns {string}
      */
-    create(originRepository: string, version: string, releaseType: string, cascadingRepository: string): string
+    create(originRepository: string, version: string): string
 
 }
