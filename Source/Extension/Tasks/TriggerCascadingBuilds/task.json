@@ -10,7 +10,7 @@
     "version": {
         "Major": 0,
         "Minor": 0,
-        "Patch": 13
+        "Patch": 14
     },
     "visibility": [
         "Build"
@@ -43,7 +43,6 @@
         },
         {
             "name": "Cascades",
-            "required": true,
             "type": "string",
             "label": "Comma separated list of repositories to cascade",
             "helpMarkDown": ""

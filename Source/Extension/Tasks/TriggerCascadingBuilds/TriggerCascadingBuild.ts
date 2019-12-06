@@ -27,7 +27,6 @@ export class TriggerCascadingBuild implements ICanTriggerCascadingBuild {
         let client = token? new Octokit({auth: token}) : this._client;
         let [owner, repo] = repositoryName.split('/', 2);
         console.log(`Triggering cascade build on ${owner}/${repo} with trigger message '${triggerMessage}'`);
-
         let ref = await this._issueCommit(client, triggerMessage, owner, repo);
         console.log(`New reference sha: ${ref.data.object.sha}`);
         
@@ -49,7 +48,7 @@ export class TriggerCascadingBuild implements ICanTriggerCascadingBuild {
                 repo,
                 ref
             });
-        console.log(reference);
+        console.log(`Status: ${reference.status}`);
         return reference.data.object;
         
     }
@@ -61,7 +60,7 @@ export class TriggerCascadingBuild implements ICanTriggerCascadingBuild {
             repo,
             commit_sha: reference.sha
         });
-        console.log(commit);
+        console.log(`Status: ${commit.status}`);
         return commit.data.tree.sha;
     }
     
@@ -75,7 +74,7 @@ export class TriggerCascadingBuild implements ICanTriggerCascadingBuild {
             parents: [reference.sha]
 
         });
-        console.log(commit);
+        console.log(`Status: ${commit.status}`);
         return commit.data;
     }
     
@@ -88,7 +87,7 @@ export class TriggerCascadingBuild implements ICanTriggerCascadingBuild {
             sha: commit.sha,
             force: true
         });
-        console.log(updatedReference);
+        console.log(`Status: ${updatedReference.status}`);
         return updatedReference;
     }
 }
