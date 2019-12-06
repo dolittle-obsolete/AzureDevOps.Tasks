@@ -24,7 +24,6 @@
     "@dolittle/azure-dev-ops.tasks.shared": "../../Shared/dolittle-azure-dev-ops.tasks.shared-1.0.0.tgz",
     "@octokit/rest": "^16.35.0",
     "azure-pipelines-task-lib": "^2.9.3",
-    "git-commit-push-via-github-api": "^1.0.2",
     "semver": "^6.3.0"
   }
 }

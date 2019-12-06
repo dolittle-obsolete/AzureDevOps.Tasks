@@ -6,27 +6,30 @@ import * as taskLib from 'azure-pipelines-task-lib';
 import path from 'path';
 import { CascadingBuildMessageCreator } from './CascadingBuildMessageCreator';
 import { TriggerCascadingBuild } from './TriggerCascadingBuild';
+import semver from 'semver';
 
 taskLib.setResourcePath(path.resolve(__dirname, 'task.json'));
+
 function getGithubEndPointToken(githubEndpoint: string): string {
     const githubEndpointObject = taskLib.getEndpointAuthorization(githubEndpoint, false);
-    let githubEndpointToken: string | undefined = undefined;
+    let githubEndpointToken: string | undefined;
 
-    if (!!githubEndpointObject) {
-        taskLib.debug('Endpoint scheme: ' + githubEndpointObject.scheme);
+    if (githubEndpointObject !== undefined) {
+        let scheme = githubEndpointObject.scheme;
+        taskLib.debug('Endpoint scheme: ' + scheme);
 
-        if (githubEndpointObject.scheme === 'PersonalAccessToken') {
+        if (scheme === 'PersonalAccessToken') {
             githubEndpointToken = githubEndpointObject.parameters.accessToken;
-        } else if (githubEndpointObject.scheme === 'OAuth') {
+        } 
+        else if (scheme === 'OAuth' || scheme === 'Token') {
             githubEndpointToken = githubEndpointObject.parameters.AccessToken;
-        } else if (githubEndpointObject.scheme === 'Token') {
-            githubEndpointToken = githubEndpointObject.parameters.AccessToken;
-        } else if (githubEndpointObject.scheme) {
+        } 
+        else if (scheme) {
             throw new Error(taskLib.loc('InvalidEndpointAuthScheme', githubEndpointObject.scheme));
         }
     }
 
-    if (!githubEndpointToken) {
+    if (githubEndpointToken === undefined) {
         throw new Error(taskLib.loc('InvalidGitHubEndpoint', githubEndpoint));
     }
 
@@ -35,18 +38,27 @@ function getGithubEndPointToken(githubEndpoint: string): string {
 
 async function run() {
     try {
+        const shouldPublish = taskLib.getBoolInput('ShouldPublish', true);
+        if (!shouldPublish) {
+            taskLib.setResult(taskLib.TaskResult.Skipped, 'ShouldPublish is false. Not triggering cascades');
+            return;
+            
+        }
+        const nextVersion = taskLib.getInput('NextVersion', true)!;
+        if (!semver.valid(nextVersion)) throw new Error(`'${nextVersion}' is not a valid SemVer version`) 
+
         const originRepo = taskLib.getVariable('Build.Repository.Name');
         if ( originRepo === undefined ) throw new Error("Build.Rpository.Name is undefined");
-        const endpointId = taskLib.getInput('Connection', true);
-        const token = endpointId? getGithubEndPointToken(endpointId) : undefined;
-        const nextVersion = taskLib.getInput('NextVersion', true)!;
-        const shouldPublish = taskLib.getBoolInput('ShouldPublish', true);
+        const endpointId = taskLib.getInput('Connection', true)!;
+        const token = getGithubEndPointToken(endpointId);
+        
         const cascades = taskLib.getDelimitedInput('Cascades', ',', true);
         let messageCreator = new CascadingBuildMessageCreator();
-        let cascadingBuild = new TriggerCascadingBuild();
+        let cascadingBuild = new TriggerCascadingBuild(token);
+
         for (let cascadingRepositoryName of cascades) {
             const message = messageCreator.create(originRepo, nextVersion);
-            await cascadingBuild.trigger(message, cascadingRepositoryName, token!);
+            await cascadingBuild.trigger(message, cascadingRepositoryName);
         }
 
         taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success');
