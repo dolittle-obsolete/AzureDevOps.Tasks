@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { Logger, getGithubEndPointToken, getBuildContext, getPullRequestContext } from '@dolittle/azure-dev-ops.tasks.shared';
+import { Logger, getGithubEndPointToken, getBuildContext, getPullRequestContext, BuildContext } from '@dolittle/azure-dev-ops.tasks.shared';
 import * as taskLib from 'azure-pipelines-task-lib';
 import path from 'path';
 import outputVariables from './OutputVariables';
@@ -13,7 +13,6 @@ import { SemVerVersionSorter } from './Version/SemVerVersionSorter';
 import { IReleaseTypeExtractor } from './ReleaseType/IReleaseTypeExtractor';
 import { ReleaseTypeExtractor } from './ReleaseType/ReleaseTypeExtractor';
 import { GithubClient } from './Repository/Github/GithubClient';
-import { BuildContext } from '../../Shared/BuildContext';
 import { GithubPipelineContextCreator } from './PipelineContext/Github/GithubPipelineContextCreator';
 import { GithubLatestVersionFinder } from './Version/Github/GithubLatestVersionFinder';
 

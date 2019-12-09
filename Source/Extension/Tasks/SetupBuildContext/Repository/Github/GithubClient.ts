@@ -2,11 +2,10 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+import { ILogger, BuildContext } from '@dolittle/azure-dev-ops.tasks.shared';
 import Octokit from '@octokit/rest';
 import semver from 'semver';
-import { BuildContext } from "../../../../Shared/BuildContext";
 import { IVersionSorter } from '../../Version/IVersionSorter';
-import { ILogger } from '@dolittle/azure-dev-ops.tasks.shared';
 /**
  * Represents a proxy for communicating with GitHub
  *

@@ -2,9 +2,8 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
+import { BuildContext, PullRequestContext } from "@dolittle/azure-dev-ops.tasks.shared";
 import { PipelineContext } from "./PipelineContext";
-import { BuildContext } from "../../../Shared/BuildContext";
-import { PullRequestContext } from "../../../Shared/PullRequestContext";
 import { ICanCreatePipelineContext } from "./ICanCreatePipelineContext";
 
 /**
