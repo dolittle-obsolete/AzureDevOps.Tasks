@@ -26,7 +26,7 @@ export class GithubRepositoryTagger implements ICanTagRepository {
     }
 
     async tag(tag: Tag, version: string) {
-        this._logger.debug(`Creating tag '${tag}' from version '${version}'`);
+        this._logger.debug(`Creating tag '${tag}' from version '${version}' on repository '${this._owner}/${this._repo}'`);
         let commitSha = await this._getCommitSha();
         let tagObject = await this._createTagObject(tag, version, commitSha);
         await this._updateReference(tagObject.sha);
@@ -34,7 +34,7 @@ export class GithubRepositoryTagger implements ICanTagRepository {
     }
 
     private async _getCommitSha() {
-        this._logger.debug('Getting commit sha')
+        this._logger.debug(`Getting commit sha from '${this._owner}/${this._repo}'`)
         let commitReference = await this._client.git.getRef({
             owner: this._owner,
             repo: this._repo,
@@ -45,7 +45,7 @@ export class GithubRepositoryTagger implements ICanTagRepository {
     }
 
     private async _createTagObject(tag: string, version: string, commitSha: string) {
-        this._logger.debug('Creating tag object');
+        this._logger.debug(`Creating tag object on '${this._owner}/${this._repo}'`);
         let tagResponse = await this._client.git.createTag({
             owner: this._owner,
             repo: this._repo,
@@ -59,7 +59,7 @@ export class GithubRepositoryTagger implements ICanTagRepository {
     }
 
     private async _updateReference(tagSha: string) {
-        this._logger.debug('Updating reference');
+        this._logger.debug(`Updating reference on '${this._owner}/${this._repo}'`);
         let updateResponse = await this._client.git.updateRef({
             owner: this._owner,
             repo: this._repo,

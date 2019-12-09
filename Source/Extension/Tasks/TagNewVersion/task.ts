@@ -2,8 +2,8 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import * as taskLib from 'azure-pipelines-task-lib';
 import { getGithubEndPointToken, Logger, getBuildContext, getRepoAndOwner } from '@dolittle/azure-dev-ops.tasks.shared';
+import * as taskLib from 'azure-pipelines-task-lib';
 import path from 'path';
 import { TagsCreator } from './TagsCreator';
 import { GithubRepositoryTagger } from './Github/GithubRepositoryTagger';
