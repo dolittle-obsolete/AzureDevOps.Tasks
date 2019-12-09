@@ -3,14 +3,28 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import * as taskLib from 'azure-pipelines-task-lib';
+import { getGithubEndPointToken, Logger, getBuildContext, getRepoAndOwner } from '@dolittle/azure-dev-ops.tasks.shared';
 import path from 'path';
+import { TagsCreator } from './TagsCreator';
+import { GithubRepositoryTagger } from './Github/GithubRepositoryTagger';
 
 taskLib.setResourcePath(path.resolve(__dirname, 'task.json'));
 
+const logger = new Logger();
 async function run() {
     try {
-        const connection = taskLib.getInput('Connection', true);
-        const version = taskLib.getInput('Version', true);
+        const endpointId = taskLib.getInput('Connection', true)!;
+        const token = getGithubEndPointToken(endpointId);
+        const version = taskLib.getInput('Version', true)!;
+        let buildContext = getBuildContext();
+        const {owner, repo} = getRepoAndOwner(buildContext);
+        let tagsCreator = new TagsCreator(logger);
+        let githubTagger = new GithubRepositoryTagger(logger, owner, repo, token);
+        let tags = tagsCreator.create(version);
+        
+        for (let tag of tags) {
+            await githubTagger.tag(tag, version);
+        }
 
         taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success');
     }

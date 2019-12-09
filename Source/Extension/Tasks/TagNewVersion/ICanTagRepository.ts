@@ -15,8 +15,9 @@ export interface ICanTagRepository {
     /**
      * Tags the repository
      *
-     * @param {Tag} tag
+     * @param {Tag} tag The version tag
+     * @param {string} version The actual version number (without v)
      * @returns {Promise<void>}
      */
-    tag(tag: Tag): Promise<void>
+    tag(tag: Tag, version: string): Promise<void>
 }
