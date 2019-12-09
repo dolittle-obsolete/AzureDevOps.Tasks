@@ -3,8 +3,8 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { PipelineContext } from "./PipelineContext";
-import { BuildContext } from "./BuildContext";
-import { PullRequestContext } from "./PullRequestContext";
+import { BuildContext } from "../../../Shared/BuildContext";
+import { PullRequestContext } from "../../../Shared/PullRequestContext";
 import { ICanCreatePipelineContext } from "./ICanCreatePipelineContext";
 
 /**

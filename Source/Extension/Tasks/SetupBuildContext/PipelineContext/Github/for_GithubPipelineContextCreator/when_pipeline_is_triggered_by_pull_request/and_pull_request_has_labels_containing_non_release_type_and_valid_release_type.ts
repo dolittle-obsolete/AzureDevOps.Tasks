@@ -3,8 +3,8 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { a_github_pipeline_context_creator } from '../given/a_github_pipeline_context_creator'
-import { PipelineContext } from '../../../PipelineContext';
 import { expect } from 'chai';
+import { PipelineContext } from '../../../PipelineContext';
 
 describe('and pull request has labels containing non release types and valid release type', () => {
     let context = new a_github_pipeline_context_creator();
@@ -15,7 +15,7 @@ describe('and pull request has labels containing non release types and valid rel
         labels: [{name: 'something'}, {name: 'major'}]
     }]}));
 
-    let pipeline_context: PipelineContext
+    let pipeline_context: PipelineContext;
     before(async () => {
         pipeline_context = await context_creator.create(context.build_context, context.pull_request_context);
     });

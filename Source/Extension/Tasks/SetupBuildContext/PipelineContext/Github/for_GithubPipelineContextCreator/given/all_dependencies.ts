@@ -5,9 +5,9 @@
 import { GithubClient } from "../../../../Repository/Github/GithubClient";
 import sinon from "sinon";
 import { IReleaseTypeExtractor } from "../../../../ReleaseType/IReleaseTypeExtractor";
-import { PullRequestContext } from "../../../PullRequestContext";
+import { PullRequestContext } from "../../../../../../Shared/PullRequestContext";
 import { GithubLatestVersionFinder } from "../../../../Version/Github/GithubLatestVersionFinder";
-import { BuildContext } from "../../../BuildContext";
+import { BuildContext } from "../../../../../../Shared/BuildContext";
 import { ReleaseTypeExtractor } from "../../../../ReleaseType/ReleaseTypeExtractor";
 import { NullLogger } from "@dolittle/azure-dev-ops.tasks.shared";
 

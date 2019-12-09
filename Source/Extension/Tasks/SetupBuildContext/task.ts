@@ -2,11 +2,10 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+import { Logger, getGithubEndPointToken, getBuildContext, getPullRequestContext } from '@dolittle/azure-dev-ops.tasks.shared';
 import * as taskLib from 'azure-pipelines-task-lib';
 import path from 'path';
 import outputVariables from './OutputVariables';
-import { createBuildContext } from './PipelineContext/createBuildContext';
-import { createPullRequestContext } from './PipelineContext/createPullRequestContext';
 import { IPipelineContextCreators } from './PipelineContext/IPipelineContextCreators';
 import { PipelineContextCreators } from './PipelineContext/PipelineContextCreators';
 import { IVersionSorter } from './Version/IVersionSorter';
@@ -14,50 +13,20 @@ import { SemVerVersionSorter } from './Version/SemVerVersionSorter';
 import { IReleaseTypeExtractor } from './ReleaseType/IReleaseTypeExtractor';
 import { ReleaseTypeExtractor } from './ReleaseType/ReleaseTypeExtractor';
 import { GithubClient } from './Repository/Github/GithubClient';
-import { BuildContext } from './PipelineContext/BuildContext';
+import { BuildContext } from '../../Shared/BuildContext';
 import { GithubPipelineContextCreator } from './PipelineContext/Github/GithubPipelineContextCreator';
 import { GithubLatestVersionFinder } from './Version/Github/GithubLatestVersionFinder';
-import { Logger } from '@dolittle/azure-dev-ops.tasks.shared';
 
 taskLib.setResourcePath(path.resolve(__dirname, 'task.json'));
 
 const logger = new Logger(); 
-/**
- * Taken from https://github.com/microsoft/azure-pipelines-tasks/blob/master/Tasks/GitHubCommentV0/main.ts
- *
- * @param {string} githubEndpoint
- * @returns {string}
- */
-function getGithubEndPointToken(githubEndpoint: string): string {
-    const githubEndpointObject = taskLib.getEndpointAuthorization(githubEndpoint, false);
-    let githubEndpointToken: string | undefined = undefined;
 
-    if (!!githubEndpointObject) {
-        taskLib.debug('Endpoint scheme: ' + githubEndpointObject.scheme);
-
-        if (githubEndpointObject.scheme === 'PersonalAccessToken') {
-            githubEndpointToken = githubEndpointObject.parameters.accessToken;
-        } else if (githubEndpointObject.scheme === 'OAuth') {
-            githubEndpointToken = githubEndpointObject.parameters.AccessToken;
-        } else if (githubEndpointObject.scheme === 'Token') {
-            githubEndpointToken = githubEndpointObject.parameters.AccessToken;
-        } else if (githubEndpointObject.scheme) {
-            throw new Error(taskLib.loc('InvalidEndpointAuthScheme', githubEndpointObject.scheme));
-        }
-    }
-
-    if (!githubEndpointToken) {
-        throw new Error(taskLib.loc('InvalidGitHubEndpoint', githubEndpoint));
-    }
-
-    return githubEndpointToken;
-}
 async function run() {
     try {
         const endpointId = taskLib.getInput('Connection');
         const token = endpointId? getGithubEndPointToken(endpointId) : undefined;
-        const buildContext = createBuildContext();
-        const pullRequestContext = createPullRequestContext();
+        const buildContext = getBuildContext();
+        const pullRequestContext = getPullRequestContext();
         const versionSorter: IVersionSorter = new SemVerVersionSorter(logger);
         const releaseTypeExtractor: IReleaseTypeExtractor = new ReleaseTypeExtractor(logger);
 

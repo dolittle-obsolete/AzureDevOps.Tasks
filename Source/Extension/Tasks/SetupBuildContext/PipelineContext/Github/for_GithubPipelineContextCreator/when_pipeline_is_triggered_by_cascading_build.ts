@@ -16,7 +16,7 @@ describe('when pipeline is triggered by cascading build', () => {
 
     (context.client.pulls as sinon.SinonStub).returns(Promise.resolve({data: []}));
 
-    let pipeline_context: PipelineContext
+    let pipeline_context: PipelineContext;
     before(async () => {
         pipeline_context = await context_creator.create(context.build_context, context.pull_request_context);
         pipeline_context

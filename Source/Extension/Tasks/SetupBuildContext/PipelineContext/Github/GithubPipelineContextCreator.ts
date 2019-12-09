@@ -2,15 +2,15 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+import { ILogger } from "@dolittle/azure-dev-ops.tasks.shared";
 import { ICanCreatePipelineContext } from "../ICanCreatePipelineContext";
-import { BuildContext } from "../BuildContext";
-import { PullRequestContext } from "../PullRequestContext";
+import { BuildContext } from "../../../../Shared/BuildContext";
+import { PullRequestContext } from "../../../../Shared/PullRequestContext";
 import { PipelineContext } from "../PipelineContext";
 import { RepositoryProviders } from "../../Repository/RepositoryProviders";
 import { GithubClient } from "../../Repository/Github/GithubClient";
 import { IReleaseTypeExtractor } from "../../ReleaseType/IReleaseTypeExtractor";
 import { GithubLatestVersionFinder } from "../../Version/Github/GithubLatestVersionFinder";
-import { ILogger } from "@dolittle/azure-dev-ops.tasks.shared";
 
 export const cascadingBuildMessage = '[Cascading release]'
 

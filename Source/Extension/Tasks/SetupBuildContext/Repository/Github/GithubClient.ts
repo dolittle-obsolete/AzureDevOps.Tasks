@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import Octokit from '@octokit/rest';
 import semver from 'semver';
-import { BuildContext } from "../../PipelineContext/BuildContext";
+import { BuildContext } from "../../../../Shared/BuildContext";
 import { IVersionSorter } from '../../Version/IVersionSorter';
 import { ILogger } from '@dolittle/azure-dev-ops.tasks.shared';
 /**

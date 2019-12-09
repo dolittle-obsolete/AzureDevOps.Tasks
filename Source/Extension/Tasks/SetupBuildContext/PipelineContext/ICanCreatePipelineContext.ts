@@ -2,9 +2,9 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { BuildContext } from "./BuildContext";
+import { BuildContext } from "../../../Shared/BuildContext";
 import { PipelineContext } from "./PipelineContext";
-import { PullRequestContext } from "./PullRequestContext";
+import { PullRequestContext } from "../../../Shared/PullRequestContext";
 
 /**
  * Defines a system that can create a {PipelineContext}

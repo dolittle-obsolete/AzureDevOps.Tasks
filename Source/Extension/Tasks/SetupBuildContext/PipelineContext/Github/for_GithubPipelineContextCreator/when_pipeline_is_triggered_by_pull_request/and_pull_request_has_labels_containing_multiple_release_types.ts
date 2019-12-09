@@ -15,7 +15,7 @@ describe('and pull request has labels containing multiple release types', () => 
         labels: [{name: 'minor'}, {name: 'patch'}]
     }]}));
 
-    let pipeline_context: PipelineContext
+    let pipeline_context: PipelineContext;
     before(async () => {
         pipeline_context = await context_creator.create(context.build_context, context.pull_request_context);
     });
