@@ -10,7 +10,7 @@ import * as taskLib from 'azure-pipelines-task-lib';
  * @param {string} githubEndpoint
  * @returns {string}
  */
-function getGithubEndPointToken(githubEndpoint: string): string {
+export function getGithubEndPointToken(githubEndpoint: string): string {
     const githubEndpointObject = taskLib.getEndpointAuthorization(githubEndpoint, false);
     let githubEndpointToken: string | undefined;
 
