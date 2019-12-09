@@ -1,7 +1,7 @@
 {
   "name": "@dolittle/azure-dev-ops.tasks.shared",
   "private": true,
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "license": "MIT",
   "main": "Distribution/index.js",

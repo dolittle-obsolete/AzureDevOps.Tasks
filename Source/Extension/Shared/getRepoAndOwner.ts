@@ -12,7 +12,7 @@ import { BuildContext } from "./BuildContext";
  * @returns
  */
 export function getRepoAndOwner(context: BuildContext) {
-    let [repo, owner] = context.repositoryName.split('/', 2);
+    let [owner, repo] = context.repositoryName.split('/', 2);
     return {
         owner, repo
     };
