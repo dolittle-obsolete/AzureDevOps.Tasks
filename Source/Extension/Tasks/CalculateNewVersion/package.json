@@ -21,7 +21,7 @@
     "sync-request": "^6.1.0"
   },
   "dependencies": {
-    "@dolittle/azure-dev-ops.tasks.shared": "../../Shared/dolittle-azure-dev-ops.tasks.shared-1.0.0.tgz",
+    "@dolittle/azure-dev-ops.tasks.shared": "../../Shared/dolittle-azure-dev-ops.tasks.shared-1.0.1.tgz",
     "azure-pipelines-task-lib": "^2.9.3",
     "semver": "^6.3.0"
   }

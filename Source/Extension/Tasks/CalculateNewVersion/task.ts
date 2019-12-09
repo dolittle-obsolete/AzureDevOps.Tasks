@@ -2,18 +2,17 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { ILogger, Logger } from '@dolittle/azure-dev-ops.tasks.shared';
+import { Logger } from '@dolittle/azure-dev-ops.tasks.shared';
 import * as taskLib from 'azure-pipelines-task-lib';
 import path from 'path';
 import { ReleaseType } from 'semver';
 import { VersionIncrementor } from './VersionIncrementor';
 
 taskLib.setResourcePath(path.resolve(__dirname, 'task.json'));
-
+const logger = new Logger();
 async function run() {
     try {
-        let logger: ILogger = new Logger()
-        const versionIncrementor = new VersionIncrementor();
+        const versionIncrementor = new VersionIncrementor(logger);
 
         const previousVersion = taskLib.getInput('PreviousVersion', true)!;
         let releaseType = taskLib.getInput('ReleaseType') as string | undefined;

@@ -15,8 +15,8 @@ export interface IVersionIncrementor {
 
     /**
      * Increments a version based on the release type 
-     * @param {SemVer} version 
+     * @param {string} version 
      * @param {ReleaseType} releaseType
      */
-    increment(version: SemVer, releaseType: ReleaseType): string | SemVer
+    increment(version: string, releaseType: ReleaseType): string | SemVer
 }
