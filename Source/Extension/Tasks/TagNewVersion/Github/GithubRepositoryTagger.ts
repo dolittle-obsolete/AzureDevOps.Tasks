@@ -2,10 +2,10 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
+import { ILogger } from '@dolittle/azure-dev-ops.tasks.shared';
 import Octokit from '@octokit/rest';
 import { ICanTagRepository } from '../ICanTagRepository';
 import { Tag } from '../ITagsCreator';
-import { ILogger } from '@dolittle/azure-dev-ops.tasks.shared';
 
 const ref = 'heads/master'
 export class GithubRepositoryTagger implements ICanTagRepository {
@@ -26,11 +26,18 @@ export class GithubRepositoryTagger implements ICanTagRepository {
     }
 
     async tag(tag: Tag, version: string) {
-        this._logger.debug(`Creating tag '${tag}' from version '${version}' on repository '${this._owner}/${this._repo}'`);
-        let commitSha = await this._getCommitSha();
-        let tagObject = await this._createTagObject(tag, version, commitSha);
-        await this._updateReference(tagObject.sha);
-        
+        this._logger.debug(`Creating release with tag '${tag}' from version '${version}' on repository '${this._owner}/${this._repo}'`);
+        let releaseResponse = await this._client.repos.createRelease({
+            owner: this._owner,
+            repo: this._repo,
+            tag_name: tag,
+            name: `Release version '${version}'`
+        });
+        this._logger.debug(`Status: ${releaseResponse.status}`);
+        // let commitSha = await this._getCommitSha();
+        // let tagObject = await this._createTagObject(tag, version, commitSha);
+        // await this._updateReference(tagObject.sha);
+    
     }
 
     private async _getCommitSha() {
@@ -52,7 +59,7 @@ export class GithubRepositoryTagger implements ICanTagRepository {
             tag,
             object: commitSha,
             message: `Releasing version '${version}'`,
-            type: "commit"
+            type: 'commit' 
         });
         this._logger.debug(`Status: ${tagResponse.status}`);
         return tagResponse.data;
