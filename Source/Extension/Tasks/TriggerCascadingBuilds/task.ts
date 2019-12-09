@@ -2,40 +2,15 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+import { getGithubEndPointToken, getBuildContext, Logger } from '@dolittle/azure-dev-ops.tasks.shared';
 import * as taskLib from 'azure-pipelines-task-lib';
 import path from 'path';
-import { CascadingBuildMessageCreator } from './CascadingBuildMessageCreator';
-import { TriggerCascadingBuild } from './TriggerCascadingBuild';
 import semver from 'semver';
+import { CascadingBuildMessageCreator } from './CascadingBuildMessageCreator';
+import { CascadingBuildTriggers } from './CascadingBuildTriggers';
 
 taskLib.setResourcePath(path.resolve(__dirname, 'task.json'));
-
-function getGithubEndPointToken(githubEndpoint: string): string {
-    const githubEndpointObject = taskLib.getEndpointAuthorization(githubEndpoint, false);
-    let githubEndpointToken: string | undefined;
-
-    if (githubEndpointObject !== undefined) {
-        let scheme = githubEndpointObject.scheme;
-        taskLib.debug('Endpoint scheme: ' + scheme);
-
-        if (scheme === 'PersonalAccessToken') {
-            githubEndpointToken = githubEndpointObject.parameters.accessToken;
-        } 
-        else if (scheme === 'OAuth' || scheme === 'Token') {
-            githubEndpointToken = githubEndpointObject.parameters.AccessToken;
-        } 
-        else if (scheme) {
-            throw new Error(taskLib.loc('InvalidEndpointAuthScheme', githubEndpointObject.scheme));
-        }
-    }
-
-    if (githubEndpointToken === undefined) {
-        throw new Error(taskLib.loc('InvalidGitHubEndpoint', githubEndpoint));
-    }
-
-    return githubEndpointToken;
-}
-
+const logger = new Logger();
 async function run() {
     try {
         const shouldPublish = taskLib.getBoolInput('ShouldPublish', true);
@@ -51,20 +26,13 @@ async function run() {
             taskLib.setResult(taskLib.TaskResult.Skipped, 'There are no cascades to trigger');
             return;
         }
-        
-        const originRepo = taskLib.getVariable('Build.Repository.Name');
-        if ( originRepo === undefined ) throw new Error("Build.Rpository.Name is undefined");
         const endpointId = taskLib.getInput('Connection', true)!;
         const token = getGithubEndPointToken(endpointId);
+        let buildContext = getBuildContext();
         
-        
-        let messageCreator = new CascadingBuildMessageCreator();
-        let cascadingBuild = new TriggerCascadingBuild(token);
+        let buildTriggers = CascadingBuildTriggers.fromContext(logger, buildContext, cascades, token);
 
-        for (let cascadingRepositoryName of cascades) {
-            const message = messageCreator.create(originRepo, nextVersion);
-            await cascadingBuild.trigger(message, cascadingRepositoryName);
-        }
+        await buildTriggers.trigger(buildContext, nextVersion);
 
         taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success');
     }

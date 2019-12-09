@@ -3,30 +3,21 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { BuildContext } from "@dolittle/azure-dev-ops.tasks.shared";
-
+import { ICanTriggerCascadingBuild } from "./ICanTriggerCascadingBuild";
 
 /**
- * Defines a system that can trigger a cascading build
+ * Defines a system that knows about {ICanTriggerCascadingBuild}
  *
  * @export
- * @interface ICanTriggerCascadingBuild
+ * @interface ICascadingBuildTriggers
  */
-export interface ICanTriggerCascadingBuild {
-    
+export interface ICascadingBuildTriggers {
+
     /**
      * Triggers the build
      *
-     * @param {string} triggerMessage
      * @returns {Promise<void>}
      */
-    trigger(triggerMessage: string): Promise<void>
-
-    /**
-     * Whether or not the build can be triggered
-     *
-     * @param {BuildContext} buildContext
-     * @returns {boolean}
-     */
-    canTrigger(buildContext: BuildContext): boolean
+    trigger(buildContext: BuildContext, version: string): Promise<void>
 
 }
