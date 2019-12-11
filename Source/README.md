@@ -73,6 +73,7 @@ Since we ignore the packaged .tgz files for git the Tasks should always use the 
 Outside the 'Extension there are two other folders called 'TestHelpers' and 'TestRunnerTests'.
 * 'TestRunnerTests' contains the tests that runs mocked instances of the Tasks. There should be a folder for each Task
 * 'TestHelpers' contains helper functions for the TestRunnerTests
+
 All of this should be improved later as it is not that easy to work with.
 
 ## Development and Publishing life cycle
