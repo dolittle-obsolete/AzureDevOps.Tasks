@@ -13,12 +13,12 @@ import * as taskLib from 'azure-pipelines-task-lib';
  * @implements {ILogger}
  */
 export class Logger implements ILogger {
-    
-    debug(message: string) { 
+
+    debug(message: string) {
         taskLib.debug(message);
     }
 
-    warning(message: string) { 
+    warning(message: string) {
         taskLib.warning(message);
     }
 

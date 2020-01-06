@@ -9,7 +9,7 @@
  * @class BuildProviders
  */
 export class RepositoryProviders {
-    
-    static GitHub = 'GitHub'
-    
-} 
+
+    static GitHub = 'GitHub';
+
+}

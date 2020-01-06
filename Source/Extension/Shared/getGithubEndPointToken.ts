@@ -15,15 +15,15 @@ export function getGithubEndPointToken(githubEndpoint: string): string {
     let githubEndpointToken: string | undefined;
 
     if (githubEndpointObject !== undefined) {
-        let scheme = githubEndpointObject.scheme;
+        const scheme = githubEndpointObject.scheme;
         taskLib.debug('Endpoint scheme: ' + scheme);
 
         if (scheme === 'PersonalAccessToken') {
             githubEndpointToken = githubEndpointObject.parameters.accessToken;
-        } 
+        }
         else if (scheme === 'OAuth' || scheme === 'Token') {
             githubEndpointToken = githubEndpointObject.parameters.AccessToken;
-        } 
+        }
         else if (scheme) {
             throw new Error(taskLib.loc('InvalidEndpointAuthScheme', githubEndpointObject.scheme));
         }

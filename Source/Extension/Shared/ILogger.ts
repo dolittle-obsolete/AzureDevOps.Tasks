@@ -9,14 +9,14 @@
  * @interface ILogger
  */
 export interface ILogger {
-    
+
     /**
      * Logs a debugging message
      *
      * @param {string} message
      */
     debug(message: string): void;
-    
+
     /**
      * Logs a warning message
      *
@@ -38,4 +38,4 @@ export interface ILogger {
      */
     log(message: string): void
 
-} 
+}
