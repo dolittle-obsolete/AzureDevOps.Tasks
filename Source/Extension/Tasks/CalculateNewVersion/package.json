@@ -14,14 +14,14 @@
     "extension:build": "yarn && yarn test && yarn test:clean && del node_modules yarn.lock && yarn install --prod"
   },
   "devDependencies": {
-    "@dolittle/typescript.build": "^5.1.1",
+    "@dolittle/typescript.build": "^5.3.1",
     "@types/q": "^1.5.2",
     "@types/semver": "^6.2.0",
     "del-cli": "^3.0.0",
     "sync-request": "^6.1.0"
   },
   "dependencies": {
-    "@dolittle/azure-dev-ops.tasks.shared": "../../Shared/dolittle-azure-dev-ops.tasks.shared-1.0.4.tgz",
+    "@dolittle/azure-dev-ops.tasks.shared": "../../Shared/dolittle-azure-dev-ops.tasks.shared-1.0.5.tgz",
     "azure-pipelines-task-lib": "^2.9.3",
     "semver": "^6.3.0"
   }
