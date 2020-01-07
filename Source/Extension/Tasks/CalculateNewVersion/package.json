@@ -9,6 +9,8 @@
     "clean": "del \"**/*.js\" !node_modules !wallaby.conf.js",
     "build": "yarn clean && tsc -p tsconfig.json",
     "test": "yarn build && yarn test:run",
+    "lint": "npx tslint --config tslint.json --project tsconfig.json",
+    "lint:fix": "npx tslint --config tslint.json --project tsconfig.json --fix",
     "test:run": "mocha \"**/for_*/**/*.js\" --require @dolittle/typescript.build/mocha.opts",
     "test:clean": "del \"**/for_*/**/*.js\" !node_modules",
     "extension:build": "yarn && yarn test && yarn test:clean && del node_modules yarn.lock && yarn install --prod"
