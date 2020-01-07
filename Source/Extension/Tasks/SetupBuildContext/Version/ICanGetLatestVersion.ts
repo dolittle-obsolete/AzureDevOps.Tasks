@@ -10,7 +10,7 @@
  * @interface ICanGetLatestVersion
  */
 export interface ICanGetLatestVersion {
-    
-    
+
+
     get(): Promise<string>
 }

@@ -2,8 +2,8 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { BuildContext, PullRequestContext} from "@dolittle/azure-dev-ops.tasks.shared";
-import { PipelineContext } from "./PipelineContext";
+import { BuildContext, PullRequestContext } from '@dolittle/azure-dev-ops.tasks.shared';
+import { PipelineContext } from './PipelineContext';
 
 /**
  * Defines a system that can create a {PipelineContext}
@@ -20,7 +20,7 @@ export interface ICanCreatePipelineContext {
      * @returns {Promise<PipelineContext>}
      */
     create(buildContext: BuildContext, pullRequestContext: PullRequestContext): Promise<PipelineContext>
-    
+
     /**
      * Whether or not the system can create {PipelineContext} from the given {BuildContext}
      *
@@ -28,5 +28,5 @@ export interface ICanCreatePipelineContext {
      * @returns {boolean}
      */
     canCreateFromContext(buildContext: BuildContext): boolean
-    
+
 }

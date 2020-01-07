@@ -3,12 +3,12 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { expect } from 'chai';
-import { a_github_pipeline_context_creator } from '../given/a_github_pipeline_context_creator'
+import { a_github_pipeline_context_creator } from '../given/a_github_pipeline_context_creator';
 import { PipelineContext } from '../../../PipelineContext';
 
 describe('and pull request has labels containing multiple release types', () => {
-    let context = new a_github_pipeline_context_creator();
-    let context_creator = context.pipeline_context_creator;
+    const context = new a_github_pipeline_context_creator();
+    const context_creator = context.pipeline_context_creator;
     context.pull_request_context.pullRequestNumber = 1;
     (context.client.pulls as sinon.SinonStub).returns(Promise.resolve({data: [{
         number: context.pull_request_context.pullRequestNumber,

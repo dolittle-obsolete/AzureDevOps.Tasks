@@ -10,7 +10,7 @@
  * @interface IVersionSorter
  */
 export interface IVersionSorter {
-    
+
     /**
      * Sorts the list of versions
      *

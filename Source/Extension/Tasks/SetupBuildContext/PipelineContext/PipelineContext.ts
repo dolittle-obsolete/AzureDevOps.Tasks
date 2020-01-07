@@ -6,4 +6,4 @@ export type PipelineContext = {
     shouldPublish: boolean
     previousVersion: string
     releaseType: string | undefined
-}
+};

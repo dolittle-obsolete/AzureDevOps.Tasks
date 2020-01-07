@@ -2,12 +2,12 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { GithubClient } from "../../../../Repository/Github/GithubClient";
-import sinon from "sinon";
-import { IReleaseTypeExtractor } from "../../../../ReleaseType/IReleaseTypeExtractor";
-import { GithubLatestVersionFinder } from "../../../../Version/Github/GithubLatestVersionFinder";
-import { ReleaseTypeExtractor } from "../../../../ReleaseType/ReleaseTypeExtractor";
-import { NullLogger, PullRequestContext, BuildContext } from "@dolittle/azure-dev-ops.tasks.shared";
+import { GithubClient } from '../../../../Repository/Github/GithubClient';
+import sinon from 'sinon';
+import { IReleaseTypeExtractor } from '../../../../ReleaseType/IReleaseTypeExtractor';
+import { GithubLatestVersionFinder } from '../../../../Version/Github/GithubLatestVersionFinder';
+import { ReleaseTypeExtractor } from '../../../../ReleaseType/ReleaseTypeExtractor';
+import { NullLogger, PullRequestContext, BuildContext } from '@dolittle/azure-dev-ops.tasks.shared';
 
 export class all_dependencies {
     client: GithubClient;
@@ -15,7 +15,7 @@ export class all_dependencies {
     latest_version_finder: GithubLatestVersionFinder;
     pull_request_context: PullRequestContext;
     build_context: BuildContext;
-    
+
     constructor() {
         this.client = {
             latestVersionTag: sinon.stub(),

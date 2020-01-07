@@ -6,8 +6,8 @@ import { expect } from 'chai';
 import { an_extractor } from './given/an_extractor';
 
 describe('when extracting from undefined string', () => {
-    let extractor = new an_extractor().extractor;
-    let result = extractor.extract(undefined as any);
+    const extractor = new an_extractor().extractor;
+    const result = extractor.extract(undefined as any);
 
     it('should return undefined', () => expect(result).to.be.undefined);
 });

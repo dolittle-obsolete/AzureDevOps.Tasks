@@ -5,9 +5,9 @@
 import { an_extractor } from './given/an_extractor';
 
 describe('when extracting from string with only a release type', () => {
-    let extractor = new an_extractor().extractor;
-    let labels = ['major'];
-    let result = extractor.extract(labels);
+    const extractor = new an_extractor().extractor;
+    const labels = ['major'];
+    const result = extractor.extract(labels);
 
     it('should return major', () => result!.should.be.equal('major'));
 });

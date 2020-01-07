@@ -18,12 +18,12 @@ import { GithubLatestVersionFinder } from './Version/Github/GithubLatestVersionF
 
 taskLib.setResourcePath(path.resolve(__dirname, 'task.json'));
 
-const logger = new Logger(); 
+const logger = new Logger();
 
 async function run() {
     try {
         const endpointId = taskLib.getInput('Connection');
-        const token = endpointId? getGithubEndPointToken(endpointId) : undefined;
+        const token = endpointId ? getGithubEndPointToken(endpointId) : undefined;
         const buildContext = getBuildContext();
         const pullRequestContext = getPullRequestContext();
         const versionSorter: IVersionSorter = new SemVerVersionSorter(logger);
@@ -31,9 +31,9 @@ async function run() {
 
         const githubClient = createGithubClient(versionSorter, buildContext, token);
         const githubLatestVersionFinder = createGithubLatestVersionFinder(githubClient);
-        let pipelineContextCreators = getPipelineContextCreators(releaseTypeExtractor, githubClient, githubLatestVersionFinder);
+        const pipelineContextCreators = getPipelineContextCreators(releaseTypeExtractor, githubClient, githubLatestVersionFinder);
 
-        let pipelineContext = await pipelineContextCreators.create(buildContext, pullRequestContext);
+        const pipelineContext = await pipelineContextCreators.create(buildContext, pullRequestContext);
 
         taskLib.setVariable(outputVariables.PreviousVersion, pipelineContext.previousVersion);
         taskLib.setVariable(outputVariables.ShouldPublish, `${pipelineContext.shouldPublish}`);
@@ -54,7 +54,7 @@ function createGithubLatestVersionFinder(client: GithubClient) {
 }
 
 function getPipelineContextCreators(releaseTypeExtractor: IReleaseTypeExtractor, githubClient: GithubClient, githubLatestVersionFinder: GithubLatestVersionFinder) {
-    let pipelineContextCreators: IPipelineContextCreators = new PipelineContextCreators([
+    const pipelineContextCreators: IPipelineContextCreators = new PipelineContextCreators([
         new GithubPipelineContextCreator(githubClient, releaseTypeExtractor, githubLatestVersionFinder, logger)
     ]);
 

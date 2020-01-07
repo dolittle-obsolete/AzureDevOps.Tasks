@@ -13,9 +13,9 @@ import { IVersionSorter } from '../../Version/IVersionSorter';
  * @class GithubClient
  */
 export class GithubClient {
-    private _octokit: Octokit
-    private _owner: string
-    private _repo: string
+    private _octokit: Octokit;
+    private _owner: string;
+    private _repo: string;
 
     /**
      * Instantiates an instance of {GithubClient}.
@@ -28,7 +28,7 @@ export class GithubClient {
         this._octokit = new Octokit({
             auth: token
         });
-        let [owner, repo] = buildContext.repositoryName.split('/', 2); 
+        const [owner, repo] = buildContext.repositoryName.split('/', 2);
         this._owner = owner;
         this._repo = repo;
     }
@@ -40,11 +40,11 @@ export class GithubClient {
         }).then(_ => _.data.filter(_ => semver.valid(_.name)).map(_ => _.name));
         this._logger.debug(`Found ${versionTags.length} version tags`);
 
-        versionTags = versionTags.map(_ => _.startsWith('v')? _.substr(1) : _);
-        let sortedVersions = this._versionSorter.sort(versionTags, true);
+        versionTags = versionTags.map(_ => _.startsWith('v') ? _.substr(1) : _);
+        const sortedVersions = this._versionSorter.sort(versionTags, true);
 
-        let latestVersion = sortedVersions.length === 0? undefined : sortedVersions[0];
-        
+        const latestVersion = sortedVersions.length === 0 ? undefined : sortedVersions[0];
+
         return latestVersion;
     }
 
