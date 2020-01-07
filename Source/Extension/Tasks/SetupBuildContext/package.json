@@ -8,6 +8,8 @@
   "scripts": {
     "clean": "del \"**/*.js\" !node_modules !wallaby.conf.js",
     "build": "yarn clean && tsc -p tsconfig.json",
+    "lint": "npx tslint --config tslint.json --project tsconfig.json",
+    "lint:fix": "npx tslint --config tslint.json --project tsconfig.json --fix",
     "test": "yarn build && yarn test:run",
     "test:run": "mocha \"**/for_*/**/*.js\" --require @dolittle/typescript.build/mocha.opts",
     "test:clean": "del \"**/for_*/**/*.js\" !node_modules",
