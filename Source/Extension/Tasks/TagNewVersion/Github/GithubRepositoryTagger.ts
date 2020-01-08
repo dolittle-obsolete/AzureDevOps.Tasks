@@ -7,7 +7,7 @@ import Octokit from '@octokit/rest';
 import { ICanTagRepository } from '../ICanTagRepository';
 import { Tag } from '../ITagsCreator';
 
-const ref = 'heads/master'
+const ref = 'heads/master';
 export class GithubRepositoryTagger implements ICanTagRepository {
 
     private _client: Octokit;
@@ -27,7 +27,7 @@ export class GithubRepositoryTagger implements ICanTagRepository {
 
     async tag(tag: Tag, version: string) {
         this._logger.debug(`Creating release with tag '${tag}' from version '${version}' on repository '${this._owner}/${this._repo}'`);
-        let releaseResponse = await this._client.repos.createRelease({
+        const releaseResponse = await this._client.repos.createRelease({
             owner: this._owner,
             repo: this._repo,
             tag_name: tag,
@@ -37,12 +37,12 @@ export class GithubRepositoryTagger implements ICanTagRepository {
         // let commitSha = await this._getCommitSha();
         // let tagObject = await this._createTagObject(tag, version, commitSha);
         // await this._updateReference(tagObject.sha);
-    
+
     }
 
     private async _getCommitSha() {
-        this._logger.debug(`Getting commit sha from '${this._owner}/${this._repo}'`)
-        let commitReference = await this._client.git.getRef({
+        this._logger.debug(`Getting commit sha from '${this._owner}/${this._repo}'`);
+        const commitReference = await this._client.git.getRef({
             owner: this._owner,
             repo: this._repo,
             ref
@@ -53,13 +53,13 @@ export class GithubRepositoryTagger implements ICanTagRepository {
 
     private async _createTagObject(tag: string, version: string, commitSha: string) {
         this._logger.debug(`Creating tag object on '${this._owner}/${this._repo}'`);
-        let tagResponse = await this._client.git.createTag({
+        const tagResponse = await this._client.git.createTag({
             owner: this._owner,
             repo: this._repo,
             tag,
             object: commitSha,
             message: `Releasing version '${version}'`,
-            type: 'commit' 
+            type: 'commit'
         });
         this._logger.debug(`Status: ${tagResponse.status}`);
         return tagResponse.data;
@@ -67,7 +67,7 @@ export class GithubRepositoryTagger implements ICanTagRepository {
 
     private async _updateReference(tagSha: string) {
         this._logger.debug(`Updating reference on '${this._owner}/${this._repo}'`);
-        let updateResponse = await this._client.git.updateRef({
+        const updateResponse = await this._client.git.updateRef({
             owner: this._owner,
             repo: this._repo,
             ref,

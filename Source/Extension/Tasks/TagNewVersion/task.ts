@@ -16,13 +16,13 @@ async function run() {
         const endpointId = taskLib.getInput('Connection', true)!;
         const token = getGithubEndPointToken(endpointId);
         const version = taskLib.getInput('Version', true)!;
-        let buildContext = getBuildContext();
+        const buildContext = getBuildContext();
         const {owner, repo} = getRepoAndOwner(buildContext);
-        let tagsCreator = new TagsCreator(logger);
-        let githubTagger = new GithubRepositoryTagger(logger, owner, repo, token);
-        let tags = tagsCreator.create(version);
-        
-        for (let tag of tags) {
+        const tagsCreator = new TagsCreator(logger);
+        const githubTagger = new GithubRepositoryTagger(logger, owner, repo, token);
+        const tags = tagsCreator.create(version);
+
+        for (const tag of tags) {
             await githubTagger.tag(tag, version);
         }
 
