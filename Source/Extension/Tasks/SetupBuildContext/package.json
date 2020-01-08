@@ -13,7 +13,7 @@
     "test": "yarn build && yarn test:run",
     "test:run": "mocha \"**/for_*/**/*.js\" --require @dolittle/typescript.build/mocha.opts",
     "test:clean": "del \"**/for_*/**/*.js\" !node_modules",
-    "extension:build": "yarn && yarn test && yarn test:clean && del node_modules yarn.lock && yarn install --prod"
+    "extension:build": "yarn && yarn lint && yarn test && yarn test:clean && del node_modules yarn.lock && yarn install --prod"
   },
   "devDependencies": {
     "@dolittle/typescript.build": "^5.1.1",
