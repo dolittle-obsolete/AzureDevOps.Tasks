@@ -15,7 +15,7 @@ describe('when provider is not GitHub', () => {
     let exception: Error;
     before(async () => {
         try {
-            await context_creator.create(context.build_context, context.pull_request_context);
+            await context_creator.create(context.build_context);
         }
         catch (error) {
             exception = error;

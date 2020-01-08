@@ -2,9 +2,9 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { BuildContext, PullRequestContext } from '@dolittle/azure-dev-ops.tasks.shared';
 import { ICanCreatePipelineContext } from './ICanCreatePipelineContext';
 import { IPipelineContextCreators } from './IPipelineContextCreators';
+import { BuildContext } from '../BuildContext';
 
 /**
  * Represents an implementation of {IPipelineContextCreators}
@@ -34,7 +34,7 @@ export class PipelineContextCreators implements IPipelineContextCreators {
      * @param {PullRequestContext} pullRequestContext
      * @returns {Promise<PipelineContext>}
      */
-    create(buildContext: BuildContext, pullRequestContext: PullRequestContext) {
+    create(buildContext: BuildContext) {
         let creator: ICanCreatePipelineContext | null = null;
 
         for (const pipelineCreator of this.pipeLineContextCreators) {
@@ -44,6 +44,6 @@ export class PipelineContextCreators implements IPipelineContextCreators {
             }
         }
         if (creator === null) throw new Error('There are no pipeline creators that can build pipeline context from context');
-        return creator.create(buildContext, pullRequestContext);
+        return creator.create(buildContext);
     }
 }

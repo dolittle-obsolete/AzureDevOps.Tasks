@@ -12,13 +12,13 @@ describe('and pull request has labels containing one release type', () => {
     context.build_context.sourceBranchName = 'master';
 
     (context.client.pulls as sinon.SinonStub).returns(Promise.resolve({data: [{
-        merge_commit_sha: context.build_context.sourceVersion,
+        merge_commit_sha: context.build_context.commitId,
         labels: [{name: 'minor'}]
     }]}));
 
     let pipeline_context: PipelineContext;
     before(async () => {
-        pipeline_context = await context_creator.create(context.build_context, context.pull_request_context);
+        pipeline_context = await context_creator.create(context.build_context);
     });
     it('should not be undefined', () => expect(pipeline_context).to.not.be.undefined);
     it('should publish', () => pipeline_context.shouldPublish.should.be.true);

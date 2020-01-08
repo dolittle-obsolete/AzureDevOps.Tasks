@@ -24,6 +24,47 @@
             "type": "connectedService:github:OAuth,PersonalAccessToken,InstallationToken",
             "label": "Connection (OAuth or PAT)",
             "helpMarkDown": "Specify the name of the service connection to use to connect to the repository. The connection must be based on a user's OAuth or a personal access token. Learn more about service connections [here](https://aka.ms/AA3am5s)."
+        },
+        {
+            "name": "RepositoryProvider",
+            "required": true,
+            "type": "string",
+            "label": "Repository provider(GitHub, )",
+            "defaultValue": "$(Build.Repository.Provider)"
+        },
+        {
+            "name": "Repository",
+            "required": true,
+            "type": "string",
+            "label": "Repository (for GitHub <owner>/<repo>)",
+            "defaultValue": "$(Build.Repository.Name)"
+        },
+        {
+            "name": "CommitId",
+            "required": true,
+            "type": "string",
+            "label": "The commit id that triggered the build",
+            "defaultValue": "$(Build.SourceVersion)"
+        },
+        {
+            "name": "CommitMessage",
+            "required": true,
+            "type": "string",
+            "label": "The commit message that triggered the build",
+            "defaultValue": "$(Build.SourceVersionMessage)"
+        },
+        {
+            "name": "SourceBranchName",
+            "required": true,
+            "type": "string",
+            "label": "The name of the branch that triggered the build",
+            "defaultValue": "$(Build.SourceBranchName)"
+        },
+        {
+            "name": "PullRequestId",
+            "type": "string",
+            "label": "The name of the branch that triggered the build",
+            "defaultValue": "$(System.PullRequest.PullRequestNumber)"
         }
     ],
     "OutputVariables": [

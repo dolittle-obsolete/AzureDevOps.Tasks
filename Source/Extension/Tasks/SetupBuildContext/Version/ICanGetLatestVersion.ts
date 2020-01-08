@@ -11,6 +11,5 @@
  */
 export interface ICanGetLatestVersion {
 
-
     get(): Promise<string>
 }

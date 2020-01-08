@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { ILogger, BuildContext } from '@dolittle/azure-dev-ops.tasks.shared';
+import { ILogger } from '@dolittle/azure-dev-ops.tasks.shared';
 import Octokit from '@octokit/rest';
 import semver from 'semver';
 import { IVersionSorter } from '../../Version/IVersionSorter';
@@ -14,23 +14,17 @@ import { IVersionSorter } from '../../Version/IVersionSorter';
  */
 export class GithubClient {
     private _octokit: Octokit;
-    private _owner: string;
-    private _repo: string;
 
     /**
      * Instantiates an instance of {GithubClient}.
      * @param {ILogger} _logger
      * @param {IVersionSorter} _versionSorter
-     * @param {BuildContext} buildContext
      * @param {string} [token]
      */
-    constructor(private _logger: ILogger, private _versionSorter: IVersionSorter, buildContext: BuildContext, token?: string) {
+    constructor(private _logger: ILogger, private _versionSorter: IVersionSorter, private _owner: string, private _repo: string , token?: string) {
         this._octokit = new Octokit({
             auth: token
         });
-        const [owner, repo] = buildContext.repositoryName.split('/', 2);
-        this._owner = owner;
-        this._repo = repo;
     }
 
     async latestVersionTag() {

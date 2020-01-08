@@ -9,15 +9,15 @@ import { PipelineContext } from '../../../PipelineContext';
 describe('and pull request has labels containing one release type', () => {
     const context = new a_github_pipeline_context_creator();
     const context_creator = context.pipeline_context_creator;
-    context.pull_request_context.pullRequestNumber = 1;
+    context.build_context.pullRequestNumber = 1;
     (context.client.pulls as sinon.SinonStub).returns(Promise.resolve({data: [{
-        number: context.pull_request_context.pullRequestNumber,
+        number: context.build_context.pullRequestNumber,
         labels: [{name: 'minor'}]
     }]}));
 
     let pipeline_context: PipelineContext;
     before(async () => {
-        pipeline_context = await context_creator.create(context.build_context, context.pull_request_context);
+        pipeline_context = await context_creator.create(context.build_context);
     });
     it('should not be undefined', () => expect(pipeline_context).to.not.be.undefined);
     it('should not publish', () => pipeline_context.shouldPublish.should.be.false);

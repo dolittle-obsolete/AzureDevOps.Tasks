@@ -2,9 +2,10 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { Logger, getGithubEndPointToken, getBuildContext, getPullRequestContext, BuildContext } from '@dolittle/azure-dev-ops.tasks.shared';
+import { Logger, getGithubEndPointToken } from '@dolittle/azure-dev-ops.tasks.shared';
 import * as taskLib from 'azure-pipelines-task-lib';
 import path from 'path';
+import inputVariables from './InputVariables';
 import outputVariables from './OutputVariables';
 import { IPipelineContextCreators } from './PipelineContext/IPipelineContextCreators';
 import { PipelineContextCreators } from './PipelineContext/PipelineContextCreators';
@@ -15,6 +16,7 @@ import { ReleaseTypeExtractor } from './ReleaseType/ReleaseTypeExtractor';
 import { GithubClient } from './Repository/Github/GithubClient';
 import { GithubPipelineContextCreator } from './PipelineContext/Github/GithubPipelineContextCreator';
 import { GithubLatestVersionFinder } from './Version/Github/GithubLatestVersionFinder';
+import { BuildContext } from './BuildContext';
 
 taskLib.setResourcePath(path.resolve(__dirname, 'task.json'));
 
@@ -22,10 +24,25 @@ const logger = new Logger();
 
 async function run() {
     try {
-        const endpointId = taskLib.getInput('Connection');
+        const endpointId = taskLib.getInput(inputVariables.Connection, true);
+        const repository = taskLib.getInput(inputVariables.Repository, true)!;
+        const repositoryProvider = taskLib.getInput(inputVariables.RepositoryProvider, true)!;
+        const sourceBranchName = taskLib.getInput(inputVariables.SourceBranchName, true)!;
+        const commitId = taskLib.getInput(inputVariables.CommitId, true)!;
+        const commitMessage = taskLib.getInput(inputVariables.CommitMessage, true)!;
+        const pullRequestNumberString = taskLib.getInput(inputVariables.PullRequestNumber);
+        let pullRequestNumber: number | undefined;
+        if (pullRequestNumberString !== undefined && pullRequestNumberString !== '') pullRequestNumber = parseInt(pullRequestNumberString, 10);
+
         const token = endpointId ? getGithubEndPointToken(endpointId) : undefined;
-        const buildContext = getBuildContext();
-        const pullRequestContext = getPullRequestContext();
+        const buildContext: BuildContext = {
+            commitId,
+            commitMessage,
+            repository,
+            repositoryProvider,
+            sourceBranchName,
+            pullRequestNumber
+        };
         const versionSorter: IVersionSorter = new SemVerVersionSorter(logger);
         const releaseTypeExtractor: IReleaseTypeExtractor = new ReleaseTypeExtractor(logger);
 
@@ -33,7 +50,7 @@ async function run() {
         const githubLatestVersionFinder = createGithubLatestVersionFinder(githubClient);
         const pipelineContextCreators = getPipelineContextCreators(releaseTypeExtractor, githubClient, githubLatestVersionFinder);
 
-        const pipelineContext = await pipelineContextCreators.create(buildContext, pullRequestContext);
+        const pipelineContext = await pipelineContextCreators.create(buildContext);
 
         taskLib.setVariable(outputVariables.PreviousVersion, pipelineContext.previousVersion);
         taskLib.setVariable(outputVariables.ShouldPublish, `${pipelineContext.shouldPublish}`);
@@ -46,7 +63,8 @@ async function run() {
 }
 
 function createGithubClient(versionSorter: IVersionSorter, buildContext: BuildContext, token?: string) {
-    return new GithubClient(logger, versionSorter, buildContext, token);
+    const [owner, repo] = buildContext.repository.split('/', 2);
+    return new GithubClient(logger, versionSorter, owner, repo, token);
 }
 
 function createGithubLatestVersionFinder(client: GithubClient) {

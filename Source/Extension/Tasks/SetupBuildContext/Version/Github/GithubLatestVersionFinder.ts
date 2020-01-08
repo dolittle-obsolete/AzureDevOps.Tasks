@@ -2,10 +2,10 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+import { ILogger } from '@dolittle/azure-dev-ops.tasks.shared';
+import semver from 'semver';
 import { GithubClient } from '../../Repository/Github/GithubClient';
 import { ICanGetLatestVersion } from '../ICanGetLatestVersion';
-import semver from 'semver';
-import { ILogger } from '@dolittle/azure-dev-ops.tasks.shared';
 
 /**
  * Represents an implementation of {ICanGetLatestVersion} that can get the latest version from Github

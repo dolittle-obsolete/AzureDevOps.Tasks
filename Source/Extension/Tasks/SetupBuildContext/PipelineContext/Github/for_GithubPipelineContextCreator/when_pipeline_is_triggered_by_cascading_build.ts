@@ -12,14 +12,13 @@ describe('when pipeline is triggered by cascading build', () => {
     const context = new a_github_pipeline_context_creator();
     const context_creator = context.pipeline_context_creator;
     context.build_context.sourceBranchName = 'master';
-    context.build_context.sourceVersionMessage = `${cascadingBuildMessage} ${context.build_context.repositoryName}`;
+    context.build_context.commitMessage = `${cascadingBuildMessage}`;
 
     (context.client.pulls as sinon.SinonStub).returns(Promise.resolve({data: []}));
 
     let pipeline_context: PipelineContext;
     before(async () => {
-        pipeline_context = await context_creator.create(context.build_context, context.pull_request_context);
-        pipeline_context;
+        pipeline_context = await context_creator.create(context.build_context);
     });
     it('should return pipeline context', () => expect(pipeline_context).to.not.be.undefined);
     it('should publish', () => pipeline_context.shouldPublish.should.be.true);

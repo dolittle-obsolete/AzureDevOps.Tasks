@@ -6,7 +6,6 @@ import { ReleaseType } from 'semver';
 import { IReleaseTypeExtractor } from './IReleaseTypeExtractor';
 import { ILogger } from '@dolittle/azure-dev-ops.tasks.shared';
 
-
 /**
  * Represents an implementation of {IReleaseTypeExtractor}
  *
