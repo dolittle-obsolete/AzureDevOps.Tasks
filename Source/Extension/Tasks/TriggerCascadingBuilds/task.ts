@@ -2,11 +2,10 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { getGithubEndPointToken, getBuildContext, Logger } from '@dolittle/azure-dev-ops.tasks.shared';
+import { getGithubEndPointToken, Logger } from '@dolittle/azure-dev-ops.tasks.shared';
 import * as taskLib from 'azure-pipelines-task-lib';
 import path from 'path';
 import semver from 'semver';
-import { CascadingBuildMessageCreator } from './CascadingBuildMessageCreator';
 import { CascadingBuildTriggers } from './CascadingBuildTriggers';
 
 taskLib.setResourcePath(path.resolve(__dirname, 'task.json'));
@@ -19,8 +18,7 @@ async function run() {
             return;
         }
         const nextVersion = taskLib.getInput('NextVersion', true)!;
-        if (!semver.valid(nextVersion)) throw new Error(`'${nextVersion}' is not a valid SemVer version`) 
-        
+        if (!semver.valid(nextVersion)) throw new Error(`'${nextVersion}' is not a valid SemVer version`);
         const cascades = taskLib.getDelimitedInput('Cascades', ',');
         if (cascades.length === 0) {
             taskLib.setResult(taskLib.TaskResult.Skipped, 'There are no cascades to trigger');
@@ -28,9 +26,8 @@ async function run() {
         }
         const endpointId = taskLib.getInput('Connection', true)!;
         const token = getGithubEndPointToken(endpointId);
-        let buildContext = getBuildContext();
-        
-        let buildTriggers = CascadingBuildTriggers.fromContext(logger, buildContext, cascades, token);
+
+        const buildTriggers = CascadingBuildTriggers.fromContext(logger, buildContext, cascades, token);
 
         await buildTriggers.trigger(buildContext, nextVersion);
 
