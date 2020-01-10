@@ -17,7 +17,7 @@ const masterRef = 'heads/master';
  * @implements {ICanTriggerCascadingBuild}
  */
 export class GithubBuildTrigger implements ICanTriggerCascadingBuild {
-    
+
     /**
      * Instantiates an instance of {GithubBuildTrigger}.
      * @param {ILogger} _logger
