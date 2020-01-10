@@ -7,29 +7,48 @@ import * as taskLib from 'azure-pipelines-task-lib';
 import path from 'path';
 import semver from 'semver';
 import { CascadingBuildTriggers } from './CascadingBuildTriggers';
+import { TriggerContext } from './TriggerContext';
+import { CascadingBuildMessageCreator } from './CascadingBuildMessageCreator';
+import { GithubBuildTrigger } from './Github/GithubBuildTrigger';
+import inputVariables from './InputVariables';
 
 taskLib.setResourcePath(path.resolve(__dirname, 'task.json'));
 const logger = new Logger();
 async function run() {
     try {
-        const shouldPublish = taskLib.getBoolInput('ShouldPublish', true);
+        const endpointId = taskLib.getInput(inputVariables.Connection, true)!;
+        const token = getGithubEndPointToken(endpointId);
+        const shouldPublish = taskLib.getBoolInput(inputVariables.ShouldPublish, true);
+        const nextVersion = taskLib.getInput(inputVariables.NextVersion, true)!;
+        const repositoryProvider = taskLib.getInput(inputVariables.RepositoryProvider, true)!;
+        const repository = taskLib.getInput(inputVariables.Repository, true)!;
+
         if (!shouldPublish) {
             taskLib.setResult(taskLib.TaskResult.Skipped, 'ShouldPublish is false. Not triggering cascades');
             return;
         }
-        const nextVersion = taskLib.getInput('NextVersion', true)!;
-        if (!semver.valid(nextVersion)) throw new Error(`'${nextVersion}' is not a valid SemVer version`);
+
+        if (!semver.valid(nextVersion)) throw new Error(`Next version: '${nextVersion}' is not a valid SemVer version`);
+
         const cascades = taskLib.getDelimitedInput('Cascades', ',');
         if (cascades.length === 0) {
             taskLib.setResult(taskLib.TaskResult.Skipped, 'There are no cascades to trigger');
             return;
         }
-        const endpointId = taskLib.getInput('Connection', true)!;
-        const token = getGithubEndPointToken(endpointId);
 
-        const buildTriggers = CascadingBuildTriggers.fromContext(logger, buildContext, cascades, token);
+        const triggerContext: TriggerContext = {
+            repositoryProvider,
+            repository
+        };
 
-        await buildTriggers.trigger(buildContext, nextVersion);
+        const buildTriggers = new CascadingBuildTriggers(
+            new CascadingBuildMessageCreator(),
+            [
+                new GithubBuildTrigger(logger)
+            ]
+        );
+
+        await buildTriggers.trigger(triggerContext, nextVersion, token);
 
         taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success');
     }

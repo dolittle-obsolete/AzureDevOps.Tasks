@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { BuildContext } from '@dolittle/azure-dev-ops.tasks.shared';
+import { TriggerContext } from './TriggerContext';
 
 
 /**
@@ -17,16 +17,18 @@ export interface ICanTriggerCascadingBuild {
      * Triggers the build
      *
      * @param {string} triggerMessage
+     * @param {TriggerContext} triggerContext
+     * @param {string} [token]
      * @returns {Promise<void>}
      */
-    trigger(triggerMessage: string): Promise<void>
+    trigger(triggerMessage: string, triggerContext: TriggerContext, token?: string): Promise<void>
 
     /**
      * Whether or not the build can be triggered
      *
-     * @param {BuildContext} buildContext
+     * @param {TriggerContext} triggerContext
      * @returns {boolean}
      */
-    canTrigger(buildContext: BuildContext): boolean
+    canTrigger(triggerContext: TriggerContext): boolean
 
 }
