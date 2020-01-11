@@ -32,7 +32,12 @@ async function run() {
         const commitMessage = taskLib.getInput(inputVariables.CommitMessage, true)!;
         const pullRequestNumberString = taskLib.getInput(inputVariables.PullRequestNumber);
         let pullRequestNumber: number | undefined;
-        if (pullRequestNumberString !== undefined && pullRequestNumberString !== '') pullRequestNumber = parseInt(pullRequestNumberString, 10);
+        if (
+            pullRequestNumberString !== undefined 
+                && pullRequestNumberString !== '' 
+                && pullRequestNumberString !== '$(System.PullRequest.PullRequestNumber)'
+            ) 
+            pullRequestNumber = parseInt(pullRequestNumberString, 10);
 
         const token = endpointId ? getGithubEndPointToken(endpointId) : undefined;
         const buildContext: BuildContext = {
