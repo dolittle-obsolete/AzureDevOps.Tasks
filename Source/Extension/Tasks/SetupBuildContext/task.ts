@@ -33,10 +33,10 @@ async function run() {
         const pullRequestNumberString = taskLib.getInput(inputVariables.PullRequestNumber);
         let pullRequestNumber: number | undefined;
         if (
-            pullRequestNumberString !== undefined 
-                && pullRequestNumberString !== '' 
+            pullRequestNumberString !== undefined
+                && pullRequestNumberString !== ''
                 && pullRequestNumberString !== '$(System.PullRequest.PullRequestNumber)'
-            ) 
+            )
             pullRequestNumber = parseInt(pullRequestNumberString, 10);
 
         const token = endpointId ? getGithubEndPointToken(endpointId) : undefined;
