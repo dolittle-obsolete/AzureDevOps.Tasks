@@ -40,6 +40,13 @@ async function run() {
             pullRequestNumber = parseInt(pullRequestNumberString, 10);
 
         const token = endpointId ? getGithubEndPointToken(endpointId) : undefined;
+
+        logger.debug(`commitId: ${commitId}`);
+        logger.debug(`commitMessage: ${commitMessage}`);
+        logger.debug(`repository: ${repository}`);
+        logger.debug(`repositoryProvider: ${repositoryProvider}`);
+        logger.debug(`sourceBranchName: ${sourceBranchName}`);
+        logger.debug(`pullRequestNumber: ${pullRequestNumber}`);
         const buildContext: BuildContext = {
             commitId,
             commitMessage,
