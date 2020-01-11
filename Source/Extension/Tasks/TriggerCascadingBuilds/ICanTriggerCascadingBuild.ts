@@ -17,11 +17,11 @@ export interface ICanTriggerCascadingBuild {
      * Triggers the build
      *
      * @param {string} triggerMessage
-     * @param {TriggerContext} triggerContext
+     * @param {string} cascadingRepo
      * @param {string} [token]
      * @returns {Promise<void>}
      */
-    trigger(triggerMessage: string, triggerContext: TriggerContext, token?: string): Promise<void>
+    trigger(triggerMessage: string, cascadingRepo: string, token?: string): Promise<void>
 
     /**
      * Whether or not the build can be triggered

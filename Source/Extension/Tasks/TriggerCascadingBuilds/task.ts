@@ -48,7 +48,7 @@ async function run() {
             ]
         );
 
-        await buildTriggers.trigger(triggerContext, nextVersion, token);
+        await buildTriggers.trigger(triggerContext, cascades, nextVersion, token);
 
         taskLib.setResult(taskLib.TaskResult.Succeeded, 'Success');
     }

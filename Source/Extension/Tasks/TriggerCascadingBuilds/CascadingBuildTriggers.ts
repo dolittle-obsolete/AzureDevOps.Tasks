@@ -22,11 +22,13 @@ export class CascadingBuildTriggers implements ICascadingBuildTriggers {
      */
     constructor(private _messageCreator: ICascadingBuildMessageCreator, private _triggers: ICanTriggerCascadingBuild[] = []) {}
 
-    async trigger(triggerContext: TriggerContext, version: string, token?: string) {
+    async trigger(triggerContext: TriggerContext, cascades: string[], version: string, token?: string) {
         const triggers = this._triggers.filter(_ => _.canTrigger(triggerContext));
         if (triggers.length === 0) throw new Error(`There are no trigger that can trigger build from context: ${triggerContext}`);
+        if (triggers.length > 1) throw new Error(`There are multiple triggerers that can trigger build from context: ${triggerContext}`);
+        const trigger = triggers[0];
         const triggerMessage = this._messageCreator.create(triggerContext.repository, version);
-        await Promise.all(triggers.map(_ => _.trigger(triggerMessage, triggerContext, token)));
+        await Promise.all(cascades.map(_ => trigger.trigger(triggerMessage, _, token)));
     }
 
 }

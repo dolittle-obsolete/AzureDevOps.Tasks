@@ -28,10 +28,10 @@ export class GithubBuildTrigger implements ICanTriggerCascadingBuild {
         return triggerContext.repositoryProvider === RepositoryProviders.GitHub;
     }
 
-    async trigger(triggerMessage: string, triggerContext: TriggerContext, token?: string) {
+    async trigger(triggerMessage: string, cascadingRepo: string, token?: string) {
 
         const client = new Octokit({auth: token});
-        const [owner, repo] = triggerContext.repository.split('/', 2);
+        const [owner, repo] = cascadingRepo.split('/', 2);
         this._logger.log(`Triggering cascade build on ${owner}/${repo} with trigger message '${triggerMessage}'`);
         const ref = await this._issueCommit(client, triggerMessage, owner, repo);
         this._logger.log(`New reference sha: ${ref.data.object.sha}`);

@@ -17,10 +17,11 @@ export interface ICascadingBuildTriggers {
      * Triggers the build
      *
      * @param {TriggerContext} triggerContext
+     * @param {string[]} cascades
      * @param {string} version
      * @param {string} [token]
      * @returns {Promise<void>}
      */
-    trigger(triggerContext: TriggerContext, version: string, token?: string): Promise<void>
+    trigger(triggerContext: TriggerContext, cascades: string[], version: string, token?: string): Promise<void>
 
 }
