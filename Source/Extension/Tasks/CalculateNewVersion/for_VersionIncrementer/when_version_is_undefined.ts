@@ -8,10 +8,9 @@ import { a_version_incrementor } from './given/a_version_incrementer';
 
 describe('when version is undefined', () => {
     const version_incrementor = new a_version_incrementor().version_incrementor;
-    const version: string = undefined;
     let exception: Error;
     try {
-        version_incrementor.increment(version, 'patch');
+        version_incrementor.increment(undefined as any, 'patch');
     }
     catch (error) {
         exception = error;
