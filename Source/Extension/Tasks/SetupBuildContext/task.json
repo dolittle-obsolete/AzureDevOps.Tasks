@@ -61,9 +61,9 @@
             "defaultValue": "$(Build.SourceBranchName)"
         },
         {
-            "name": "PullRequestId",
+            "name": "PullRequestNumber",
             "type": "string",
-            "label": "The name of the branch that triggered the build",
+            "label": "The number of the pull request that triggered the build",
             "defaultValue": "$(System.PullRequest.PullRequestNumber)"
         }
     ],
