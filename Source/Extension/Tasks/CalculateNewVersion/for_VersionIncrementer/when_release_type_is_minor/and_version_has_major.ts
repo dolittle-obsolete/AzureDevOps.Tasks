@@ -2,12 +2,12 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { a_version_incrementor } from "../given/a_version_incrementer";
+import { a_version_incrementor } from '../given/a_version_incrementer';
 
 describe('and version has major', () => {
-    let version_incrementor = new a_version_incrementor().version_incrementor;
-    let version = '1.0.0';
-    let result = version_incrementor.increment(version, 'minor');
-    
+    const version_incrementor = new a_version_incrementor().version_incrementor;
+    const version = '1.0.0';
+    const result = version_incrementor.increment(version, 'minor');
+
     it('should return the correct version', () => result.should.equal('1.1.0'));
 });

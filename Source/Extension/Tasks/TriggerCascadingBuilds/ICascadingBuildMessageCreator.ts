@@ -10,7 +10,7 @@
  * @interface ICascadingBuildMessageCreator
  */
 export interface ICascadingBuildMessageCreator {
-    
+
     /**
      * Creates the cascading build message
      *

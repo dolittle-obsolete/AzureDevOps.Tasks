@@ -2,82 +2,79 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ILogger, BuildContext, RepositoryProviders } from '@dolittle/azure-dev-ops.tasks.shared';
+import { ILogger, RepositoryProviders } from '@dolittle/azure-dev-ops.tasks.shared';
 import Octokit from '@octokit/rest';
-import { ICanTriggerCascadingBuild } from "../ICanTriggerCascadingBuild";
+import { ICanTriggerCascadingBuild } from '../ICanTriggerCascadingBuild';
+import { TriggerContext } from '../TriggerContext';
 
 const masterRef = 'heads/master';
 
 /**
- * Represents an implementation of {ICanTriggerCascadingBuild} that triggers cascading build on a 
+ * Represents an implementation of {ICanTriggerCascadingBuild} that triggers cascading build on a
  *
  * @export
  * @class GithubBuildTrigger
  * @implements {ICanTriggerCascadingBuild}
  */
 export class GithubBuildTrigger implements ICanTriggerCascadingBuild {
-    
-    private _client: Octokit;
 
     /**
      * Instantiates an instance of {GithubBuildTrigger}.
      * @param {ILogger} _logger
-     * @param {string} _owner
-     * @param {string} _repo
-     * @param {string} [token]
      */
-    constructor(private _logger: ILogger, private _owner: string, private _repo: string, token?: string) {
-        this._client = new Octokit({auth: token});
+    constructor(private _logger: ILogger) {}
+
+    canTrigger(triggerContext: TriggerContext) {
+        return triggerContext.repositoryProvider === RepositoryProviders.GitHub;
     }
 
-    canTrigger(buildContext: BuildContext) {
-        return buildContext.repositoryProvider === RepositoryProviders.GitHub;
-    }
+    async trigger(triggerMessage: string, cascadingRepo: string, token?: string) {
 
-    async trigger(triggerMessage: string) {
-        this._logger.log(`Triggering cascade build on ${this._owner}/${this._repo} with trigger message '${triggerMessage}'`);
-        let ref = await this._issueCommit(triggerMessage);
+        const client = new Octokit({auth: token});
+        const [owner, repo] = cascadingRepo.split('/', 2);
+        this._logger.log(`Triggering cascade build on ${owner}/${repo} with trigger message '${triggerMessage}'`);
+        const ref = await this._issueCommit(client, triggerMessage, owner, repo);
         this._logger.log(`New reference sha: ${ref.data.object.sha}`);
-        
+
     }
 
-    private async _issueCommit(message: string) {
-        let reference = await this._getReferenceCommit();
-        let treeSha = await this._getTreeSha(reference);
-        let commit = await this._createCommit(message, treeSha, reference);
-        let updatedReference = await this._updateReference(commit);
+    private async _issueCommit(client: Octokit, message: string, owner: string, repo: string) {
+        const reference = await this._getReferenceCommit(client, owner, repo);
+        const treeSha = await this._getTreeSha(client, reference, owner, repo);
+        const commit = await this._createCommit(client, message, treeSha, reference, owner, repo);
+        const updatedReference = await this._updateReference(client, commit, owner, repo);
         return updatedReference;
     }
 
-    private async _getReferenceCommit() {
+    private async _getReferenceCommit(client: Octokit, owner: string, repo: string) {
         this._logger.debug('Getting reference commit');
-        let reference = await this._client.git.getRef(
+        const reference = await client.git.getRef(
             {
-                owner: this._owner,
-                repo: this._repo,
+                owner: owner,
+                repo: repo,
                 ref: masterRef
             });
         this._logger.debug(`Status: ${reference.status}`);
         return reference.data.object;
-        
+
     }
-    
-    private async _getTreeSha (reference: Octokit.GitGetRefResponseObject) {
+
+    private async _getTreeSha (client: Octokit, reference: Octokit.GitGetRefResponseObject, owner: string, repo: string) {
         this._logger.debug('Getting commit');
-        let commit = await this._client.git.getCommit({
-            owner: this._owner,
-            repo: this._repo,
+        const commit = await client.git.getCommit({
+            owner: owner,
+            repo: repo,
             commit_sha: reference.sha
         });
         this._logger.debug(`Status: ${commit.status}`);
         return commit.data.tree.sha;
     }
-    
-    private async _createCommit (message: string, tree: string, reference: Octokit.GitGetRefResponseObject) {
+
+    private async _createCommit (client: Octokit, message: string, tree: string, reference: Octokit.GitGetRefResponseObject, owner: string, repo: string) {
         this._logger.debug('Creating commit');
-        let commit = await this._client.git.createCommit({
-            owner: this._owner,
-            repo: this._repo,
+        const commit = await client.git.createCommit({
+            owner: owner,
+            repo: repo,
             message,
             tree,
             parents: [reference.sha]
@@ -86,12 +83,12 @@ export class GithubBuildTrigger implements ICanTriggerCascadingBuild {
         this._logger.debug(`Status: ${commit.status}`);
         return commit.data;
     }
-    
-    private async _updateReference(commit: Octokit.GitCreateCommitResponse) {
+
+    private async _updateReference(client: Octokit, commit: Octokit.GitCreateCommitResponse, owner: string, repo: string) {
         this._logger.debug('Updating reference');
-        let updatedReference = await this._client.git.updateRef({
-            owner: this._owner,
-            repo: this._repo,
+        const updatedReference = await client.git.updateRef({
+            owner: owner,
+            repo: repo,
             ref: masterRef,
             sha: commit.sha,
             force: true

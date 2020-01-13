@@ -8,9 +8,9 @@
     "helpMarkDown": "",
     "category": "Utility",
     "version": {
-        "Major": 0,
+        "Major": 1,
         "Minor": 0,
-        "Patch": 16
+        "Patch": 1
     },
     "visibility": [
         "Build"
@@ -26,6 +26,20 @@
             "type": "connectedService:github:OAuth,PersonalAccessToken,InstallationToken",
             "label": "Connection (OAuth or PAT)",
             "helpMarkDown": "Specify the name of the service connection to use to connect to the repository. The connection must be based on a user's OAuth or a personal access token. Learn more about service connections [here](https://aka.ms/AA3am5s)."
+        },
+        {
+            "name": "RepositoryProvider",
+            "required": true,
+            "type": "string",
+            "label": "Repository provider(GitHub, )",
+            "defaultValue": "$(Build.Repository.Provider)"
+        },
+        {
+            "name": "Repository",
+            "required": true,
+            "type": "string",
+            "label": "Repository (for GitHub <owner>/<repo>)",
+            "defaultValue": "$(Build.Repository.Name)"
         },
         {
             "name": "NextVersion",

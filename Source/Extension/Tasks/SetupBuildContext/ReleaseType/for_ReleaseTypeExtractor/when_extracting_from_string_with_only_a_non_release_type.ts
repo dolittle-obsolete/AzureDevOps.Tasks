@@ -6,9 +6,9 @@ import { expect } from 'chai';
 import { an_extractor } from './given/an_extractor';
 
 describe('when extracting from string with only a non release type', () => {
-    let extractor = new an_extractor().extractor;
-    let labels = ['something'];
-    let result = extractor.extract(labels);
+    const extractor = new an_extractor().extractor;
+    const labels = ['something'];
+    const result = extractor.extract(labels);
 
     it('should return undefined', () => expect(result).to.be.undefined);
 });

@@ -9,19 +9,21 @@
     "clean": "del \"**/*.js\" !node_modules !wallaby.conf.js",
     "build": "yarn clean && tsc -p tsconfig.json",
     "test": "yarn build && yarn test:run",
+    "lint": "npx tslint --config tslint.json --project tsconfig.json",
+    "lint:fix": "npx tslint --config tslint.json --project tsconfig.json --fix",
     "test:run": "mocha \"**/for_*/**/*.js\" --require @dolittle/typescript.build/mocha.opts",
     "test:clean": "del \"**/for_*/**/*.js\" !node_modules",
-    "extension:build": "yarn && yarn test && yarn test:clean && del node_modules yarn.lock && yarn install --prod"
+    "extension:build": "yarn && yarn lint && yarn test && yarn test:clean && del node_modules yarn.lock && yarn install --prod"
   },
   "devDependencies": {
-    "@dolittle/typescript.build": "^5.1.1",
+    "@dolittle/typescript.build": "^5.3.1",
     "@types/q": "^1.5.2",
     "@types/semver": "^6.2.0",
     "del-cli": "^3.0.0",
     "sync-request": "^6.1.0"
   },
   "dependencies": {
-    "@dolittle/azure-dev-ops.tasks.shared": "../../Shared/dolittle-azure-dev-ops.tasks.shared-1.0.4.tgz",
+    "@dolittle/azure-dev-ops.tasks.shared": "../../Shared/dolittle-azure-dev-ops.tasks.shared-1.0.5.tgz",
     "azure-pipelines-task-lib": "^2.9.3",
     "semver": "^6.3.0"
   }

@@ -2,20 +2,20 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { GithubClient } from "../../../../Repository/Github/GithubClient";
-import sinon from "sinon";
-import { IReleaseTypeExtractor } from "../../../../ReleaseType/IReleaseTypeExtractor";
-import { GithubLatestVersionFinder } from "../../../../Version/Github/GithubLatestVersionFinder";
-import { ReleaseTypeExtractor } from "../../../../ReleaseType/ReleaseTypeExtractor";
-import { NullLogger, PullRequestContext, BuildContext } from "@dolittle/azure-dev-ops.tasks.shared";
+import { GithubClient } from '../../../../Repository/Github/GithubClient';
+import sinon from 'sinon';
+import { IReleaseTypeExtractor } from '../../../../ReleaseType/IReleaseTypeExtractor';
+import { GithubLatestVersionFinder } from '../../../../Version/Github/GithubLatestVersionFinder';
+import { ReleaseTypeExtractor } from '../../../../ReleaseType/ReleaseTypeExtractor';
+import { NullLogger } from '@dolittle/azure-dev-ops.tasks.shared';
+import { BuildContext } from '../../../../BuildContext';
 
 export class all_dependencies {
     client: GithubClient;
     release_type_extractor: IReleaseTypeExtractor;
     latest_version_finder: GithubLatestVersionFinder;
-    pull_request_context: PullRequestContext;
     build_context: BuildContext;
-    
+
     constructor() {
         this.client = {
             latestVersionTag: sinon.stub(),
@@ -25,20 +25,11 @@ export class all_dependencies {
         this.latest_version_finder = new GithubLatestVersionFinder(this.client, new NullLogger());
 
         this.build_context = {
-            repositoryName: 'some-org/some-repo',
+            repository: 'some-org/some-repo',
             repositoryProvider: 'GitHub',
-            sourceBranch: 'refs/head/master',
             sourceBranchName: 'master',
-            sourceVersion: 'some-id',
-            sourceVersionMessage: 'some commit message'
-
+            commitId: 'some-id',
+            commitMessage: 'some commit message'
         } as BuildContext;
-
-        this.pull_request_context = {
-            pullRequestNumber: undefined,
-            sourceBranch: undefined,
-            sourceCommitId: undefined,
-            targetBranch: undefined
-        } as PullRequestContext;
     }
 }

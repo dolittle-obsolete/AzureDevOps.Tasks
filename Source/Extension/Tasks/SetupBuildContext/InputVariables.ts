@@ -4,6 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 
 export default {
-    Connection: 'Connection'
+    Connection: 'Connection',
+    RepositoryProvider: 'RepositoryProvider',
+    Repository: 'Repository',
+    CommitId: 'CommitId',
+    CommitMessage: 'CommitMessage',
+    SourceBranchName: 'SourceBranchName',
+    PullRequestNumber: 'PullRequestNumber'
 };
-

@@ -8,9 +8,9 @@
     "helpMarkDown": "",
     "category": "Utility",
     "version": {
-        "Major": 0,
+        "Major": 1,
         "Minor": 0,
-        "Patch": 8
+        "Patch": 0
     },
     "visibility": [
         "Build"
@@ -31,6 +31,13 @@
             "type": "string",
             "label": "The version number that should be tagged",
             "helpMarkDown": ""
+        },
+        {
+            "name": "Repository",
+            "required": true,
+            "type": "string",
+            "label": "Repository (for GitHub <owner>/<repo>)",
+            "defaultValue": "$(Build.Repository.Name)"
         }
     
     ],    

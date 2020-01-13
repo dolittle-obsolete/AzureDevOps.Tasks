@@ -2,17 +2,17 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { a_sorter } from "./given/a_sorter";
+import { a_sorter } from './given/a_sorter';
 
 describe('when sorting list with versions with prereleases', () => {
-    let version_sorter = new a_sorter().sorter;
-    let version1 = '2.0.0-preview.2';
-    let version2 = '2.0.0-preview.1';
-    let version3 = '2.0.0-beta.2';
-    let version4 = '2.0.0-beta.1';
-    let version5 = '2.0.0-alpha.2';
-    let version6 = '2.0.0-alpha.1';
-    let res = version_sorter.sort([version2, version3, version1, version5, version4, version6], true);
+    const version_sorter = new a_sorter().sorter;
+    const version1 = '2.0.0-preview.2';
+    const version2 = '2.0.0-preview.1';
+    const version3 = '2.0.0-beta.2';
+    const version4 = '2.0.0-beta.1';
+    const version5 = '2.0.0-alpha.2';
+    const version6 = '2.0.0-alpha.1';
+    const res = version_sorter.sort([version2, version3, version1, version5, version4, version6], true);
     it('should return a list with three elements', () => res.should.have.lengthOf(6));
     it('should return biggest version as the first element ', () => res[0].should.equal(version1));
     it('should return second biggest version as the second element', () => res[1].should.equal(version2));

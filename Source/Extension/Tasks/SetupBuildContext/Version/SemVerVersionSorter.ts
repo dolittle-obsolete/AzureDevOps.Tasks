@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import { ILogger } from '@dolittle/azure-dev-ops.tasks.shared';
 import semver from 'semver';
-import {IVersionSorter} from './IVersionSorter';
+import { IVersionSorter } from './IVersionSorter';
 
 /**
  * Represents an implementation of {IVersionSorter} that can sort versions according to SemVer
@@ -14,7 +14,7 @@ import {IVersionSorter} from './IVersionSorter';
  * @implements {IVersionSorter}
  */
 export class SemVerVersionSorter implements IVersionSorter {
-    
+
     /**
      * Instantiates an instance of {SemVerVersionSorter}.
      * @param {ILogger} _logger
@@ -26,8 +26,8 @@ export class SemVerVersionSorter implements IVersionSorter {
         if (versions === undefined) return [];
         versions.forEach(_ => {
             if (!semver.valid(_)) throw new Error(`${_} is not a valid SemVer version`);
-        })
-        return descending? semver.rsort(versions) : semver.sort(versions);
+        });
+        return descending ? semver.rsort(versions) : semver.sort(versions);
     }
-    
+
 }

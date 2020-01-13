@@ -7,11 +7,10 @@ import { a_version_incrementor } from './given/a_version_incrementer';
 
 
 describe('when version is undefined', () => {
-    let version_incrementor = new a_version_incrementor().version_incrementor;
-    let version: string;
+    const version_incrementor = new a_version_incrementor().version_incrementor;
     let exception: Error;
     try {
-        version_incrementor.increment(version!, 'patch');
+        version_incrementor.increment(undefined as any, 'patch');
     }
     catch (error) {
         exception = error;

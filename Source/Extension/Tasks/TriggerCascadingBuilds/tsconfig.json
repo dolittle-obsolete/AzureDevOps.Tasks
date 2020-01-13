@@ -5,5 +5,6 @@
         "declaration": false,
         "outDir": "./"
     },
-    "exclude": ["wallaby.conf.js"]
+    "include": ["**/*.ts"],
+    "exclude": ["node_modules"]
 }

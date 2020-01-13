@@ -8,10 +8,12 @@
   "scripts": {
     "clean": "del \"**/*.js\" !node_modules !wallaby.conf.js",
     "build": "yarn clean && tsc -p tsconfig.json",
+    "lint": "npx tslint --config tslint.json --project tsconfig.json",
+    "lint:fix": "npx tslint --config tslint.json --project tsconfig.json --fix",
     "test": "yarn build && yarn test:run",
     "test:run": "mocha \"**/for_*/**/*.js\" --require @dolittle/typescript.build/mocha.opts",
     "test:clean": "del \"**/for_*/**/*.js\" !node_modules",
-    "extension:build": "yarn && yarn test && yarn test:clean && del node_modules yarn.lock && yarn install --prod"
+    "extension:build": "yarn && yarn lint && yarn test && yarn test:clean && del node_modules yarn.lock && yarn install --prod"
   },
   "devDependencies": {
     "@dolittle/typescript.build": "^5.1.1",
@@ -21,7 +23,7 @@
     "sync-request": "^6.1.0"
   },
   "dependencies": {
-    "@dolittle/azure-dev-ops.tasks.shared": "../../Shared/dolittle-azure-dev-ops.tasks.shared-1.0.4.tgz",
+    "@dolittle/azure-dev-ops.tasks.shared": "../../Shared/dolittle-azure-dev-ops.tasks.shared-1.0.5.tgz",
     "@octokit/rest": "^16.35.0",
     "azure-pipelines-task-lib": "^2.9.3",
     "semver": "^6.3.0"

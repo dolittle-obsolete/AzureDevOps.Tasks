@@ -6,8 +6,8 @@ import { expect } from 'chai';
 import { a_version_incrementor } from './given/a_version_incrementer';
 
 describe('when version is empty', () => {
-    let version_incrementor = new a_version_incrementor().version_incrementor;
-    let version = '';
+    const version_incrementor = new a_version_incrementor().version_incrementor;
+    const version = '';
     let exception: Error;
     try {
         version_incrementor.increment(version, 'patch');
